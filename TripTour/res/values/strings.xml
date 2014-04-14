@@ -3,6 +3,10 @@
 
     <string name="app_name">TripTour</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">Hellow world!</string>
+    <string name="login">Sig in</string>
+    <string name="user">User or nick:</string>
+    <string name="pass">Password:</string>
+    <string name="newUser">New user register!!</string>
 
 </resources>
