@@ -17,5 +17,14 @@
     <string name="rating">Evaluación de atractivos</string>
     <string name="preferences">Preferencias</string>
     <string name="welcome">Bienvenido,</string>
+    <string name="name">Nombre:</string>
+    <string name="lastname">Apellido:</string>
+    <string name="gender">Sexo:</string>
+    <string name="birthday">Fecha nacimiento:</string>
+    <string name="password">Contraseña:</string>
+    <string name="confpass">Confirmar password:</string>
+    <string name="send">Enviar</string>
+    <string name="female">Femenino</string>
+    <string name="male">Masculino</string>
 
 </resources>

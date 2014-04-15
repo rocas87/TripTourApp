@@ -17,5 +17,16 @@
     <string name="rating">Rating attractives</string>
     <string name="preferences">Preferences</string>
     <string name="welcome">Welcome,</string>
+    <string name="name">Name:</string>
+    <string name="nick">Nick:</string>
+    <string name="mail">E-mail</string>
+    <string name="lastname">Last name:</string>
+    <string name="gender">Gender:</string>
+    <string name="birthday">Birthday:</string>
+    <string name="password">Pasword:</string>
+    <string name="confpass">Repeat password:</string>
+    <string name="send">Send</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
 
 </resources>

@@ -19,8 +19,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -37,9 +39,10 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 	TextView txtUsuario, txtPass, txtRegistrar;
 	EditText edtUsuario, edtPass;
 	Button btnLogin;
-	String ip, resultado,res,valido,usr_nombre,usr_nick;
+	String ip, resultado,res,valido,usr_nombre,usr_nick,user,password;
 	InputStream is = null;
 	JSONObject json = null;
+	ProgressDialog pDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,52 +73,67 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-		final ProgressDialog pDialog = new ProgressDialog(this);
+		pDialog = new ProgressDialog(this);
 		pDialog.setMessage("Conencting...");
 		pDialog.show();
-		Thread nt = new Thread() {
-			@Override
-			public void run() {
-				
-				try {
-					res = enviarPost(edtUsuario.getText().toString(), edtPass.getText().toString());
-					JSONArray jsonArray = new JSONArray(resultado);
-					for (int i = 0; i < jsonArray.length(); i++) {
-				        JSONObject jsonObject = jsonArray.getJSONObject(i);
-				        valido = jsonObject.getString("valido");
-				        if(valido.equals("1")){
-				        	usr_nombre = jsonObject.getString("usr_nombre");
-				        	usr_nick = jsonObject.getString("usr_nick");
-				        	pDialog.dismiss();
-				        	runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									valida(usr_nombre,usr_nick);
-								}
-							});
-				        }else{
-				        	runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									pDialog.dismiss();
-									Toast.makeText(MainActivity.this, res+"Usuario invalido: ",
-											Toast.LENGTH_LONG).show();
-								}
-							});
-				        }
-				        
+		user = edtUsuario.getText().toString();
+		password = edtPass.getText().toString();
+		
+		if(user.equals("") || password.equals("")){
+			pDialog.dismiss();
+			Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+		    vibrator.vibrate(500);
+			Toast.makeText(MainActivity.this,"Complete todos los campos",
+					Toast.LENGTH_LONG).show();
+		}else{
+			Thread nt = new Thread() {
+				@Override
+				public void run() {
+					
+					try {
+						res = enviarPost(user,password);
+						JSONArray jsonArray = new JSONArray(resultado);
+						for (int i = 0; i < jsonArray.length(); i++) {
+					        JSONObject jsonObject = jsonArray.getJSONObject(i);
+					        valido = jsonObject.getString("valido");
+					        if(valido.equals("1")){
+					        	usr_nombre = jsonObject.getString("usr_nombre");
+					        	usr_nick = jsonObject.getString("usr_nick");
+					        	pDialog.dismiss();
+					        	runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										valida(usr_nombre,usr_nick);
+									}
+								});
+					        }else{
+					        	runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										pDialog.dismiss();
+										Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+									    vibrator.vibrate(200);
+										Toast.makeText(MainActivity.this,"Usuario invalido",
+												Toast.LENGTH_LONG).show();
+									}
+								});
+					        }
+					        
+					}
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
 				}
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-			}
-		};
-		nt.start();		
+			};
+			nt.start();
+		}		
 	}
 
 	@Override
 	public boolean onTouch(View arg0, MotionEvent arg1) {
 		// TODO Auto-generated method stub
+		Intent registro = new Intent(this,RegistroActivity.class);
+		startActivity(registro);
 		return false;
 	}
 	
@@ -135,6 +153,11 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 			resultado = EntityUtils.toString(entity, "UTF-8");
 		} catch (Exception e) {
 			// TODO: handle exception
+			pDialog.dismiss();
+			Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+		    vibrator.vibrate(500);
+			Toast.makeText(MainActivity.this,"No se pudo llegar al servidor",
+					Toast.LENGTH_LONG).show();
 		}
 		return resultado;
 	}
