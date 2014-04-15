@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#45D012" >
+
+    <Button
+        android:id="@+id/btnFind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="38dp"
+        android:text="@string/find"
+        android:textSize="10dp" />
+
+    <Button
+        android:id="@+id/btnRecomendacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/btnFind"
+        android:layout_marginLeft="18dp"
+        android:layout_toRightOf="@+id/btnFind"
+        android:text="@string/recomendation"
+        android:textSize="10dp" />
+
+    <Button
+        android:id="@+id/btnRutas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnFind"
+        android:layout_below="@+id/btnFind"
+        android:layout_marginTop="22dp"
+        android:text="@string/recRutas"
+        android:textSize="10dp" />
+
+    <Button
+        android:id="@+id/btnAlojamiento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnRutas"
+        android:layout_below="@+id/btnRutas"
+        android:layout_marginTop="32dp"
+        android:text="@string/alojamiento"
+        android:textSize="10dp" />
+
+    <Button
+        android:id="@+id/btnCambio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnAlojamiento"
+        android:layout_below="@+id/btnAlojamiento"
+        android:layout_marginTop="30dp"
+        android:text="@string/change"
+        android:textSize="10dp" />
+
+    <Button
+        android:id="@+id/btnEvaluacion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnAlojamiento"
+        android:layout_alignRight="@+id/btnRecomendacion"
+        android:text="@string/rating"
+        android:textSize="10dp" />
+
+    <Button
+        android:id="@+id/btnConfiguracion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/btnClima"
+        android:layout_alignTop="@+id/btnCambio"
+        android:text="@string/preferences"
+        android:textSize="10dp" />
+
+    <Button
+        android:id="@+id/btnClima"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnAlojamiento"
+        android:layout_alignBottom="@+id/btnAlojamiento"
+        android:layout_alignRight="@+id/btnEvaluacion"
+        android:text="@string/climate"
+        android:textSize="10dp" />
+
+    <TextView
+        android:id="@+id/txtBienvenido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/welcome" />
+
+    <TextView
+        android:id="@+id/txtUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/txtBienvenido"
+        android:text="usuario" />
+
+</RelativeLayout>

@@ -20,6 +20,8 @@ import org.json.JSONObject;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -68,6 +70,9 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
+		final ProgressDialog pDialog = new ProgressDialog(this);
+		pDialog.setMessage("Conencting...");
+		pDialog.show();
 		Thread nt = new Thread() {
 			@Override
 			public void run() {
@@ -81,18 +86,18 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 				        if(valido.equals("1")){
 				        	usr_nombre = jsonObject.getString("usr_nombre");
 				        	usr_nick = jsonObject.getString("usr_nick");
+				        	pDialog.dismiss();
 				        	runOnUiThread(new Runnable() {
 								@Override
 								public void run() {
-									Toast.makeText(MainActivity.this, res+"valido: "+valido+" nombre: "
-											+usr_nombre+" nick: "+usr_nick,
-											Toast.LENGTH_LONG).show();
+									valida(usr_nombre,usr_nick);
 								}
 							});
 				        }else{
 				        	runOnUiThread(new Runnable() {
 								@Override
 								public void run() {
+									pDialog.dismiss();
 									Toast.makeText(MainActivity.this, res+"Usuario invalido: ",
 											Toast.LENGTH_LONG).show();
 								}
@@ -105,7 +110,7 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 				}
 			}
 		};
-		nt.start();
+		nt.start();		
 	}
 
 	@Override
@@ -132,5 +137,12 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 			// TODO: handle exception
 		}
 		return resultado;
+	}
+	
+	public void valida (String usr_nombre, String usr_nick){
+		Intent home = new Intent(this,HomeActivity.class);
+		home.putExtra("usr_nombre", usr_nombre);
+		home.putExtra("usr_nick", usr_nick);
+		startActivity(home);
 	}
 }

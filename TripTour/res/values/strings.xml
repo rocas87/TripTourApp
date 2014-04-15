@@ -8,5 +8,14 @@
     <string name="user">User or nick:</string>
     <string name="pass">Password:</string>
     <string name="newUser">New user register!!</string>
+    <string name="find">Search attractions</string>
+    <string name="recomendation">Recommendation attractions</string>
+    <string name="recRutas">Recomendations route</string>
+    <string name="alojamiento">Hotel</string>
+    <string name="change">Change money</string>
+    <string name="climate">Climate</string>
+    <string name="rating">Rating attractives</string>
+    <string name="preferences">Preferences</string>
+    <string name="welcome">Welcome,</string>
 
 </resources>
