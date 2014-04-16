@@ -25,7 +25,7 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f080022;
+        public static final int action_settings=0x7f08001a;
         public static final int btnAlojamiento=0x7f080009;
         public static final int btnCambio=0x7f08000a;
         public static final int btnClima=0x7f08000d;
@@ -35,30 +35,22 @@ public final class R {
         public static final int btnLogin=0x7f080000;
         public static final int btnRecomendacion=0x7f080007;
         public static final int btnRutas=0x7f080008;
-        public static final int button1=0x7f080021;
-        public static final int editText1=0x7f080016;
+        public static final int button1=0x7f080012;
+        public static final int editText1=0x7f080018;
         public static final int editText2=0x7f080017;
-        public static final int editText3=0x7f080018;
-        public static final int editText4=0x7f080019;
-        public static final int editText5=0x7f08001d;
-        public static final int editText6=0x7f08001e;
-        public static final int editText7=0x7f080020;
+        public static final int editText3=0x7f080010;
+        public static final int editText4=0x7f080015;
+        public static final int editText5=0x7f080014;
+        public static final int editText6=0x7f080013;
+        public static final int editText7=0x7f080011;
         public static final int edtPass=0x7f080004;
         public static final int edtUsuario=0x7f080002;
-        public static final int radio0=0x7f08001b;
-        public static final int radio1=0x7f08001c;
-        public static final int radioGroup1=0x7f08001a;
-        public static final int txtApellido=0x7f080012;
+        public static final int radio0=0x7f080016;
+        public static final int radio1=0x7f080019;
+        public static final int radioGroup1=0x7f08000f;
         public static final int txtBienvenido=0x7f08000e;
-        public static final int txtConfPass=0x7f08001f;
-        public static final int txtMail=0x7f08000f;
-        public static final int txtNacimiento=0x7f080014;
-        public static final int txtNick=0x7f080010;
-        public static final int txtNombre=0x7f080011;
         public static final int txtPass=0x7f080003;
-        public static final int txtPassword=0x7f080015;
         public static final int txtRegistrar=0x7f080005;
-        public static final int txtSexo=0x7f080013;
         public static final int txtUsuario=0x7f080001;
     }
     public static final class layout {
@@ -97,6 +89,7 @@ public final class R {
         public static final int send=0x7f050018;
         public static final int user=0x7f050004;
         public static final int welcome=0x7f05000f;
+        public static final int year=0x7f05001b;
     }
     public static final class style {
         /** 

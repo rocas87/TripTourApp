@@ -26,5 +26,6 @@
     <string name="send">Enviar</string>
     <string name="female">Femenino</string>
     <string name="male">Masculino</string>
+    <string name="year">AAAA-AA-DD</string>
 
 </resources>
