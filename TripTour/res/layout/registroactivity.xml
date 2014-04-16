@@ -4,15 +4,8 @@
     android:layout_height="match_parent"
     android:background="#45D012" >
 
-    <RadioGroup
-        android:id="@+id/radioGroup1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText3" >
-    </RadioGroup>
-
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/edtMail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -24,103 +17,102 @@
         android:textSize="12sp" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/btnEnviar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/radio1"
         android:text="@string/send"
         android:textSize="12sp" />
 
     <EditText
-        android:id="@+id/editText7"
+        android:id="@+id/edtNombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
         android:layout_alignParentLeft="true"
+        android:layout_below="@+id/edtNick"
         android:ems="10"
-        android:hint="@string/confpass"
-        android:inputType="textPassword"
+        android:hint="@string/name"
+        android:textSize="12sp" />
+
+    <EditText
+        android:id="@+id/edtApellido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/edtNombre"
+        android:ems="10"
+        android:hint="@string/lastname"
+        android:textSize="12sp" />
+
+    <EditText
+        android:id="@+id/edtNick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/edtMail"
+        android:ems="10"
+        android:hint="@string/nick"
         android:textSize="12sp" >
 
         <requestFocus />
     </EditText>
 
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/edtPass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editText7"
+        android:layout_above="@+id/edtConfPass"
         android:layout_alignParentLeft="true"
-        android:layout_marginBottom="17dp"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
         android:textSize="12sp" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/edtFecha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/editText6"
+        android:layout_above="@+id/edtPass"
         android:layout_alignParentLeft="true"
         android:ems="10"
         android:hint="@string/year"
         android:inputType="date"
         android:textSize="12sp" />
 
-    <RadioButton
-        android:id="@+id/radio0"
+    <EditText
+        android:id="@+id/edtConfPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnEnviar"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="14dp"
+        android:ems="10"
+        android:hint="@string/confpass"
+        android:inputType="textPassword"
+        android:textSize="12sp" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupSexo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/radio1"
-        android:layout_alignBottom="@+id/radio1"
-        android:layout_marginLeft="14dp"
-        android:layout_toRightOf="@+id/radioGroup1"
-        android:checked="true"
-        android:text="@string/female"
-        android:textSize="12sp" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" >
 
-    <RadioButton
-        android:id="@+id/radio1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/editText5"
-        android:layout_marginLeft="63dp"
-        android:layout_toRightOf="@+id/radio0"
-        android:text="@string/male"
-        android:textSize="12sp" />
+        <RadioButton
+            android:id="@+id/rdbtnFemenino"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/female"
+            android:textSize="12sp" />
 
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/editText2"
-        android:layout_marginTop="28dp"
-        android:ems="10"
-        android:hint="@string/name"
-        android:textSize="12sp" />
+        <RadioButton
+            android:id="@+id/rdtbtnMasculino"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/male"
+            android:textSize="12sp" />
 
-    <EditText
-        android:id="@+id/editText4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:ems="10"
-        android:hint="@string/lastname"
-        android:textSize="12sp" />
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/editText1"
-        android:layout_marginTop="17dp"
-        android:ems="10"
-        android:hint="@string/nick"
-        android:textSize="12sp" />
+    </RadioGroup>
 
 </RelativeLayout>
