@@ -55,6 +55,7 @@ public class RegistroActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		usr_pass = edtPass.getText().toString();
 		confPass = edtConfPass.getText().toString();
+		
 		if(usr_pass.equals(confPass))
 		{
 			usr_mail = edtMail.getText().toString();
@@ -82,13 +83,6 @@ public class RegistroActivity extends Activity implements OnClickListener {
 				{
 					usr_sexo = "F";
 				}
-				else
-				{
-					Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-				    vibrator.vibrate(200);
-					Toast.makeText(RegistroActivity.this,"Seleccionar opcion sexo",
-							Toast.LENGTH_LONG).show();
-				}
 				
 				params = new ArrayList<NameValuePair>();
 				params.add(new BasicNameValuePair("usr_mail", usr_mail));
@@ -100,7 +94,6 @@ public class RegistroActivity extends Activity implements OnClickListener {
 				params.add(new BasicNameValuePair("usr_pass", usr_pass));
 				params.add(new BasicNameValuePair("pass", usr_pass));
 				
-				php = "/servtriptour/registro.php";
 				pDialog = new ProgressDialog(this);
 				
 				Thread nt = new Thread() {
@@ -110,9 +103,17 @@ public class RegistroActivity extends Activity implements OnClickListener {
 						try {
 							pDialog.setMessage("Sending...");
 							pDialog.show();
+							
+							php = "/servtriptour/registro.php";
 							EnviarPost enviar = new EnviarPost();
+							
 							res = enviar.enviarPost(params, php);
+							
+							Toast.makeText(RegistroActivity.this,res,
+									Toast.LENGTH_LONG).show();
+							
 							JSONArray jsonArray = new JSONArray(res);
+							
 							for (int i = 0; i < jsonArray.length(); i++)
 							{
 								JSONObject jsonObject = jsonArray.getJSONObject(i);
@@ -121,6 +122,9 @@ public class RegistroActivity extends Activity implements OnClickListener {
 							runOnUiThread(new Runnable() {
 								@Override
 								public void run() {
+									Toast.makeText(RegistroActivity.this,res,
+											Toast.LENGTH_LONG).show();
+									
 									if(valido.equals("mail"))
 									{
 										Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
@@ -139,6 +143,9 @@ public class RegistroActivity extends Activity implements OnClickListener {
 									}
 									else
 									{
+										Toast.makeText(RegistroActivity.this,"Usuario registrado",
+												Toast.LENGTH_LONG).show();
+										pDialog.dismiss();
 										registrado();
 									}
 								}
@@ -151,6 +158,11 @@ public class RegistroActivity extends Activity implements OnClickListener {
 				};
 				nt.start();
 			}
+		}
+		else
+		{
+			Toast.makeText(RegistroActivity.this,"Password diferentes",
+					Toast.LENGTH_LONG).show();
 		}
 	}
 	

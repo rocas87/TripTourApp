@@ -33,7 +33,7 @@
         android:layout_alignLeft="@+id/txtUsuario"
         android:layout_below="@+id/txtUsuario"
         android:ems="10"
-        android:hint="@string/user" >
+        android:hint="@string/userLog" >
 
         <requestFocus />
     </EditText>

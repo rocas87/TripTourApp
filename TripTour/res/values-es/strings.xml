@@ -5,7 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="login">Acceder</string>
-    <string name="user">Usuario o nick:</string>
+    <string name="userLog">Usuario o nick:</string>
     <string name="pass">Contrseña:</string>
     <string name="newUser">Nuevo usuario registrar!!</string>
     <string name="find">Buscar atractivos</string>
@@ -27,5 +27,7 @@
     <string name="female">Femenino</string>
     <string name="male">Masculino</string>
     <string name="year">AAAA-AA-DD</string>
+    <string name="searchResults">Resultados buesqueda</string>
+    <string name="user">Usuario: </string>
 
 </resources>
