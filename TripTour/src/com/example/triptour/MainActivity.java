@@ -141,7 +141,7 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpContext localContext = new BasicHttpContext();
-		HttpPost httpPost = new HttpPost("http://192.168.30.58/servtriptour/login.php");
+		HttpPost httpPost = new HttpPost("http://192.168.0.103/servtriptour/login.php");
 		HttpResponse response = null;
 		try {
 			List<NameValuePair> params = new ArrayList<NameValuePair>();

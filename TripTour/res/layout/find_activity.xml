@@ -23,7 +23,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
     
     <ListView 
-       android:id="@+id/resultado"
+       android:id="@+id/lista"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
        android:layout_below="@+id/txtResultados"
