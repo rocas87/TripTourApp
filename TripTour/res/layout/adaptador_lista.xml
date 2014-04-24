@@ -2,20 +2,72 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    
-	<TextView android:id="@+id/titulo" 
-		android:layout_width="match_parent" 
-		android:layout_height="wrap_content" 
-		android:textStyle="bold" 
-		android:textSize="20dp" />
 
 	<TextView
-	    android:id="@+id/desc"
+	    android:id="@+id/nombre"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_alignParentLeft="true"
-	    android:layout_below="@+id/titulo"
-	    android:textSize="12dp"
-	    android:textStyle="normal" />
+	    android:layout_alignParentTop="true"
+	    android:textSize="20dp"
+	    android:textStyle="bold" />
+
+	<TextView
+	    android:id="@+id/nom"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/nombre"
+	    android:text="@string/dir"
+	    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+	<TextView
+	    android:id="@+id/direccion"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBaseline="@+id/nom"
+	    android:layout_alignBottom="@+id/nom"
+	    android:layout_alignParentRight="true"
+	    android:layout_toRightOf="@+id/dist"
+	    android:text="TextView" />
+
+	<TextView
+	    android:id="@+id/distance"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBaseline="@+id/dist"
+	    android:layout_alignBottom="@+id/dist"
+	    android:layout_alignLeft="@+id/average"
+	    android:text="distancia"
+	    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+	<TextView
+	    android:id="@+id/dist"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/prom"
+	    android:text="@string/dist"
+	    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+	<TextView
+	    android:id="@+id/prom"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/nom"
+	    android:layout_marginTop="27dp"
+	    android:text="@string/average"
+	    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+	<TextView
+	    android:id="@+id/average"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_above="@+id/distance"
+	    android:layout_alignLeft="@+id/direccion"
+	    android:layout_marginLeft="28dp"
+	    android:text="promedio"
+	    android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

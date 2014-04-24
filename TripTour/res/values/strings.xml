@@ -31,5 +31,8 @@
     <string name="year">YYYY-MM-DD</string>
     <string name="serachResults">Search results</string>
     <string name="user">User: </string>
+    <string name="dir">Address:</string>
+    <string name="average">Average:</string>
+    <string name="dist">Distance:</string>
 
 </resources>

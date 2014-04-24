@@ -49,7 +49,7 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		ip = "192.168.30.75";
+		ip = "192.168.30.66";
 		txtUsuario = (TextView)findViewById(R.id.txtUsuario);
 		txtPass = (TextView)findViewById(R.id.txtPass);
 		txtRegistrar = (TextView)findViewById(R.id.txtRegistrar);
@@ -141,7 +141,7 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpContext localContext = new BasicHttpContext();
-		HttpPost httpPost = new HttpPost("http://192.168.0.103/servtriptour/login.php");
+		HttpPost httpPost = new HttpPost("http://"+ip+"/servtriptour/login.php");
 		HttpResponse response = null;
 		try {
 			List<NameValuePair> params = new ArrayList<NameValuePair>();

@@ -29,5 +29,8 @@
     <string name="year">AAAA-AA-DD</string>
     <string name="searchResults">Resultados buesqueda</string>
     <string name="user">Usuario: </string>
+    <string name="dir">Direccion:</string>
+    <string name="average">Promedio:</string>
+    <string name="dist">Distancia:</string>
 
 </resources>

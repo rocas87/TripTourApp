@@ -19,10 +19,10 @@ public class EnviarPost {
 	
 	public String enviarPost(List<NameValuePair> params, String php) {
 		
-		ip = "192.168.30.58";
+		ip = "192.168.30.66";
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpContext localContext = new BasicHttpContext();
-		HttpPost httpPost = new HttpPost("http://192.168.30.58/servtriptour/registro.php");
+		HttpPost httpPost = new HttpPost("http://"+ip+php);
 		HttpResponse response = null;
 		try {
 			httpPost.setEntity(new UrlEncodedFormEntity(params));
