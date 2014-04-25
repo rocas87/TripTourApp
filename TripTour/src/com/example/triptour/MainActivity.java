@@ -18,6 +18,12 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.app.Activity;
@@ -34,7 +40,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnClickListener, OnTouchListener{
+public class MainActivity extends Activity implements OnClickListener, OnTouchListener, 
+android.location.LocationListener
+{
 
 	TextView txtUsuario, txtPass, txtRegistrar;
 	EditText edtUsuario, edtPass;
@@ -43,13 +51,18 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 	InputStream is = null;
 	JSONObject json = null;
 	ProgressDialog pDialog;
+	Location loc;
+	LatLng MiUbicacion;
+	LocationManager handle;
+	private String provider;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		ip = "192.168.30.66";
+		//ip = "10.20.13.124";
+		ip = "192.168.0.112";
 		txtUsuario = (TextView)findViewById(R.id.txtUsuario);
 		txtPass = (TextView)findViewById(R.id.txtPass);
 		txtRegistrar = (TextView)findViewById(R.id.txtRegistrar);
@@ -61,6 +74,8 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 		
 		btnLogin.setOnClickListener(this);
 		txtRegistrar.setOnTouchListener(this);
+		
+		loc = getMiUbicacion();
 	}
 
 	@Override
@@ -167,5 +182,49 @@ public class MainActivity extends Activity implements OnClickListener, OnTouchLi
 		home.putExtra("usr_nombre", usr_nombre);
 		home.putExtra("usr_nick", usr_nick);
 		startActivity(home);
+	}
+	
+	public Location getMiUbicacion()
+	{
+		//Llamo al servico de localizacion	        
+	    handle = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+	    //Clase criteria permite decidir mejor poveedor de posicion
+	    Criteria c = new Criteria();
+	    //obtiene el mejor proveedor en función del criterio asignado
+	    //ACCURACY_FINE(La mejor presicion)--ACCURACY_COARSE(PRESISION MEDIA)
+	    c.setAccuracy(Criteria.ACCURACY_FINE);
+	    //Indica si es necesaria la altura por parte del proveedor
+	    c.setAltitudeRequired(false);
+	    provider = handle.getBestProvider(c, false);
+	    //Se activan las notificaciones de localización con los parámetros: 
+	    //proveedor, tiempo mínimo de actualización, distancia mínima, Locationlistener
+	    handle.requestLocationUpdates(provider, 60000, 5,(LocationListener) this);
+	    //Obtiene la ultima posicion conocida por el proveedor
+	    loc = handle.getLastKnownLocation(provider);
+	    return loc;
+	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		// TODO Auto-generated method stub
+		
 	}
 }

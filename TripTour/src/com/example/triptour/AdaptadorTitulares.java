@@ -16,7 +16,7 @@ public class AdaptadorTitulares extends ArrayAdapter {
 	ArrayList<String> direccion = new ArrayList<String>();
 	ArrayList<String> promedio = new ArrayList<String>();
 	ArrayList<String> distancia = new ArrayList<String>();
-	String nom, dir, prom, dist;
+	String nom, dir, prom, dist, lat;
 	TextView name, address, average, distance;
 	
 	

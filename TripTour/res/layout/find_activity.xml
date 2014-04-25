@@ -22,12 +22,13 @@
         android:text="@string/searchResults"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     
-    <ListView 
-       android:id="@+id/lista"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_below="@+id/txtResultados"
-       android:drawSelectorOnTop="false" />
+    <ListView
+        android:id="@+id/lista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/txtResultados"
+        android:drawSelectorOnTop="false" />
 
     <TextView
         android:id="@+id/txtUsuario"
@@ -37,5 +38,14 @@
         android:layout_toRightOf="@+id/txtUser"
         android:text="usuario"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Button
+        android:id="@+id/btnmap"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/map" />
     
 </RelativeLayout>

@@ -33,6 +33,7 @@ public class HomeActivity extends Activity implements OnClickListener {
 		
 		Bundle home = getIntent().getExtras();
 		user = home.getString("usr_nick");
+		
 		usuario.setText(user);
 				
 		btnFind.setOnClickListener(this);
