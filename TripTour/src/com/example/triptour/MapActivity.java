@@ -115,7 +115,8 @@ implements android.location.LocationListener, OnClickListener
 		CircleOptions circleOptions = new CircleOptions();
 		// Indico las coordenadas del centro y el radio en metros
 		circleOptions.center(coord).radius(radioBusqueda*1000);
-		circleOptions.strokeColor(Color.GREEN);
+		circleOptions.strokeColor(Color.RED);
+		circleOptions.strokeWidth((float) 2.0);
 		// Get back the mutable Circle
 		Circle circle = mapa.addCircle(circleOptions);
 						

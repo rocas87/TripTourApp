@@ -67,7 +67,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 
 			// Parametros forsados por el momento
 			categoria = "1";
-			radioBusqueda = "1.5";
+			radioBusqueda = "10";
 
 			loc = getMiUbicacion();
 			latitud = String.valueOf(loc.getLatitude());
@@ -93,26 +93,61 @@ public class FindActivity extends Activity implements android.location.LocationL
 					try
 					{
 						res = enviar.enviarPost(params, php);
-						JSONArray jsonArray = new JSONArray(res);		
+						JSONArray jsonArray = new JSONArray(res);
+						
 						 for (int i = 0; i < jsonArray.length(); i++) 
 						 {
 							JSONObject jsonObject = jsonArray.getJSONObject(i);
-						    nombre.add(jsonObject.getString("itm_nombre"));
-						    direccion.add(jsonObject.getString("itm_direccion"));
-						    promedio.add(jsonObject.getString("itm_promedio"));
-						    distancia.add(jsonObject.getString("distancia"));
-						    latitude.add(jsonObject.getString("itm_latitud"));
-						    longitude.add(jsonObject.getString("itm_longitud"));
-						    if(jsonArray.length() == 0)
-						    {
-						    	Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-							    vibrator.vibrate(200);
-						    	Toast.makeText(FindActivity.this,"No se encontraron resultados",
-										Toast.LENGTH_LONG).show();
-						    }
-						    else
-						    {
-						    	runOnUiThread
+							if(jsonObject.getString("resultado").equals("categoria"))
+							{
+								runOnUiThread
+								 (
+										 new Runnable()
+										 {
+											 @Override
+											 public void run() 
+											 {
+												 Vibrator vibrator =(Vibrator)getSystemService
+														 (Context.VIBRATOR_SERVICE);
+												 vibrator.vibrate(200);
+												 Toast.makeText(FindActivity.this,"No se encontraron" +
+												 		"resultados para esta categoria",
+												 		Toast.LENGTH_LONG).show();
+												 pDialog.dismiss();
+											 }
+										 }
+								 );
+							}
+							else if(jsonObject.getString("resultado").equals("radioBusqueda"))
+							{
+								runOnUiThread
+								 (
+										 new Runnable()
+										 {
+											 @Override
+											 public void run() 
+											 {
+												 Vibrator vibrator =(Vibrator)getSystemService
+														 (Context.VIBRATOR_SERVICE);
+												 vibrator.vibrate(200);
+												 Toast.makeText(FindActivity.this,"No se encontraron" +
+												 		"resultados dentro del radio de busqueda",
+												 		Toast.LENGTH_LONG).show();
+												 pDialog.dismiss();
+											 }
+										 }
+								 );
+							}
+							else if(jsonObject.getString("resultado").equals("1"))
+							{
+								nombre.add(jsonObject.getString("itm_nombre"));
+							    direccion.add(jsonObject.getString("itm_direccion"));
+							    promedio.add(jsonObject.getString("itm_promedio"));
+							    distancia.add(jsonObject.getString("distancia"));
+							    latitude.add(jsonObject.getString("itm_latitud"));
+							    longitude.add(jsonObject.getString("itm_longitud"));
+							    
+							    runOnUiThread
 								 (
 										 new Runnable()
 										 {
@@ -124,8 +159,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 											 }
 										 }
 								 );
-						    }
-
+							}
 						 }
 					}
 					catch (Exception e)

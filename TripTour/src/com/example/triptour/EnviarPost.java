@@ -20,7 +20,9 @@ public class EnviarPost {
 	public String enviarPost(List<NameValuePair> params, String php) {
 		
 		//ip = "10.20.13.124";
-		ip = "192.168.0.112";
+		ip = "192.168.0.101";
+		//ip = "172.16.224.238";
+		//ip = "192.168.30.73";
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpContext localContext = new BasicHttpContext();
 		HttpPost httpPost = new HttpPost("http://"+ip+php);

@@ -62,7 +62,10 @@ android.location.LocationListener
 		setContentView(R.layout.activity_main);
 		
 		//ip = "10.20.13.124";
-		ip = "192.168.0.112";
+		ip = "192.168.0.101";
+		//ip = "172.16.224.238";
+		//ip = "192.168.30.73";
+		
 		txtUsuario = (TextView)findViewById(R.id.txtUsuario);
 		txtPass = (TextView)findViewById(R.id.txtPass);
 		txtRegistrar = (TextView)findViewById(R.id.txtRegistrar);
