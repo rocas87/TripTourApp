@@ -4,17 +4,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -47,7 +38,7 @@ android.location.LocationListener
 	TextView txtUsuario, txtPass, txtRegistrar;
 	EditText edtUsuario, edtPass;
 	Button btnLogin;
-	String ip, resultado,res,valido,usr_nombre,usr_nick,user,password;
+	String res,valido,usr_nombre,usr_nick,user,password, php;
 	InputStream is = null;
 	JSONObject json = null;
 	ProgressDialog pDialog;
@@ -55,17 +46,14 @@ android.location.LocationListener
 	LatLng MiUbicacion;
 	LocationManager handle;
 	private String provider;
+	List<NameValuePair> params;
+	EnviarPost enviar = new EnviarPost();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		//ip = "10.20.13.124";
-		ip = "192.168.0.101";
-		//ip = "172.16.224.238";
-		//ip = "192.168.30.73";
-		
+				
 		txtUsuario = (TextView)findViewById(R.id.txtUsuario);
 		txtPass = (TextView)findViewById(R.id.txtPass);
 		txtRegistrar = (TextView)findViewById(R.id.txtRegistrar);
@@ -79,6 +67,8 @@ android.location.LocationListener
 		txtRegistrar.setOnTouchListener(this);
 		
 		loc = getMiUbicacion();
+		
+		php = "/servtriptour/login.php";
 	}
 
 	@Override
@@ -109,8 +99,13 @@ android.location.LocationListener
 				public void run() {
 					
 					try {
-						res = enviarPost(user,password);
-						JSONArray jsonArray = new JSONArray(resultado);
+						params = new ArrayList<NameValuePair>();
+						params.add(new BasicNameValuePair("usuario",user));
+						params.add(new BasicNameValuePair("pass",password));
+						
+						res = enviar.enviarPost(params, php);
+						
+						JSONArray jsonArray = new JSONArray(res);
 						for (int i = 0; i < jsonArray.length(); i++) {
 					        JSONObject jsonObject = jsonArray.getJSONObject(i);
 					        valido = jsonObject.getString("valido");
@@ -154,32 +149,7 @@ android.location.LocationListener
 		startActivity(registro);
 		return false;
 	}
-	
-	public String enviarPost(String usuario, String pass) {
-
-		HttpClient httpClient = new DefaultHttpClient();
-		HttpContext localContext = new BasicHttpContext();
-		HttpPost httpPost = new HttpPost("http://"+ip+"/servtriptour/login.php");
-		HttpResponse response = null;
-		try {
-			List<NameValuePair> params = new ArrayList<NameValuePair>();
-			params.add(new BasicNameValuePair("usuario", usuario));
-			params.add(new BasicNameValuePair("pass", pass));
-			httpPost.setEntity(new UrlEncodedFormEntity(params));
-			response = httpClient.execute(httpPost, localContext);
-			HttpEntity entity = response.getEntity();
-			resultado = EntityUtils.toString(entity, "UTF-8");
-		} catch (Exception e) {
-			// TODO: handle exception
-			pDialog.dismiss();
-			Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-		    vibrator.vibrate(500);
-			Toast.makeText(MainActivity.this,"No se pudo llegar al servidor",
-					Toast.LENGTH_LONG).show();
-		}
-		return resultado;
-	}
-	
+		
 	public void valida (String usr_nombre, String usr_nick){
 		Intent home = new Intent(this,HomeActivity.class);
 		home.putExtra("usr_nombre", usr_nombre);

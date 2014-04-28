@@ -80,6 +80,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 			params.add(new BasicNameValuePair("radioBusqueda",radioBusqueda));
 
 			php = "/servtriptour/busqueda.php";
+			
 			pDialog = new ProgressDialog(this);
 			pDialog.setMessage("Buscando...");
 			pDialog.show();
