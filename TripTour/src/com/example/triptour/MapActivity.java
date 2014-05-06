@@ -136,10 +136,10 @@ implements android.location.LocationListener, OnClickListener
 	    Criteria c = new Criteria();
 	    //obtiene el mejor proveedor en función del criterio asignado
 	    //ACCURACY_FINE(La mejor presicion)--ACCURACY_COARSE(PRESISION MEDIA)
-	    c.setAccuracy(Criteria.ACCURACY_COARSE);
+	    c.setAccuracy(Criteria.ACCURACY_FINE);
 	    //Indica si es necesaria la altura por parte del proveedor
 	    c.setAltitudeRequired(false);
-	    provider = handle.getBestProvider(c, false);
+	    provider = handle.getBestProvider(c, true);
 	    //Se activan las notificaciones de localización con los parámetros: 
 	    //proveedor, tiempo mínimo de actualización, distancia mínima, Locationlistener
 	    handle.requestLocationUpdates(provider, 60000, 5, this);
@@ -150,14 +150,7 @@ implements android.location.LocationListener, OnClickListener
 		    //Obtenemos la última posición conocida dada por el proveedor
 		    MiUbicacion = new LatLng(loc.getLatitude(),loc.getLongitude());
 			configGPS(MiUbicacion);
-		}else
-		{	
-			//Miubicacion = new LatLng(-33.442909,-70.65386999999998);
-			//Toast t1 = Toast.makeText(this, "No se pudo Obtener la ubicacion", Toast.LENGTH_LONG);
-			//t1.show();
-			//configGPS(Miubicacion);
-		 }	
-
+		}
 	}
 	
 	private void configGPS(LatLng latlong) 

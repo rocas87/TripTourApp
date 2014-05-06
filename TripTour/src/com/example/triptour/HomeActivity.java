@@ -56,6 +56,9 @@ public class HomeActivity extends Activity implements OnClickListener {
 			startActivity(find);
 			break;
 		case R.id.btnRecomendacion:
+			Intent recomendation = new Intent(this,RecomendationActivity.class);
+			recomendation.putExtra("user", user);
+			startActivity(recomendation);
 			break;
 		case R.id.btnRutas:
 			break;

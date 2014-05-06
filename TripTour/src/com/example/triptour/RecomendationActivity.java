@@ -28,7 +28,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class FindActivity extends Activity implements android.location.LocationListener, OnClickListener{
+public class RecomendationActivity extends Activity implements android.location.LocationListener, OnClickListener{
 
 	TextView txtUsuario, Seleccionado;
 	ListView lista;
@@ -53,7 +53,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
-			setContentView(R.layout.find_activity);
+			setContentView(R.layout.recomendation_activity);
 
 			txtUsuario = (TextView)findViewById(R.id.txtUsuario);
 			lista = (ListView)findViewById(R.id.lista);
@@ -74,12 +74,13 @@ public class FindActivity extends Activity implements android.location.LocationL
 			longitud = String.valueOf(loc.getLongitude());
 
 			params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("usuario",usuario));
 			params.add(new BasicNameValuePair("latitud",latitud));
 			params.add(new BasicNameValuePair("longitud",longitud));
 			params.add(new BasicNameValuePair("categoria",categoria));
 			params.add(new BasicNameValuePair("radioBusqueda",radioBusqueda));
 
-			php = "/servtriptour/busqueda.php";
+			php = "/servtriptour/recomendacion.php";
 			
 			pDialog = new ProgressDialog(this);
 			pDialog.setMessage("Buscando...");
@@ -87,7 +88,6 @@ public class FindActivity extends Activity implements android.location.LocationL
 
 			Thread tr = new Thread()
 			{
-
 				@Override
 				public void run()
 				{
@@ -111,7 +111,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 												 Vibrator vibrator =(Vibrator)getSystemService
 														 (Context.VIBRATOR_SERVICE);
 												 vibrator.vibrate(200);
-												 Toast.makeText(FindActivity.this,"No se encontraron" +
+												 Toast.makeText(RecomendationActivity.this,"No se encontraron" +
 												 		"resultados para esta categoria",
 												 		Toast.LENGTH_LONG).show();
 												 pDialog.dismiss();
@@ -131,7 +131,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 												 Vibrator vibrator =(Vibrator)getSystemService
 														 (Context.VIBRATOR_SERVICE);
 												 vibrator.vibrate(200);
-												 Toast.makeText(FindActivity.this,"No se encontraron" +
+												 Toast.makeText(RecomendationActivity.this,"No se encontraron" +
 												 		"resultados dentro del radio de busqueda",
 												 		Toast.LENGTH_LONG).show();
 												 pDialog.dismiss();
@@ -230,26 +230,23 @@ public class FindActivity extends Activity implements android.location.LocationL
 		@Override
 		public void onLocationChanged(Location location) {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void onProviderDisabled(String provider) {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void onProviderEnabled(String provider) {
 			// TODO Auto-generated method stub
-
 		}
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
 			// TODO Auto-generated method stub
-
 		}
+		
 		@Override
 		public void onClick(View arg0) {
 			// TODO Auto-generated method stub

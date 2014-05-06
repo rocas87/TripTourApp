@@ -165,10 +165,10 @@ android.location.LocationListener
 	    Criteria c = new Criteria();
 	    //obtiene el mejor proveedor en función del criterio asignado
 	    //ACCURACY_FINE(La mejor presicion)--ACCURACY_COARSE(PRESISION MEDIA)
-	    c.setAccuracy(Criteria.ACCURACY_FINE);
+	    c.setAccuracy(Criteria.ACCURACY_COARSE);
 	    //Indica si es necesaria la altura por parte del proveedor
 	    c.setAltitudeRequired(false);
-	    provider = handle.getBestProvider(c, false);
+	    provider = handle.getBestProvider(c, true);
 	    //Se activan las notificaciones de localización con los parámetros: 
 	    //proveedor, tiempo mínimo de actualización, distancia mínima, Locationlistener
 	    handle.requestLocationUpdates(provider, 60000, 5,(LocationListener) this);

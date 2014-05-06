@@ -276,7 +276,8 @@ containing a value of this type.
         public static final int find_activity=0x7f030002;
         public static final int homeactivity=0x7f030003;
         public static final int map_activity=0x7f030004;
-        public static final int registroactivity=0x7f030005;
+        public static final int recomendation_activity=0x7f030005;
+        public static final int registroactivity=0x7f030006;
     }
     public static final class menu {
         public static final int main=0x7f0a0000;
