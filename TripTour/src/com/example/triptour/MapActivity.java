@@ -136,7 +136,7 @@ implements android.location.LocationListener, OnClickListener
 	    Criteria c = new Criteria();
 	    //obtiene el mejor proveedor en función del criterio asignado
 	    //ACCURACY_FINE(La mejor presicion)--ACCURACY_COARSE(PRESISION MEDIA)
-	    c.setAccuracy(Criteria.ACCURACY_FINE);
+	    c.setAccuracy(Criteria.ACCURACY_COARSE);
 	    //Indica si es necesaria la altura por parte del proveedor
 	    c.setAltitudeRequired(false);
 	    provider = handle.getBestProvider(c, true);
@@ -145,12 +145,8 @@ implements android.location.LocationListener, OnClickListener
 	    handle.requestLocationUpdates(provider, 60000, 5, this);
 	    //Obtiene la ultima posicion conocida por el proveedor
 	    loc = handle.getLastKnownLocation(provider);
-	    
-	    if(loc != null){
-		    //Obtenemos la última posición conocida dada por el proveedor
-		    MiUbicacion = new LatLng(loc.getLatitude(),loc.getLongitude());
-			configGPS(MiUbicacion);
-		}
+	    MiUbicacion = new LatLng(loc.getLatitude(),loc.getLongitude());
+		configGPS(MiUbicacion);
 	}
 	
 	private void configGPS(LatLng latlong) 
