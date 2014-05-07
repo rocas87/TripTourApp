@@ -80,8 +80,11 @@ implements android.location.LocationListener, OnClickListener
 			 {
 				 mapa.addMarker(new MarkerOptions()
 		        .position(new LatLng(Double.parseDouble(latitude.get(i)), Double.parseDouble(longitude.get(i))))
-		        .title(String.valueOf(nombre.get(i)+"\n Average:"+promedio.get(i)+"\n Distance:"+distancia.get(i))));
+		        .title(String.valueOf(nombre.get(i)))
+		        .snippet("Average:"+promedio.get(i)+"Distance:"+distancia.get(i)));
 				 
+				 mapa.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
+								 
 				waypoints = waypoints + "|" + "|" + Double.parseDouble(latitude.get(i)) + "," +
 							Double.parseDouble(longitude.get(i));
 				//Dibujo ruta entre mas de 2 puntos
@@ -101,7 +104,11 @@ implements android.location.LocationListener, OnClickListener
 			
 			mapa.addMarker(new MarkerOptions()
 	        .position(new LatLng(Double.parseDouble(itm_latitude), Double.parseDouble(itm_longitude)))
-	        .title(String.valueOf(itm_nombre+"\n Average:"+itm_promedio+"\n Distance:"+itm_distancia)));
+	        .title(itm_nombre)
+	        .snippet("Average:"+itm_promedio+"Distance:"+itm_distancia));
+			
+			mapa.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
+			
 			waypoints = "waypoints=optimize:true|"+ coord.latitude + "," + coord.longitude
 			            + "|" + "|" + Double.parseDouble(itm_latitude) + "," + Double.parseDouble(itm_longitude);
 			//Dibujo ruta entre mas de 2 puntos
