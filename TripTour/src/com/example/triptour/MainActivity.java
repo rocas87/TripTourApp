@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -104,7 +105,7 @@ android.location.LocationListener
 						params.add(new BasicNameValuePair("pass",password));
 						
 						res = enviar.enviarPost(params, php);
-						
+						Log.e("Response", res);
 						JSONArray jsonArray = new JSONArray(res);
 						for (int i = 0; i < jsonArray.length(); i++) {
 					        JSONObject jsonObject = jsonArray.getJSONObject(i);

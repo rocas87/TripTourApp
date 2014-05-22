@@ -40,7 +40,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 	ArrayList<String> distancia = new ArrayList<String>();
 	ArrayList<String> latitude = new ArrayList<String>();
 	ArrayList<String> longitude = new ArrayList<String>();
-	String usuario, latitud, longitud, categoria, radioBusqueda, php, res, itm_nombre, itm_direccion,
+	String usuario, latitud, longitud, categoria, radioBusqueda, mode, php, res, itm_nombre, itm_direccion,
 				    itm_promedio, itm_distancia, itm_latitude, itm_longitude;
 	Location loc;
 	LocationClient mLocationClient;
@@ -67,7 +67,8 @@ public class FindActivity extends Activity implements android.location.LocationL
 
 			// Parametros forsados por el momento
 			categoria = "1";
-			radioBusqueda = "10";
+			radioBusqueda = "5";
+			mode = "driving";
 
 			loc = getMiUbicacion();
 			latitud = String.valueOf(loc.getLatitude());
@@ -202,6 +203,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 			mapActivity.putExtra("itm_distancia", itm_distancia);
 			mapActivity.putExtra("itm_latitud", itm_latitude);
 			mapActivity.putExtra("itm_longitud", itm_longitude);
+			mapActivity.putExtra("rta_mode", mode);
 			mapActivity.putExtra("radioBusqueda", radioBusqueda);
 			startActivity(mapActivity);
 		}
@@ -214,7 +216,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 		    Criteria c = new Criteria();
 		    //obtiene el mejor proveedor en función del criterio asignado
 		    //ACCURACY_FINE(La mejor presicion)--ACCURACY_COARSE(PRESISION MEDIA)
-		    c.setAccuracy(Criteria.ACCURACY_COARSE);
+		    c.setAccuracy(Criteria.ACCURACY_FINE);
 		    //Indica si es necesaria la altura por parte del proveedor
 		    c.setAltitudeRequired(false);
 		    provider = handle.getBestProvider(c, true);
@@ -261,6 +263,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 			mapActivity.putExtra("itm_distancia", distancia);
 			mapActivity.putExtra("itm_latitud", latitude);
 			mapActivity.putExtra("itm_longitud", longitude);
+			mapActivity.putExtra("rta_mode", mode);
 			mapActivity.putExtra("radioBusqueda", radioBusqueda);
 			startActivity(mapActivity);
 		}

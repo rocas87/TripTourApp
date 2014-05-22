@@ -38,7 +38,8 @@ implements android.location.LocationListener, OnClickListener
 	private String provider;
 	Location loc;
 	LatLng MiUbicacion, coord;
-	String itm_nombre, itm_direccion, itm_promedio, itm_distancia, itm_latitude, itm_longitude, waypoints;
+	String itm_nombre, itm_direccion, itm_promedio, itm_distancia, itm_latitude, itm_longitude, waypoints,
+	rta_nombre, rta_promedio, rta_distancia, rta_duracion, rta_coordenadas, rta_mode;
 	Marker itemMarker;
 	//double itm_latitud, itm_longitud;
 	ArrayList<String> nombre = new ArrayList<String>();
@@ -49,6 +50,9 @@ implements android.location.LocationListener, OnClickListener
 	ArrayList<String> longitude = new ArrayList<String>();
 	Double radioBusqueda;
 	int id;
+	String[] tokens;
+	String[] tokensNombre;
+	
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
@@ -63,6 +67,8 @@ implements android.location.LocationListener, OnClickListener
 		
 		coord = Ubicacion();
 		
+		waypoints = "&origin=" + coord.latitude + "," + coord.longitude + "&waypoints=optimize:true|";
+		
 		Bundle mapActivity = getIntent().getExtras();
 		id = mapActivity.getInt("id");
 		if(id==0)
@@ -73,9 +79,8 @@ implements android.location.LocationListener, OnClickListener
 			distancia = mapActivity.getStringArrayList("itm_distancia");
 			latitude = mapActivity.getStringArrayList("itm_latitud");
 			longitude = mapActivity.getStringArrayList("itm_longitud");
-			
-			waypoints = "waypoints=optimize:true|"+ coord.latitude + "," + coord.longitude;
-			
+			rta_mode = mapActivity.getString("rta_mode");
+						
 			for(int i=0; i< nombre.size(); i++)
 			 {
 				 mapa.addMarker(new MarkerOptions()
@@ -84,16 +89,14 @@ implements android.location.LocationListener, OnClickListener
 		        .snippet("Average:"+promedio.get(i)+"Distance:"+distancia.get(i)));
 				 
 				 mapa.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
-								 
-				waypoints = waypoints + "|" + "|" + Double.parseDouble(latitude.get(i)) + "," +
-							Double.parseDouble(longitude.get(i));
-				//Dibujo ruta entre mas de 2 puntos
-				String url = getMapsApiDirectionsUrl(waypoints);
-			    ReadTask downloadTask = new ReadTask();
-			    downloadTask.execute(url);
+				
+				 waypoints = waypoints + "|" + Double.parseDouble(latitude.get(i)) + "," 
+				 + Double.parseDouble(longitude.get(i));
 			 }
+			
+			radioBusqueda = Double.parseDouble(mapActivity.getString("radioBusqueda"));
 		}
-		else
+		else if(id==1)
 		{
 			itm_nombre = mapActivity.getString("itm_nombre");
 			itm_direccion = mapActivity.getString("itm_direccion");
@@ -101,6 +104,7 @@ implements android.location.LocationListener, OnClickListener
 			itm_distancia = mapActivity.getString("itm_distancia");
 			itm_latitude = mapActivity.getString("itm_latitud");
 			itm_longitude = mapActivity.getString("itm_longitud");
+			rta_mode = mapActivity.getString("rta_mode");
 			
 			mapa.addMarker(new MarkerOptions()
 	        .position(new LatLng(Double.parseDouble(itm_latitude), Double.parseDouble(itm_longitude)))
@@ -109,15 +113,47 @@ implements android.location.LocationListener, OnClickListener
 			
 			mapa.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
 			
-			waypoints = "waypoints=optimize:true|"+ coord.latitude + "," + coord.longitude
-			            + "|" + "|" + Double.parseDouble(itm_latitude) + "," + Double.parseDouble(itm_longitude);
-			//Dibujo ruta entre mas de 2 puntos
-			String url = getMapsApiDirectionsUrl(waypoints);
-		    ReadTask downloadTask = new ReadTask();
-		    downloadTask.execute(url);
+			waypoints = waypoints + "|" + Double.parseDouble(itm_latitude) + "," 
+						+ Double.parseDouble(itm_longitude);
+			
+		    radioBusqueda = Double.parseDouble(mapActivity.getString("radioBusqueda"));
 		}
-		radioBusqueda = Double.parseDouble(mapActivity.getString("radioBusqueda"));
-		 		
+		else if (id==2)
+		{		
+			rta_nombre = mapActivity.getString("rta_nombre");
+			rta_promedio = mapActivity.getString("rta_promedio");
+			rta_distancia = mapActivity.getString("rta_distancia");
+			rta_duracion = mapActivity.getString("rta_duracion");
+			rta_coordenadas = mapActivity.getString("rta_coordenadas");
+			rta_mode = mapActivity.getString("rta_mode");
+			radioBusqueda = Double.parseDouble(mapActivity.getString("distMaxima"));
+		
+			//Divide coordenadas y nombre de la ruta
+			String delims = ",";
+			tokens = rta_coordenadas.split(delims);
+			tokensNombre = rta_nombre.split(delims);
+					
+			int largo = (tokens.length)-1;
+			for(int i=0; i < largo; i++)
+			 {
+				 mapa.addMarker(new MarkerOptions()
+		        .position(new LatLng(Double.parseDouble(tokens[i]), Double.parseDouble(tokens[i+1])))
+		        .title(String.valueOf(rta_nombre))
+		        .snippet("Average:"+rta_promedio));
+				 
+				mapa.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
+				
+				waypoints = waypoints + "|" + tokens[i] + "," + tokens[i+1];
+							    
+				i++;
+			 }	
+		}
+		
+		//Dibujo ruta entre mas de 2 puntos
+		String url = getMapsApiDirectionsUrl(waypoints);
+	    ReadTask downloadTask = new ReadTask();
+	    downloadTask.execute(url);
+		
 		// Instantiates a new CircleOptions object and defines the center and radius
 		CircleOptions circleOptions = new CircleOptions();
 		// Indico las coordenadas del centro y el radio en metros
@@ -126,7 +162,7 @@ implements android.location.LocationListener, OnClickListener
 		circleOptions.strokeWidth((float) 2.0);
 		// Get back the mutable Circle
 		Circle circle = mapa.addCircle(circleOptions);
-						
+		
 		mapa.setOnMarkerClickListener(new OnMarkerClickListener() {
 			public boolean onMarkerClick(Marker marker) {
 				Toast.makeText(	MapActivity.this,marker.getTitle(), 0);
@@ -143,7 +179,7 @@ implements android.location.LocationListener, OnClickListener
 	    Criteria c = new Criteria();
 	    //obtiene el mejor proveedor en función del criterio asignado
 	    //ACCURACY_FINE(La mejor presicion)--ACCURACY_COARSE(PRESISION MEDIA)
-	    c.setAccuracy(Criteria.ACCURACY_COARSE);
+	    c.setAccuracy(Criteria.ACCURACY_FINE);
 	    //Indica si es necesaria la altura por parte del proveedor
 	    c.setAltitudeRequired(false);
 	    provider = handle.getBestProvider(c, true);
@@ -196,7 +232,7 @@ implements android.location.LocationListener, OnClickListener
 	}
 	private String getMapsApiDirectionsUrl(String waypoints) {
 	    String sensor = "sensor=false";
-	    String params = waypoints + "&" + sensor;
+	    String params = waypoints + "&" + "mode=" + rta_mode+ "&" + sensor;
 	    String output = "json";
 	    String url = "https://maps.googleapis.com/maps/api/directions/"
 	        + output + "?" + params;
