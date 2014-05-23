@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.maps.model.LatLng;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -19,6 +20,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -54,7 +56,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.find_activity);
-
+			Log.e("token", "estoy en find");
 			txtUsuario = (TextView)findViewById(R.id.txtUsuario);
 			lista = (ListView)findViewById(R.id.lista);
 			
@@ -64,16 +66,18 @@ public class FindActivity extends Activity implements android.location.LocationL
 			Bundle find = getIntent().getExtras();
 			usuario = find.getString("user");
 			txtUsuario.setText(usuario);
-
+			Log.e("token", "estoy en find" + usuario);
 			// Parametros forsados por el momento
 			categoria = "1";
 			radioBusqueda = "5";
 			mode = "driving";
-
+			Log.e("token", "antes Ub" + usuario);
 			loc = getMiUbicacion();
+			Log.e("token", "despues get Ub" + loc);
 			latitud = String.valueOf(loc.getLatitude());
+			Log.e("token", "despues get Latitud Ub" + usuario);
 			longitud = String.valueOf(loc.getLongitude());
-
+			Log.e("token", "despues Ub" + usuario);
 			params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("latitud",latitud));
 			params.add(new BasicNameValuePair("longitud",longitud));
@@ -94,6 +98,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 				{
 					try
 					{
+						Log.e("token", "THREAD");
 						res = enviar.enviarPost(params, php);
 						JSONArray jsonArray = new JSONArray(res);
 						
@@ -211,12 +216,12 @@ public class FindActivity extends Activity implements android.location.LocationL
 		public Location getMiUbicacion()
 		{
 			//Llamo al servico de localizacion	        
-		    handle = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+		    handle = (LocationManager)getSystemService(LOCATION_SERVICE);
 		    //Clase criteria permite decidir mejor poveedor de posicion
 		    Criteria c = new Criteria();
 		    //obtiene el mejor proveedor en función del criterio asignado
 		    //ACCURACY_FINE(La mejor presicion)--ACCURACY_COARSE(PRESISION MEDIA)
-		    c.setAccuracy(Criteria.ACCURACY_FINE);
+		    c.setAccuracy(Criteria.ACCURACY_COARSE);
 		    //Indica si es necesaria la altura por parte del proveedor
 		    c.setAltitudeRequired(false);
 		    provider = handle.getBestProvider(c, true);
@@ -225,7 +230,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 		    handle.requestLocationUpdates(provider, 60000, 5,this);
 		    //Obtiene la ultima posicion conocida por el proveedor
 		    loc = handle.getLastKnownLocation(provider);
-
+		  
 		    return loc;
 		}
 

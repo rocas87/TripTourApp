@@ -3,6 +3,7 @@ package com.example.triptour;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -33,7 +34,7 @@ public class HomeActivity extends Activity implements OnClickListener {
 		
 		Bundle home = getIntent().getExtras();
 		user = home.getString("usr_nick");
-		
+		Log.e("token", user);
 		usuario.setText(user);
 				
 		btnFind.setOnClickListener(this);
@@ -51,6 +52,7 @@ public class HomeActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		switch(arg0.getId()){
 		case R.id.btnFind:
+			Log.e("token", "estoy home" + user);
 			Intent find = new Intent(this,FindActivity.class);
 			find.putExtra("user", user);
 			startActivity(find);

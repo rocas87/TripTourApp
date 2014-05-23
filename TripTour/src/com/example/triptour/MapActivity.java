@@ -39,7 +39,7 @@ implements android.location.LocationListener, OnClickListener
 	Location loc;
 	LatLng MiUbicacion, coord;
 	String itm_nombre, itm_direccion, itm_promedio, itm_distancia, itm_latitude, itm_longitude, waypoints,
-	rta_nombre, rta_promedio, rta_distancia, rta_duracion, rta_coordenadas, rta_mode;
+	rta_nombre, rta_promedio, rta_distancia, rta_duracion, rta_coordenadas, rta_mode, promedio_itm;
 	Marker itemMarker;
 	//double itm_latitud, itm_longitud;
 	ArrayList<String> nombre = new ArrayList<String>();
@@ -49,9 +49,8 @@ implements android.location.LocationListener, OnClickListener
 	ArrayList<String> latitude = new ArrayList<String>();
 	ArrayList<String> longitude = new ArrayList<String>();
 	Double radioBusqueda;
-	int id;
-	String[] tokens;
-	String[] tokensNombre;
+	int id, indice;
+	String[] tokens, tokensNombre, tokensPromedio;
 	
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -127,24 +126,27 @@ implements android.location.LocationListener, OnClickListener
 			rta_coordenadas = mapActivity.getString("rta_coordenadas");
 			rta_mode = mapActivity.getString("rta_mode");
 			radioBusqueda = Double.parseDouble(mapActivity.getString("distMaxima"));
-		
+			promedio_itm = mapActivity.getString("promedio_itm");
+			
 			//Divide coordenadas y nombre de la ruta
 			String delims = ",";
 			tokens = rta_coordenadas.split(delims);
 			tokensNombre = rta_nombre.split(delims);
+			tokensPromedio = promedio_itm.split(delims);
 					
-			int largo = (tokens.length)-1;
-			for(int i=0; i < largo; i++)
+			indice = 0;
+			for(int i=0; i < (tokens.length)-1; i++)
 			 {
 				 mapa.addMarker(new MarkerOptions()
 		        .position(new LatLng(Double.parseDouble(tokens[i]), Double.parseDouble(tokens[i+1])))
-		        .title(String.valueOf(rta_nombre))
-		        .snippet("Average:"+rta_promedio));
+		        .title(String.valueOf(tokensNombre[indice]))
+		        .snippet("Average:"+tokensPromedio[indice]));
 				 
 				mapa.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
 				
 				waypoints = waypoints + "|" + tokens[i] + "," + tokens[i+1];
-							    
+				
+				indice++;
 				i++;
 			 }	
 		}
@@ -179,7 +181,7 @@ implements android.location.LocationListener, OnClickListener
 	    Criteria c = new Criteria();
 	    //obtiene el mejor proveedor en función del criterio asignado
 	    //ACCURACY_FINE(La mejor presicion)--ACCURACY_COARSE(PRESISION MEDIA)
-	    c.setAccuracy(Criteria.ACCURACY_FINE);
+	    c.setAccuracy(Criteria.ACCURACY_COARSE);
 	    //Indica si es necesaria la altura por parte del proveedor
 	    c.setAltitudeRequired(false);
 	    provider = handle.getBestProvider(c, true);
