@@ -3,6 +3,7 @@ package com.example.triptour;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -74,6 +75,8 @@ public class HomeActivity extends Activity implements OnClickListener {
 		case R.id.btnClima:
 			break;
 		case R.id.btnCambio:
+			Intent changeMoney = new Intent(this,ChangeMoneyActivity.class);
+			startActivity(changeMoney);
 			break;
 		case R.id.btnConfiguracion:
 			break;

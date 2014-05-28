@@ -84,7 +84,7 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 			params.add(new BasicNameValuePair("tiempoRecorrido",tiempoRecorrido));
 			params.add(new BasicNameValuePair("mode",mode));
 			
-			php = "/servtriptour/recomendacion_ruta.php";
+			php = "/servtriptour/mula.php";
 			
 			pDialog = new ProgressDialog(this);
 			pDialog.setMessage("Buscando...");
@@ -103,7 +103,29 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 						 for (int i = 0; i < jsonArray.length(); i++) 
 						 {
 							JSONObject jsonObject = jsonArray.getJSONObject(i);
-						
+							if (jsonObject.getString("resultado")=="nada")
+							{
+								runOnUiThread
+								 (
+										 new Runnable()
+										 {
+											 @Override
+											 public void run() 
+											 {
+												 Vibrator vibrator =(Vibrator)getSystemService
+														 (Context.VIBRATOR_SERVICE);
+												 vibrator.vibrate(200);
+												 Toast.makeText(RecomendationRouteActivity.this,"No se encontraron rutas disponibles",
+														 Toast.LENGTH_LONG).show();
+												 pDialog.dismiss();
+											 }
+										 }
+								 );
+							}
+							else
+							{
+								
+							
 							nombre.add(jsonObject.getString("rta_nombre"));
 							promedio.add(jsonObject.getString("rta_promedio"));
 							distancia.add(jsonObject.getString("rta_distancia"));
@@ -125,6 +147,7 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 									 }
 								 }
 							 );
+							}
 						 }
 					}
 					catch (Exception e)

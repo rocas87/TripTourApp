@@ -35,5 +35,9 @@
     <string name="average">Average:</string>
     <string name="dist">Distance (Km):</string>
     <string name="map">Map</string>
+    <string name="origen">Origin:</string>
+    <string name="destino">destination</string>
+    <string name="valor">Result:</string>
+    <string name="monto">Amount</string>
 
 </resources>

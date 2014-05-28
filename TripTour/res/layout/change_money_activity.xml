@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/txtorige"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/origen" />
+
+    <TextView
+        android:id="@+id/txtdestino"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtorige"
+        android:layout_below="@+id/txtorige"
+        android:layout_marginTop="14dp"
+        android:text="@string/destino" />
+
+    <TextView
+        android:id="@+id/txtvalor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtdestino"
+        android:layout_below="@+id/txtdestino"
+        android:layout_marginTop="54dp"
+        android:text="@string/valor" />
+
+    <TextView
+        android:id="@+id/txtmonto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtCambio"
+        android:layout_alignLeft="@+id/txtdestino"
+        android:layout_marginBottom="16dp"
+        android:text="@string/monto" />
+
+   
+
+    <Button
+        android:id="@+id/btnCambio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtCambio"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/change" />
+
+    <TextView
+        android:id="@+id/txtCambio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/txtvalor"
+        android:layout_centerHorizontal="true"
+        android:text="@string/change"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/edtCantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtCambio"
+        android:layout_alignLeft="@+id/txtCambio"
+        android:ems="10"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
+
+</RelativeLayout>
