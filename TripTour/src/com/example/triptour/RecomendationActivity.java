@@ -19,7 +19,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -71,13 +70,11 @@ public class RecomendationActivity extends Activity implements android.location.
 			radioBusqueda = "10";
 			mode = "driving";
 
-			Log.e("token", "antes Ub" + usuario);
+			//Obtengo latitud y longitud
 			loc = getMiUbicacion();
-			Log.e("token", "despues get Ub" + loc);
 			latitud = String.valueOf(loc.getLatitude());
-			Log.e("token", "despues get Latitud Ub" + usuario);
 			longitud = String.valueOf(loc.getLongitude());
-			Log.e("token", "despues Ub" + usuario);
+			
 
 			params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("usuario",usuario));
@@ -86,7 +83,7 @@ public class RecomendationActivity extends Activity implements android.location.
 			params.add(new BasicNameValuePair("categoria",categoria));
 			params.add(new BasicNameValuePair("radioBusqueda",radioBusqueda));
 
-			php = "/servtriptour/recomendacion.php";
+			php = "/servtriptour/recomendacionV2.php";
 			
 			pDialog = new ProgressDialog(this);
 			pDialog.setMessage("Buscando...");

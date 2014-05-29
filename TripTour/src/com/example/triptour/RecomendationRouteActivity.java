@@ -20,7 +20,6 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -84,7 +83,7 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 			params.add(new BasicNameValuePair("tiempoRecorrido",tiempoRecorrido));
 			params.add(new BasicNameValuePair("mode",mode));
 			
-			php = "/servtriptour/mula.php";
+			php = "/servtriptour/recomendacion_rutaV2.php";
 			
 			pDialog = new ProgressDialog(this);
 			pDialog.setMessage("Buscando...");

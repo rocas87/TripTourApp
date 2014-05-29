@@ -2,7 +2,6 @@ package com.example.triptour;
 
 import java.text.DecimalFormat;
 
-import android.R.integer;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.app.Activity;
+import android.app.ProgressDialog;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -30,7 +30,8 @@ public class ChangeMoneyActivity extends Activity implements OnClickListener{
 	double total, cant;
 	Editable data;
 	String [] tokenResultado, tokenMoneda;
-	DecimalFormat decimales = new DecimalFormat("0.00"); 
+	DecimalFormat decimales = new DecimalFormat("0.00");
+	ProgressDialog pDialog;
 	
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -72,6 +73,9 @@ public class ChangeMoneyActivity extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
+		pDialog = new ProgressDialog(this);
+		pDialog.setMessage("Calculando...");
+		pDialog.show();
 		Thread nt = new Thread()
 		{
 			public void run()
@@ -84,6 +88,7 @@ public class ChangeMoneyActivity extends Activity implements OnClickListener{
 						public void run()
 						{
 							txtCambio.setText(valor);
+							pDialog.dismiss();
 						}
 					});
 				}

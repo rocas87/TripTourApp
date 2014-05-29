@@ -9,7 +9,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.google.android.gms.location.LocationClient;
-import com.google.android.gms.maps.model.LatLng;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -56,7 +55,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 		protected void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			setContentView(R.layout.find_activity);
-			Log.e("token", "estoy en find");
+			
 			txtUsuario = (TextView)findViewById(R.id.txtUsuario);
 			lista = (ListView)findViewById(R.id.lista);
 			
@@ -71,13 +70,11 @@ public class FindActivity extends Activity implements android.location.LocationL
 			categoria = "1";
 			radioBusqueda = "5";
 			mode = "driving";
-			Log.e("token", "antes Ub" + usuario);
+			
 			loc = getMiUbicacion();
-			Log.e("token", "despues get Ub" + loc);
 			latitud = String.valueOf(loc.getLatitude());
-			Log.e("token", "despues get Latitud Ub" + usuario);
 			longitud = String.valueOf(loc.getLongitude());
-			Log.e("token", "despues Ub" + usuario);
+			
 			params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("latitud",latitud));
 			params.add(new BasicNameValuePair("longitud",longitud));
