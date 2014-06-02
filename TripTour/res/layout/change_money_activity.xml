@@ -14,44 +14,6 @@
         android:text="@string/origen" />
 
     <TextView
-        android:id="@+id/txtdestino"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txtorige"
-        android:layout_below="@+id/txtorige"
-        android:layout_marginTop="14dp"
-        android:text="@string/destino" />
-
-    <TextView
-        android:id="@+id/txtvalor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txtdestino"
-        android:layout_below="@+id/txtdestino"
-        android:layout_marginTop="54dp"
-        android:text="@string/valor" />
-
-    <TextView
-        android:id="@+id/txtmonto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/txtCambio"
-        android:layout_alignLeft="@+id/txtdestino"
-        android:layout_marginBottom="16dp"
-        android:text="@string/monto" />
-
-   
-
-    <Button
-        android:id="@+id/btnCambio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/txtCambio"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="@string/change" />
-
-    <TextView
         android:id="@+id/txtCambio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -59,6 +21,55 @@
         android:layout_centerHorizontal="true"
         android:text="@string/change"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Spinner
+        android:id="@+id/origen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/edtCantidad"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/txtdestino"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtorige"
+        android:layout_below="@+id/origen"
+        android:text="@string/destino" />
+
+    <Spinner
+        android:id="@+id/destino"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/origen"
+        android:layout_below="@+id/origen" />
+
+    <Button
+        android:id="@+id/btnCambio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtvalor"
+        android:layout_below="@+id/destino"
+        android:layout_marginTop="92dp"
+        android:text="@string/change" />
+
+    <TextView
+        android:id="@+id/txtvalor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btnCambio"
+        android:layout_alignLeft="@+id/txtdestino"
+        android:layout_marginBottom="60dp"
+        android:text="@string/valor" />
+
+    <TextView
+        android:id="@+id/txtmonto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/txtCambio"
+        android:layout_alignLeft="@+id/txtvalor"
+        android:layout_marginBottom="15dp"
+        android:text="@string/monto" />
 
     <EditText
         android:id="@+id/edtCantidad"

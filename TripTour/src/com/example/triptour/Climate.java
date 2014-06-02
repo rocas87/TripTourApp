@@ -75,12 +75,12 @@ public class Climate extends Activity {
 		if(region.equals("Metropolitan"))
 		{
 			Log.e("token","meteo1");
-			return "http://www.meteochile.cl/reg05m.php/";
+			return "http://www.meteochile.cl/reg05m.php";
 		}
 		else
 		{
 			Log.e("token","meteo2");
-			return "http://www.meteochile.cl/";
+			return "http://www.meteochile.cl";
 		}
 		
 	}
