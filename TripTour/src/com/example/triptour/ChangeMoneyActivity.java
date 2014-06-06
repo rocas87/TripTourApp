@@ -37,7 +37,7 @@ public class ChangeMoneyActivity extends Activity implements OnClickListener{
 	double total, cant;
 	Editable data;
 	String [] tokenResultado, tokenMoneda, tokenOrigen, tokenDestino;
-	DecimalFormat decimales = new DecimalFormat("0.000");
+	DecimalFormat decimales = new DecimalFormat("0.00");
 	ProgressDialog pDialog;
 	private Spinner spOrigen, spDestino;
 	private List<String> lista = new ArrayList<String>();
