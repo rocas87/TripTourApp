@@ -14,7 +14,7 @@ android:text="@string/find"
 android:textSize="22sp" />
  
 <Spinner
- android:id="@+id/origen"
+ android:id="@+id/spCategoria"
  android:layout_width="wrap_content"
  android:layout_height="wrap_content"
  />

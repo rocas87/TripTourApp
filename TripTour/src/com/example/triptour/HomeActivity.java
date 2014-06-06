@@ -10,7 +10,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -30,8 +29,6 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class HomeActivity extends android.support.v4.app.FragmentActivity 
@@ -46,11 +43,11 @@ implements android.location.LocationListener, OnClickListener
 	ProgressDialog pd;
 	GoogleMap mapa;
 	LatLng MiUbicacion;
-	ArrayAdapter<String> adaptadorOrigen;
-	private Spinner spOrigen;
-	private List<String> lista = new ArrayList<String>();
-	LayoutInflater li;
-	View prompt;
+	ArrayAdapter<String> adaptadorCategoria;
+	private Spinner spCategoria;
+	private List<String> categorias = new ArrayList<String>();
+	LayoutInflater liFind;
+	View promptFind;
 	
 	// TODO Auto-generated method stub
 	@Override
@@ -68,13 +65,13 @@ implements android.location.LocationListener, OnClickListener
 		
 		centrarMapa();
 		
-		lista.add("Bar");
-		lista.add("Zoologico");
-		lista.add("Museo");
-		lista.add("Parques");
-		lista.add("Parque de diversiones");
-		lista.add("Deportes");
-		lista.add("Restorant");
+		categorias.add("Bar");
+		categorias.add("Zoologico");
+		categorias.add("Museo");
+		categorias.add("Parques");
+		categorias.add("Parque de diversiones");
+		categorias.add("Deportes");
+		categorias.add("Restorant");
 	}
 	
 	@Override
@@ -139,24 +136,25 @@ implements android.location.LocationListener, OnClickListener
 	private void pomptFind() 
 	{
 		// TODO Auto-generated method stub
-		li = LayoutInflater.from(this);
-		prompt = li.inflate(R.layout.prompt_find_activity, null);
+		liFind = LayoutInflater.from(this);
+		promptFind = liFind.inflate(R.layout.prompt_find_activity, null);
 
-		spOrigen = (Spinner)findViewById(R.id.origen);
-		spOrigen = (Spinner)prompt.findViewById(R.id.origen);
-		adaptadorOrigen = new ArrayAdapter<String>
-			(this,android.R.layout.simple_spinner_item, lista);
-		adaptadorOrigen.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spOrigen.setAdapter(adaptadorOrigen);
+		spCategoria = (Spinner)findViewById(R.id.spCategoria);
+		spCategoria = (Spinner)promptFind.findViewById(R.id.spCategoria);
+		adaptadorCategoria = new ArrayAdapter<String>
+			(this,android.R.layout.simple_spinner_item, categorias);
+		adaptadorCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spCategoria.setAdapter(adaptadorCategoria);
 		
-		spOrigen.setOnItemSelectedListener(new OnItemSelectedListener()
+		spCategoria.setOnItemSelectedListener(new OnItemSelectedListener()
 		{
 
 			@Override
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				// TODO Auto-generated method stub
-				categoria = arg2++; 
+				categoria = arg2+1;
+				Log.e("token", String.valueOf(categoria));
 			}
 
 			@Override
@@ -168,7 +166,7 @@ implements android.location.LocationListener, OnClickListener
 		});
 		
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setView(prompt);
+		alertDialogBuilder.setView(promptFind);
 		
 		// Mostramos el mensaje del cuadro de dialogo
 		alertDialogBuilder
@@ -197,8 +195,6 @@ implements android.location.LocationListener, OnClickListener
 		find.putExtra("user", user);
 		find.putExtra("categoria", String.valueOf(categoria));
 		startActivity(find);
-		
-		
 	}
 	public void centrarMapa()
 	{
