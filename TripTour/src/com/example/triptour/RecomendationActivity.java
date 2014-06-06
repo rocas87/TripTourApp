@@ -61,12 +61,13 @@ public class RecomendationActivity extends Activity implements android.location.
 			btnMapa = (Button)findViewById(R.id.btnmap);
 			btnMapa.setOnClickListener(this);
 			
-			Bundle find = getIntent().getExtras();
-			usuario = find.getString("user");
+			Bundle recomendation = getIntent().getExtras();
+			usuario = recomendation.getString("user");
+			categoria = recomendation.getString("categoria");
+			
 			txtUsuario.setText(usuario);
 
 			// Parametros forsados por el momento
-			categoria = "1";
 			radioBusqueda = "10";
 			mode = "driving";
 

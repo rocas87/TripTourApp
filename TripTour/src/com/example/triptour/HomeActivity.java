@@ -35,7 +35,7 @@ public class HomeActivity extends android.support.v4.app.FragmentActivity
 implements android.location.LocationListener, OnClickListener
 {
 	String user;
-	int categoria;
+	int categoriaFind, categoriaRecomendation;
 	Location loc;
 	LocationClient mLocationClient;
 	LocationManager handle;
@@ -46,8 +46,8 @@ implements android.location.LocationListener, OnClickListener
 	ArrayAdapter<String> adaptadorCategoria;
 	private Spinner spCategoria;
 	private List<String> categorias = new ArrayList<String>();
-	LayoutInflater liFind;
-	View promptFind;
+	LayoutInflater liFind, liRecomendation;
+	View promptFind, promptRecomendation;
 	
 	// TODO Auto-generated method stub
 	@Override
@@ -89,9 +89,7 @@ implements android.location.LocationListener, OnClickListener
 	            return true;
 	            
 	        case R.id.recomendation:
-	        	Intent recomendation = new Intent(this,RecomendationActivity.class);
-				recomendation.putExtra("user", user);
-				startActivity(recomendation);
+	        	promptRecomendation();
 	            return true;
 	            
 	        case R.id.recomendation_route:
@@ -153,8 +151,7 @@ implements android.location.LocationListener, OnClickListener
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 				// TODO Auto-generated method stub
-				categoria = arg2+1;
-				Log.e("token", String.valueOf(categoria));
+				categoriaFind = arg2+1;
 			}
 
 			@Override
@@ -193,9 +190,76 @@ implements android.location.LocationListener, OnClickListener
 	{
 		Intent find = new Intent(this,FindActivity.class);
 		find.putExtra("user", user);
-		find.putExtra("categoria", String.valueOf(categoria));
+		find.putExtra("categoria", String.valueOf(categoriaFind));
 		startActivity(find);
 	}
+	
+	private void promptRecomendation() 
+	{
+		// TODO Auto-generated method stub
+		liRecomendation = LayoutInflater.from(this);
+		promptRecomendation = liRecomendation.inflate(R.layout.prompt_recomendation_activity, null);
+
+		spCategoria = (Spinner)findViewById(R.id.spCategoria);
+		spCategoria = (Spinner)promptRecomendation.findViewById(R.id.spCategoria);
+		adaptadorCategoria = new ArrayAdapter<String>
+			(this,android.R.layout.simple_spinner_item, categorias);
+		adaptadorCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spCategoria.setAdapter(adaptadorCategoria);
+		
+		spCategoria.setOnItemSelectedListener(new OnItemSelectedListener()
+		{
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				categoriaRecomendation = arg2+1;
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setView(promptRecomendation);
+		
+		// Mostramos el mensaje del cuadro de dialogo
+		alertDialogBuilder
+		.setCancelable(false)
+		.setPositiveButton("OK", new DialogInterface.OnClickListener() 
+		{
+			public void onClick(DialogInterface dialog,int id) 
+			{
+				// Rescatamos el nombre del EditText y lo mostramos por pantalla
+				recomendation();
+			}
+		})
+		.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() 
+		{
+			public void onClick(DialogInterface dialog,int id) 
+			{
+				// Cancelamos el cuadro de dialogo
+				dialog.cancel();
+			}
+		});
+		// Creamos un AlertDialog y lo mostramos
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	}
+
+	public void recomendation()
+	{
+		Intent recomendation = new Intent(this,RecomendationActivity.class);
+		recomendation.putExtra("user", user);
+		recomendation.putExtra("categoria", String.valueOf(categoriaRecomendation));
+		startActivity(recomendation);
+	}
+	
 	public void centrarMapa()
 	{
 		//Llamo al servico de localizacion	        
