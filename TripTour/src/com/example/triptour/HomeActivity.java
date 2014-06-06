@@ -1,5 +1,8 @@
 package com.example.triptour;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -8,8 +11,10 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
@@ -17,16 +22,23 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 public class HomeActivity extends android.support.v4.app.FragmentActivity 
 implements android.location.LocationListener, OnClickListener
 {
 	String user;
+	int categoria;
 	Location loc;
 	LocationClient mLocationClient;
 	LocationManager handle;
@@ -34,6 +46,11 @@ implements android.location.LocationListener, OnClickListener
 	ProgressDialog pd;
 	GoogleMap mapa;
 	LatLng MiUbicacion;
+	ArrayAdapter<String> adaptadorOrigen;
+	private Spinner spOrigen;
+	private List<String> lista = new ArrayList<String>();
+	LayoutInflater li;
+	View prompt;
 	
 	// TODO Auto-generated method stub
 	@Override
@@ -50,6 +67,14 @@ implements android.location.LocationListener, OnClickListener
 		mapa.setMyLocationEnabled(true);
 		
 		centrarMapa();
+		
+		lista.add("Bar");
+		lista.add("Zoologico");
+		lista.add("Museo");
+		lista.add("Parques");
+		lista.add("Parque de diversiones");
+		lista.add("Deportes");
+		lista.add("Restorant");
 	}
 	
 	@Override
@@ -62,10 +87,8 @@ implements android.location.LocationListener, OnClickListener
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle presses on the action bar items
 	    switch (item.getItemId()) {
-	        case R.id.find:
-				Intent find = new Intent(this,FindActivity.class);
-				find.putExtra("user", user);
-				startActivity(find);
+	        case R.id.find:	    		
+	        	pomptFind();
 	            return true;
 	            
 	        case R.id.recomendation:
@@ -113,6 +136,70 @@ implements android.location.LocationListener, OnClickListener
 	    return false;
 	}
 
+	private void pomptFind() 
+	{
+		// TODO Auto-generated method stub
+		li = LayoutInflater.from(this);
+		prompt = li.inflate(R.layout.prompt_find_activity, null);
+
+		spOrigen = (Spinner)findViewById(R.id.origen);
+		spOrigen = (Spinner)prompt.findViewById(R.id.origen);
+		adaptadorOrigen = new ArrayAdapter<String>
+			(this,android.R.layout.simple_spinner_item, lista);
+		adaptadorOrigen.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spOrigen.setAdapter(adaptadorOrigen);
+		
+		spOrigen.setOnItemSelectedListener(new OnItemSelectedListener()
+		{
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				categoria = arg2++; 
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setView(prompt);
+		
+		// Mostramos el mensaje del cuadro de dialogo
+		alertDialogBuilder
+		.setCancelable(false)
+		.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog,int id) {
+		// Rescatamos el nombre del EditText y lo mostramos por pantalla
+			find();
+		}
+		})
+		.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog,int id) {
+		// Cancelamos el cuadro de dialogo
+		dialog.cancel();
+		}
+		});
+		// Creamos un AlertDialog y lo mostramos
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+		
+	}
+
+	public void find()
+	{
+		Intent find = new Intent(this,FindActivity.class);
+		find.putExtra("user", user);
+		find.putExtra("categoria", String.valueOf(categoria));
+		startActivity(find);
+		
+		
+	}
 	public void centrarMapa()
 	{
 		//Llamo al servico de localizacion	        

@@ -64,10 +64,11 @@ public class FindActivity extends Activity implements android.location.LocationL
 			
 			Bundle find = getIntent().getExtras();
 			usuario = find.getString("user");
+			categoria = find.getString("categoria");
+			
 			txtUsuario.setText(usuario);
-			Log.e("token", "estoy en find" + usuario);
 			// Parametros forsados por el momento
-			categoria = "1";
+			
 			radioBusqueda = "5";
 			mode = "driving";
 			
