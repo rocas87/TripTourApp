@@ -20,7 +20,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,14 +27,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class HomeActivity extends android.support.v4.app.FragmentActivity 
 implements android.location.LocationListener, OnClickListener
 {
-	String user;
-	int categoriaFind, categoriaRecomendation;
+	String user, latLong, hora, minuto;
+	int categoriaFind, transporteFind, categoriaRecomendation, transporteRecomendation, transporteRoute;
 	Location loc;
 	LocationClient mLocationClient;
 	LocationManager handle;
@@ -43,12 +43,14 @@ implements android.location.LocationListener, OnClickListener
 	ProgressDialog pd;
 	GoogleMap mapa;
 	LatLng MiUbicacion;
-	ArrayAdapter<String> adaptadorCategoria;
-	private Spinner spCategoria;
+	ArrayAdapter<String> adaptadorCategoria, adaptadorTransporte;
+	private Spinner spCategoria, spTransporte;
 	private List<String> categorias = new ArrayList<String>();
-	LayoutInflater liFind, liRecomendation;
-	View promptFind, promptRecomendation;
-	
+	private List<String> transporte = new ArrayList<String>();
+	LayoutInflater liFind, liRecomendation, liRecomendationRoute;
+	View promptFind, promptRecomendation, promptRecomendationRoute;
+	EditText duracion;
+	String [] tokenDuracion;
 	// TODO Auto-generated method stub
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ implements android.location.LocationListener, OnClickListener
 		mapa.setMyLocationEnabled(true);
 		
 		centrarMapa();
-		
+		//Categorias disponibles
 		categorias.add("Bar");
 		categorias.add("Zoologico");
 		categorias.add("Museo");
@@ -72,6 +74,9 @@ implements android.location.LocationListener, OnClickListener
 		categorias.add("Parque de diversiones");
 		categorias.add("Deportes");
 		categorias.add("Restorant");
+		//Tipos de transporte
+		transporte.add("Driving/Automovil");
+		transporte.add("Walking/Caminando");
 	}
 	
 	@Override
@@ -93,10 +98,8 @@ implements android.location.LocationListener, OnClickListener
 	            return true;
 	            
 	        case R.id.recomendation_route:
-				Intent recomendationRoute = new Intent(this,RecomendationRouteActivity.class);
-				recomendationRoute.putExtra("user", user);
-				startActivity(recomendationRoute);
-				return true;
+	        	promptRecomendationRoute();
+	            return true;
 
 	        case R.id.evaluacion:
 	        	return true;
@@ -107,15 +110,12 @@ implements android.location.LocationListener, OnClickListener
 				startActivity(intent);
 				return true;
 
-	        case R.id.clima:
-	        	pd = new ProgressDialog(this);
-	        	pd.setMessage("Buscando ubicacion para pronostico por zona....");
-				pd.show();
-	        	loc = getMiUbicacion();
+	        case R.id.clima:				
+				loc = getMiUbicacion();
 				Climate cl = new Climate();
-				pd.dismiss();
+				latLong = cl.climaURL(String.valueOf(loc.getLatitude()), String.valueOf(loc.getLongitude()));
 				Intent clima = new Intent(Intent.ACTION_VIEW);
-				clima.setData(Uri.parse(cl.climaURL(String.valueOf(loc.getLatitude()), String.valueOf(loc.getLongitude()))));
+				clima.setData(Uri.parse(latLong));
 				startActivity(clima);
 				return true;
 
@@ -137,12 +137,17 @@ implements android.location.LocationListener, OnClickListener
 		liFind = LayoutInflater.from(this);
 		promptFind = liFind.inflate(R.layout.prompt_find_activity, null);
 
-		spCategoria = (Spinner)findViewById(R.id.spCategoria);
 		spCategoria = (Spinner)promptFind.findViewById(R.id.spCategoria);
 		adaptadorCategoria = new ArrayAdapter<String>
 			(this,android.R.layout.simple_spinner_item, categorias);
 		adaptadorCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spCategoria.setAdapter(adaptadorCategoria);
+		
+		spTransporte = (Spinner)promptFind.findViewById(R.id.spTransporte);
+		adaptadorTransporte = new ArrayAdapter<String>
+			(this,android.R.layout.simple_spinner_item, transporte);
+		adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spTransporte.setAdapter(adaptadorTransporte);
 		
 		spCategoria.setOnItemSelectedListener(new OnItemSelectedListener()
 		{
@@ -158,6 +163,23 @@ implements android.location.LocationListener, OnClickListener
 			public void onNothingSelected(AdapterView<?> arg0) {
 				// TODO Auto-generated method stub
 				
+			}
+			
+		});
+		
+		spTransporte.setOnItemSelectedListener(new OnItemSelectedListener()
+		{
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				transporteFind = arg2+1;
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub	
 			}
 			
 		});
@@ -191,6 +213,7 @@ implements android.location.LocationListener, OnClickListener
 		Intent find = new Intent(this,FindActivity.class);
 		find.putExtra("user", user);
 		find.putExtra("categoria", String.valueOf(categoriaFind));
+		find.putExtra("transporte", String.valueOf(transporteFind));
 		startActivity(find);
 	}
 	
@@ -207,6 +230,12 @@ implements android.location.LocationListener, OnClickListener
 		adaptadorCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spCategoria.setAdapter(adaptadorCategoria);
 		
+		spTransporte = (Spinner)promptRecomendation.findViewById(R.id.spTransporte);
+		adaptadorTransporte = new ArrayAdapter<String>
+			(this,android.R.layout.simple_spinner_item, transporte);
+		adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spTransporte.setAdapter(adaptadorTransporte);
+		
 		spCategoria.setOnItemSelectedListener(new OnItemSelectedListener()
 		{
 
@@ -221,6 +250,23 @@ implements android.location.LocationListener, OnClickListener
 			public void onNothingSelected(AdapterView<?> arg0) {
 				// TODO Auto-generated method stub
 				
+			}
+			
+		});
+		
+		spTransporte.setOnItemSelectedListener(new OnItemSelectedListener()
+		{
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				transporteRecomendation = arg2+1;
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub	
 			}
 			
 		});
@@ -257,7 +303,79 @@ implements android.location.LocationListener, OnClickListener
 		Intent recomendation = new Intent(this,RecomendationActivity.class);
 		recomendation.putExtra("user", user);
 		recomendation.putExtra("categoria", String.valueOf(categoriaRecomendation));
+		recomendation.putExtra("transporte", String.valueOf(transporteRecomendation));
 		startActivity(recomendation);
+	}
+	
+	private void promptRecomendationRoute() 
+	{
+		// TODO Auto-generated method stub
+		liRecomendationRoute = LayoutInflater.from(this);
+		promptRecomendationRoute = liRecomendationRoute.inflate(R.layout.prompt_recomendation_route_activity, null);
+		
+		spTransporte = (Spinner)promptRecomendationRoute.findViewById(R.id.spTransporte);
+		adaptadorTransporte = new ArrayAdapter<String>
+			(this,android.R.layout.simple_spinner_item, transporte);
+		adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spTransporte.setAdapter(adaptadorTransporte);
+		
+		duracion = (EditText)promptRecomendationRoute.findViewById(R.id.duracion);
+		
+		spTransporte.setOnItemSelectedListener(new OnItemSelectedListener()
+		{
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				transporteRoute = arg2+1;
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub	
+			}
+			
+		});
+		
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setView(promptRecomendationRoute);
+		
+		// Mostramos el mensaje del cuadro de dialogo
+		alertDialogBuilder
+		.setCancelable(false)
+		.setPositiveButton("OK", new DialogInterface.OnClickListener() 
+		{
+			public void onClick(DialogInterface dialog,int id) 
+			{
+				// Rescatamos el nombre del EditText y lo mostramos por pantalla
+				tokenDuracion = (duracion.getText().toString()).split(":");
+				hora = tokenDuracion[0];
+				minuto = tokenDuracion[1];
+				recomendationRoute();
+			}
+		})
+		.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() 
+		{
+			public void onClick(DialogInterface dialog,int id) 
+			{
+				// Cancelamos el cuadro de dialogo
+				dialog.cancel();
+			}
+		});
+		// Creamos un AlertDialog y lo mostramos
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	}
+
+	public void recomendationRoute()
+	{
+		Intent recomendationRoute = new Intent(this,RecomendationRouteActivity.class);
+		recomendationRoute.putExtra("user", user);	
+		recomendationRoute.putExtra("transporte", String.valueOf(transporteRoute));
+		recomendationRoute.putExtra("hora", hora);
+		recomendationRoute.putExtra("minuto", minuto);
+		startActivity(recomendationRoute);
 	}
 	
 	public void centrarMapa()
@@ -289,6 +407,7 @@ implements android.location.LocationListener, OnClickListener
 		//Se mueve la camara a lo indicado anteriormente
 		mapa.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 	}
+	
 	@Override
 	public void onLocationChanged(Location location) {
 		// TODO Auto-generated method stub
@@ -312,6 +431,7 @@ implements android.location.LocationListener, OnClickListener
 		// TODO Auto-generated method stub
 		
 	}
+	
 	public Location getMiUbicacion()
 	{
 		//Llamo al servico de localizacion	        

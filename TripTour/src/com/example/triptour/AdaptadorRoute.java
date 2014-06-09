@@ -9,26 +9,26 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class AdaptadorTitulares extends ArrayAdapter {
+public class AdaptadorRoute extends ArrayAdapter {
 
 	Activity context;
 	ArrayList<String> nombre = new ArrayList<String>();
-	ArrayList<String> direccion = new ArrayList<String>();
 	ArrayList<String> promedio = new ArrayList<String>();
 	ArrayList<String> distancia = new ArrayList<String>();
-	String nom, dir, prom, dist, lat;
-	TextView name, address, average, distance;
+	ArrayList<String> duracion = new ArrayList<String>();
+	String nom, prom, dist, dur;
+	TextView name, average, distance, duration;
 	
 	
 	//@SuppressWarnings("unchecked")
-	public AdaptadorTitulares(Activity context, ArrayList<String> nombre, 
-			ArrayList<String> direccion, ArrayList<String> promedio, ArrayList<String> distancia) {
-		super(context, R.layout.adaptador_lista, nombre);
+	public AdaptadorRoute(Activity context, ArrayList<String> nombre, ArrayList<String> promedio, ArrayList<String> distancia,
+			ArrayList<String> duracion) {
+		super(context, R.layout.adaptador_route, nombre);
 		// TODO Auto-generated constructor stub
 		this.nombre = nombre;
-		this.direccion = direccion;
 		this.promedio = promedio;
 		this.distancia = distancia;
+		this.duracion = duracion;
 		this.context = context;
 	}
 
@@ -36,24 +36,24 @@ public class AdaptadorTitulares extends ArrayAdapter {
 	public View getView(int position, View convertView, ViewGroup paretn)
 	{
 		LayoutInflater inflater = context.getLayoutInflater();
-		View item = inflater.inflate(R.layout.adaptador_lista, null);
+		View item = inflater.inflate(R.layout.adaptador_route, null);
 		
 		nom = nombre.get(position).toString();
-		dir = direccion.get(position).toString();
 		prom = promedio.get(position).toString();
 		dist = distancia.get(position).toString();
+		dur = duracion.get(position).toString();
 		
 		name = (TextView)item.findViewById(R.id.nombre);
 		name.setText(nom);
-		
-		address= (TextView)item.findViewById(R.id.direccion);
-		address.setText(dir);
-		
+				
 		average = (TextView)item.findViewById(R.id.average);
 		average.setText(prom);
 		
 		distance = (TextView)item.findViewById(R.id.distance);
 		distance.setText(dist);
+		
+		duration = (TextView)item.findViewById(R.id.duration);
+		duration.setText(dur);
 		
 		return item;
 	}

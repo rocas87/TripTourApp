@@ -11,12 +11,14 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.util.Log;
 
 public class Climate extends Activity {
 	
 	String url, resultado, region, direccion, data, separa, respuesta;
 	String[] tokens, tokensRegion;
+	ProgressDialog pd; 
 	
 	public String climaURL(final String latitud, final String longitud)
 	{

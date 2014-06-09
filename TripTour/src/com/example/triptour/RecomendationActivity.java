@@ -40,7 +40,7 @@ public class RecomendationActivity extends Activity implements android.location.
 	ArrayList<String> distancia = new ArrayList<String>();
 	ArrayList<String> latitude = new ArrayList<String>();
 	ArrayList<String> longitude = new ArrayList<String>();
-	String usuario, latitud, longitud, categoria, radioBusqueda, mode, php, res, itm_nombre, itm_direccion,
+	String usuario, latitud, longitud, categoria, radioBusqueda, transporte, mode, php, res, itm_nombre, itm_direccion,
 				    itm_promedio, itm_distancia, itm_latitude, itm_longitude;
 	Location loc;
 	LocationClient mLocationClient;
@@ -64,19 +64,26 @@ public class RecomendationActivity extends Activity implements android.location.
 			Bundle recomendation = getIntent().getExtras();
 			usuario = recomendation.getString("user");
 			categoria = recomendation.getString("categoria");
+			transporte = recomendation.getString("transporte");
 			
 			txtUsuario.setText(usuario);
 
-			// Parametros forsados por el momento
-			radioBusqueda = "10";
-			mode = "driving";
+			if(transporte.equals("1"))
+			{
+				mode = "driving";
+				radioBusqueda = "20";
+			}
+			else if(transporte.equals("2"))
+			{
+				mode = "walking";
+				radioBusqueda = "5";
+			}
 
 			//Obtengo latitud y longitud
 			loc = getMiUbicacion();
 			latitud = String.valueOf(loc.getLatitude());
 			longitud = String.valueOf(loc.getLongitude());
-			
-
+						
 			params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("usuario",usuario));
 			params.add(new BasicNameValuePair("latitud",latitud));

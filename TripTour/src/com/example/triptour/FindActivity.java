@@ -42,7 +42,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 	ArrayList<String> latitude = new ArrayList<String>();
 	ArrayList<String> longitude = new ArrayList<String>();
 	String usuario, latitud, longitud, categoria, radioBusqueda, mode, php, res, itm_nombre, itm_direccion,
-				    itm_promedio, itm_distancia, itm_latitude, itm_longitude;
+				    itm_promedio, itm_distancia, itm_latitude, itm_longitude, transporte;
 	Location loc;
 	LocationClient mLocationClient;
 	LocationManager handle;
@@ -65,13 +65,22 @@ public class FindActivity extends Activity implements android.location.LocationL
 			Bundle find = getIntent().getExtras();
 			usuario = find.getString("user");
 			categoria = find.getString("categoria");
-			
+			transporte = find.getString("transporte");
 			txtUsuario.setText(usuario);
 			// Parametros forsados por el momento
 			
-			radioBusqueda = "5";
-			mode = "driving";
+			if(transporte.equals("1"))
+			{
+				mode = "driving";
+				radioBusqueda = "20";
+			}
+			else if(transporte.equals("2"))
+			{
+				mode = "walking";
+				radioBusqueda = "5";
+			}
 			
+						
 			loc = getMiUbicacion();
 			latitud = String.valueOf(loc.getLatitude());
 			longitud = String.valueOf(loc.getLongitude());

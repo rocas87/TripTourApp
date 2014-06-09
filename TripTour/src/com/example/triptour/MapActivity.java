@@ -38,7 +38,7 @@ implements android.location.LocationListener, OnClickListener
 	private String provider;
 	Location loc;
 	LatLng MiUbicacion, coord;
-	String itm_nombre, itm_direccion, itm_promedio, itm_distancia, itm_latitude, itm_longitude, waypoints,
+	String itm_nombre, itm_direccion, itm_promedio, itm_distancia, itm_latitude, itm_longitude, waypoints, url,
 	rta_nombre, rta_promedio, rta_distancia, rta_duracion, rta_coordenadas, rta_mode, promedio_itm;
 	Marker itemMarker;
 	//double itm_latitud, itm_longitud;
@@ -70,6 +70,7 @@ implements android.location.LocationListener, OnClickListener
 		
 		Bundle mapActivity = getIntent().getExtras();
 		id = mapActivity.getInt("id");
+		//Si corresponde a 1 solo item
 		if(id==0)
 		{
 			nombre = mapActivity.getStringArrayList("itm_nombre");
@@ -88,13 +89,10 @@ implements android.location.LocationListener, OnClickListener
 		        .snippet("Average:"+promedio.get(i)+"Distance:"+distancia.get(i)));
 				 
 				 mapa.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
-				
-				 waypoints = waypoints + "|" + Double.parseDouble(latitude.get(i)) + "," 
-				 + Double.parseDouble(longitude.get(i));
 			 }
-			
 			radioBusqueda = Double.parseDouble(mapActivity.getString("radioBusqueda"));
 		}
+		//Si coorresponde a 1 solo item
 		else if(id==1)
 		{
 			itm_nombre = mapActivity.getString("itm_nombre");
@@ -115,8 +113,13 @@ implements android.location.LocationListener, OnClickListener
 			waypoints = waypoints + "|" + Double.parseDouble(itm_latitude) + "," 
 						+ Double.parseDouble(itm_longitude);
 			
+			//Dibujo ruta entre puntos
+			url = getMapsApiDirectionsUrl(waypoints);
+		    ReadTask downloadTask = new ReadTask();
+		    downloadTask.execute(url);
 		    radioBusqueda = Double.parseDouble(mapActivity.getString("radioBusqueda"));
 		}
+		//Si corresponde a rutas
 		else if (id==2)
 		{		
 			rta_nombre = mapActivity.getString("rta_nombre");
@@ -149,12 +152,13 @@ implements android.location.LocationListener, OnClickListener
 				indice++;
 				i++;
 			 }	
+			//Dibujo ruta entre puntos
+			url = getMapsApiDirectionsUrl(waypoints);
+		    ReadTask downloadTask = new ReadTask();
+		    downloadTask.execute(url);
 		}
 		
-		//Dibujo ruta entre mas de 2 puntos
-		String url = getMapsApiDirectionsUrl(waypoints);
-	    ReadTask downloadTask = new ReadTask();
-	    downloadTask.execute(url);
+		
 		
 		// Instantiates a new CircleOptions object and defines the center and radius
 		CircleOptions circleOptions = new CircleOptions();

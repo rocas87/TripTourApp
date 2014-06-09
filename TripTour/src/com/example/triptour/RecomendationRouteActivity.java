@@ -41,8 +41,7 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 	ArrayList<String> promedio_itm = new ArrayList<String>();
 	ArrayList<String> direcciones = new ArrayList<String>();
 	String usuario, latitud, longitud, php, res, itm_nombre, itm_direccion, itm_promedio, itm_distancia, 
-		   itm_latitude, itm_longitude, mode, tiempoRecorrido, distMaxima;
-	int dia, hora, minuto;
+		   itm_latitude, itm_longitude, mode, transporte, tiempoRecorrido, distMaxima, dia, hora, minuto;
 	Location loc;
 	LocationClient mLocationClient;
 	LocationManager handle;
@@ -59,22 +58,32 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 			txtUsuario = (TextView)findViewById(R.id.txtUsuario);
 			lista = (ListView)findViewById(R.id.lista);
 						
-			Bundle find = getIntent().getExtras();
-			usuario = find.getString("user");
+			Bundle recomendationRoute = getIntent().getExtras();
+			usuario = recomendationRoute.getString("user");
+			transporte = recomendationRoute.getString("transporte");
+			hora = recomendationRoute.getString("hora");
+			minuto = recomendationRoute.getString("minuto");
+			
 			txtUsuario.setText(usuario);
 
-			// Parametros forsados por el momento
-			mode = "driving";
-			dia = 0;
-			hora = 0;
-			minuto = 50;
+			if(transporte.equals("1"))
+			{
+				mode = "driving";
+				distMaxima = "50";
+			}
+			else if(transporte.equals("2"))
+			{
+				mode = "walking";
+				distMaxima = "10";
+			}
+			
+			dia = "0";
 			tiempoRecorrido = dia+","+hora+","+minuto; 
-			distMaxima = "50";
 
 			loc = getMiUbicacion();
 			latitud = String.valueOf(loc.getLatitude());
 			longitud = String.valueOf(loc.getLongitude());
-
+						
 			params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("usuario",usuario));
 			params.add(new BasicNameValuePair("latitud",latitud));
@@ -163,7 +172,7 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 								final ArrayList<String> coordenadas, final ArrayList<String> promedio_itm,
 								final ArrayList<String> direcciones)
 		{
-			AdaptadorTitulares adap = new AdaptadorTitulares(this,nombre,promedio,distancia,duracion);
+			AdaptadorRoute adap = new AdaptadorRoute(this,nombre,promedio,distancia,duracion);
 			lista.setAdapter(adap);
 			lista.setOnItemClickListener(new OnItemClickListener()
 			{
