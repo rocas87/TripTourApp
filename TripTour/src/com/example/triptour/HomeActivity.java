@@ -51,6 +51,7 @@ implements android.location.LocationListener, OnClickListener
 	View promptFind, promptRecomendation, promptRecomendationRoute;
 	EditText duracion;
 	String [] tokenDuracion;
+	
 	// TODO Auto-generated method stub
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ implements android.location.LocationListener, OnClickListener
 		mapa.setMyLocationEnabled(true);
 		
 		centrarMapa();
+		
 		//Categorias disponibles
 		categorias.add("Bar");
 		categorias.add("Zoologico");
@@ -121,11 +123,14 @@ implements android.location.LocationListener, OnClickListener
 
 	        case R.id.cambio_moneda:
 				Intent changeMoney = new Intent(this,ChangeMoneyActivity.class);
+				changeMoney.putExtra("user", user);
 				startActivity(changeMoney);
 				return true;
 
 			case R.id.preferencias:
 				return true;
+				
+			
 
 	    }
 	    return false;

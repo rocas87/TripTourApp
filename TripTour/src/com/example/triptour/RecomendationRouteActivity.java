@@ -10,26 +10,37 @@ import org.json.JSONObject;
 
 import com.google.android.gms.location.LocationClient;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class RecomendationRouteActivity extends Activity implements android.location.LocationListener{
 
-	TextView txtUsuario, Seleccionado;
+	TextView txtUsuario, Seleccionado, txtResults, txtMode;
 	ListView lista;
 	Button btnMapa;
 	List<NameValuePair> params;
@@ -41,13 +52,24 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 	ArrayList<String> promedio_itm = new ArrayList<String>();
 	ArrayList<String> direcciones = new ArrayList<String>();
 	String usuario, latitud, longitud, php, res, itm_nombre, itm_direccion, itm_promedio, itm_distancia, 
-		   itm_latitude, itm_longitude, mode, transporte, tiempoRecorrido, distMaxima, dia, hora, minuto;
+		   itm_latitude, itm_longitude, mode, medioTransporte, tiempoRecorrido, distMaxima, dia, hora, minuto, latLong;
+	int categoriaFind, transporteFind, categoriaRecomendation, transporteRecomendation, transporteRoute;
 	Location loc;
 	LocationClient mLocationClient;
 	LocationManager handle;
 	private String provider;
 	ProgressDialog pDialog;
 	EnviarPost enviar = new EnviarPost();
+	JSONArray jsonArray;
+	ArrayAdapter<String> adaptadorCategoria, adaptadorTransporte;
+	private Spinner spCategoria, spTransporte;
+	private List<String> categorias = new ArrayList<String>();
+	private List<String> transporte = new ArrayList<String>();
+	LayoutInflater liFind, liRecomendation, liRecomendationRoute;
+	View promptFind, promptRecomendation, promptRecomendationRoute;
+	EditText tiempo;
+	String [] tokenDuracion;
+	
 
 	// TODO Auto-generated method stub
 		@Override
@@ -56,22 +78,39 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 			setContentView(R.layout.recomendation_route_activity);
 
 			txtUsuario = (TextView)findViewById(R.id.txtUsuario);
+			txtResults = (TextView)findViewById(R.id.txtResult);
+			txtMode = (TextView)findViewById(R.id.txtMode);
 			lista = (ListView)findViewById(R.id.lista);
-						
+				
+			ActionBar actionBar = getActionBar();
+			actionBar.setDisplayHomeAsUpEnabled(true);
+			
+			//Categorias disponibles
+			categorias.add("Bar");
+			categorias.add("Zoologico");
+			categorias.add("Museo");
+			categorias.add("Parques");
+			categorias.add("Parque de diversiones");
+			categorias.add("Deportes");
+			categorias.add("Restorant");
+			//Tipos de transporte
+			transporte.add("Driving/Automovil");
+			transporte.add("Walking/Caminando");
+			
 			Bundle recomendationRoute = getIntent().getExtras();
 			usuario = recomendationRoute.getString("user");
-			transporte = recomendationRoute.getString("transporte");
+			medioTransporte = recomendationRoute.getString("transporte");
 			hora = recomendationRoute.getString("hora");
 			minuto = recomendationRoute.getString("minuto");
 			
 			txtUsuario.setText(usuario);
 
-			if(transporte.equals("1"))
+			if(medioTransporte.equals("1"))
 			{
 				mode = "driving";
 				distMaxima = "50";
 			}
-			else if(transporte.equals("2"))
+			else if(medioTransporte.equals("2"))
 			{
 				mode = "walking";
 				distMaxima = "10";
@@ -106,7 +145,7 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 					try
 					{
 						res = enviar.enviarPost(params, php);
-						JSONArray jsonArray = new JSONArray(res);
+						jsonArray = new JSONArray(res);
 						
 						 for (int i = 0; i < jsonArray.length(); i++) 
 						 {
@@ -132,8 +171,6 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 							}
 							else
 							{
-								
-							
 							nombre.add(jsonObject.getString("rta_nombre"));
 							promedio.add(jsonObject.getString("rta_promedio"));
 							distancia.add(jsonObject.getString("rta_distancia"));
@@ -151,6 +188,8 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 									 {
 									  llenaLista(nombre,promedio,distancia,duracion, coordenadas, 
 											  promedio_itm, direcciones);
+									  txtResults.setText(String.valueOf(jsonArray.length()));
+									  txtMode.setText(mode);
 									  pDialog.dismiss();
 									 }
 								 }
@@ -167,6 +206,313 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 			tr.start();
 
 		}
+		
+
+		@Override
+	    public boolean onCreateOptionsMenu(Menu menu) {
+	        // Inflate the menu; this adds items to the action bar if it is present.
+	        getMenuInflater().inflate(R.menu.action_bar, menu);
+	        return true;
+	    }
+		
+		public boolean onOptionsItemSelected(MenuItem item) {
+		    // Handle presses on the action bar items
+		    switch (item.getItemId()) {
+		        case R.id.find:	    		
+		        	pomptFind();
+		            return true;
+		            
+		        case R.id.recomendation:
+		        	promptRecomendation();
+		            return true;
+		            
+		        case R.id.recomendation_route:
+		        	promptRecomendationRoute();
+		            return true;
+
+		        case R.id.evaluacion:
+		        	return true;
+
+		        case R.id.alojamiento:
+					Intent intent = new Intent(Intent.ACTION_VIEW);
+					intent.setData(Uri.parse("http://www.booking.com/"));
+					startActivity(intent);
+					return true;
+
+		        case R.id.clima:				
+					loc = getMiUbicacion();
+					Climate cl = new Climate();
+					latLong = cl.climaURL(String.valueOf(loc.getLatitude()), String.valueOf(loc.getLongitude()));
+					Intent clima = new Intent(Intent.ACTION_VIEW);
+					clima.setData(Uri.parse(latLong));
+					startActivity(clima);
+					return true;
+
+		        case R.id.cambio_moneda:
+					Intent changeMoney = new Intent(this,ChangeMoneyActivity.class);
+					changeMoney.putExtra("user", usuario);
+					startActivity(changeMoney);
+					return true;
+
+				case R.id.preferencias:
+					return true;
+					
+				case android.R.id.home:
+					Intent home = new Intent(this,HomeActivity.class);
+					home.putExtra("usr_nick", usuario);
+					startActivity(home);
+					return true;
+		    }
+		    return false;
+		}
+
+		private void pomptFind() 
+		{
+			// TODO Auto-generated method stub
+			liFind = LayoutInflater.from(this);
+			promptFind = liFind.inflate(R.layout.prompt_find_activity, null);
+
+			spCategoria = (Spinner)promptFind.findViewById(R.id.spCategoria);
+			adaptadorCategoria = new ArrayAdapter<String>
+				(this,android.R.layout.simple_spinner_item, categorias);
+			adaptadorCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spCategoria.setAdapter(adaptadorCategoria);
+			
+			spTransporte = (Spinner)promptFind.findViewById(R.id.spTransporte);
+			adaptadorTransporte = new ArrayAdapter<String>
+				(this,android.R.layout.simple_spinner_item, transporte);
+			adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spTransporte.setAdapter(adaptadorTransporte);
+			
+			spCategoria.setOnItemSelectedListener(new OnItemSelectedListener()
+			{
+
+				@Override
+				public void onItemSelected(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					// TODO Auto-generated method stub
+					categoriaFind = arg2+1;
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+			
+			spTransporte.setOnItemSelectedListener(new OnItemSelectedListener()
+			{
+
+				@Override
+				public void onItemSelected(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					// TODO Auto-generated method stub
+					transporteFind = arg2+1;
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub	
+				}
+				
+			});
+			
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder.setView(promptFind);
+			
+			// Mostramos el mensaje del cuadro de dialogo
+			alertDialogBuilder
+			.setCancelable(false)
+			.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,int id) {
+			// Rescatamos el nombre del EditText y lo mostramos por pantalla
+				find();
+			}
+			})
+			.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog,int id) {
+			// Cancelamos el cuadro de dialogo
+			dialog.cancel();
+			}
+			});
+			// Creamos un AlertDialog y lo mostramos
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+			
+		}
+
+		public void find()
+		{
+			Intent find = new Intent(this,FindActivity.class);
+			find.putExtra("user", usuario);
+			find.putExtra("categoria", String.valueOf(categoriaFind));
+			find.putExtra("transporte", String.valueOf(transporteFind));
+			startActivity(find);
+		}
+		
+		private void promptRecomendation() 
+		{
+			// TODO Auto-generated method stub
+			liRecomendation = LayoutInflater.from(this);
+			promptRecomendation = liRecomendation.inflate(R.layout.prompt_recomendation_activity, null);
+
+			spCategoria = (Spinner)findViewById(R.id.spCategoria);
+			spCategoria = (Spinner)promptRecomendation.findViewById(R.id.spCategoria);
+			adaptadorCategoria = new ArrayAdapter<String>
+				(this,android.R.layout.simple_spinner_item, categorias);
+			adaptadorCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spCategoria.setAdapter(adaptadorCategoria);
+			
+			spTransporte = (Spinner)promptRecomendation.findViewById(R.id.spTransporte);
+			adaptadorTransporte = new ArrayAdapter<String>
+				(this,android.R.layout.simple_spinner_item, transporte);
+			adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spTransporte.setAdapter(adaptadorTransporte);
+			
+			spCategoria.setOnItemSelectedListener(new OnItemSelectedListener()
+			{
+
+				@Override
+				public void onItemSelected(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					// TODO Auto-generated method stub
+					categoriaRecomendation = arg2+1;
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+			
+			spTransporte.setOnItemSelectedListener(new OnItemSelectedListener()
+			{
+
+				@Override
+				public void onItemSelected(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					// TODO Auto-generated method stub
+					transporteRecomendation = arg2+1;
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub	
+				}
+				
+			});
+			
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder.setView(promptRecomendation);
+			
+			// Mostramos el mensaje del cuadro de dialogo
+			alertDialogBuilder
+			.setCancelable(false)
+			.setPositiveButton("OK", new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog,int id) 
+				{
+					// Rescatamos el nombre del EditText y lo mostramos por pantalla
+					recomendation();
+				}
+			})
+			.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog,int id) 
+				{
+					// Cancelamos el cuadro de dialogo
+					dialog.cancel();
+				}
+			});
+			// Creamos un AlertDialog y lo mostramos
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+		}
+
+		public void recomendation()
+		{
+			Intent recomendation = new Intent(this,RecomendationActivity.class);
+			recomendation.putExtra("user", usuario);
+			recomendation.putExtra("categoria", String.valueOf(categoriaRecomendation));
+			recomendation.putExtra("transporte", String.valueOf(transporteRecomendation));
+			startActivity(recomendation);
+		}
+		
+		private void promptRecomendationRoute() 
+		{
+			// TODO Auto-generated method stub
+			liRecomendationRoute = LayoutInflater.from(this);
+			promptRecomendationRoute = liRecomendationRoute.inflate(R.layout.prompt_recomendation_route_activity, null);
+			
+			spTransporte = (Spinner)promptRecomendationRoute.findViewById(R.id.spTransporte);
+			adaptadorTransporte = new ArrayAdapter<String>
+				(this,android.R.layout.simple_spinner_item, transporte);
+			adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spTransporte.setAdapter(adaptadorTransporte);
+			
+			tiempo = (EditText)promptRecomendationRoute.findViewById(R.id.duracion);
+			
+			spTransporte.setOnItemSelectedListener(new OnItemSelectedListener()
+			{
+
+				@Override
+				public void onItemSelected(AdapterView<?> arg0, View arg1,
+						int arg2, long arg3) {
+					// TODO Auto-generated method stub
+					transporteRoute = arg2+1;
+				}
+
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub	
+				}
+				
+			});
+			
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+			alertDialogBuilder.setView(promptRecomendationRoute);
+			
+			// Mostramos el mensaje del cuadro de dialogo
+			alertDialogBuilder
+			.setCancelable(false)
+			.setPositiveButton("OK", new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog,int id) 
+				{
+					// Rescatamos el nombre del EditText y lo mostramos por pantalla
+					tokenDuracion = (tiempo.getText().toString()).split(":");
+					hora = tokenDuracion[0];
+					minuto = tokenDuracion[1];
+					recomendationRoute();
+				}
+			})
+			.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() 
+			{
+				public void onClick(DialogInterface dialog,int id) 
+				{
+					// Cancelamos el cuadro de dialogo
+					dialog.cancel();
+				}
+			});
+			// Creamos un AlertDialog y lo mostramos
+			AlertDialog alertDialog = alertDialogBuilder.create();
+			alertDialog.show();
+		}
+
+		public void recomendationRoute()
+		{
+			Intent recomendationRoute = new Intent(this,RecomendationRouteActivity.class);
+			recomendationRoute.putExtra("user", usuario);	
+			recomendationRoute.putExtra("transporte", String.valueOf(transporteRoute));
+			recomendationRoute.putExtra("hora", hora);
+			recomendationRoute.putExtra("minuto", minuto);
+			startActivity(recomendationRoute);
+		}
+
 		public void llenaLista(final ArrayList<String> nombre, final ArrayList<String> promedio,
 								final ArrayList<String> distancia, final ArrayList<String> duracion,
 								final ArrayList<String> coordenadas, final ArrayList<String> promedio_itm,

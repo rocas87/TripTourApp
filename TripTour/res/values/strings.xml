@@ -29,7 +29,7 @@
     <string name="female">Female</string>
     <string name="male">Male</string>
     <string name="year">YYYY-MM-DD</string>
-    <string name="serachResults">Search results</string>
+    <string name="searchResults">Search results</string>
     <string name="user">User: </string>
     <string name="dir">Address:</string>
     <string name="average">Average:</string>
@@ -40,8 +40,12 @@
     <string name="valor">Result:</string>
     <string name="monto">Amount</string>
     <string name="category">Select category</string>
-    <string name="transport">Type of transport</string>
+    <string name="transport">Type of transport:</string>
     <string name="duration">Maximum duration tour</string>
     <string name="durationTotal">Duration tour:</string>
+    <string name="ResultRecomendation">Recomendations</string>
+    <string name="ResultRoute">Routes</string>
+    <string name="resultsRoute">Routes obtained:</string>
+    <string name="resultsFind">Attractions obtained:</string>
 
 </resources>

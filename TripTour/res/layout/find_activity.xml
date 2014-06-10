@@ -20,14 +20,15 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="22dp"
         android:text="@string/searchResults"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
     
     <ListView
         android:id="@+id/lista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/txtResultados"
+        android:layout_marginTop="50dp"
+        android:layout_below="@+id/btnmap"
         android:drawSelectorOnTop="false" />
 
     <TextView
@@ -47,5 +48,41 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:text="@string/map" />
-    
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtResultados"
+        android:text="@string/resultsFind"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView1"
+        android:text="@string/transport"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtResults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_marginLeft="18dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/txtMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_alignLeft="@+id/txtResults"
+        android:text="" />
+        
 </RelativeLayout>

@@ -19,16 +19,8 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="22dp"
-        android:text="@string/searchResults"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-    
-    <ListView
-        android:id="@+id/lista"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/txtResultados"
-        android:drawSelectorOnTop="false" />
+        android:text="@string/ResultRoute"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/txtUsuario"
@@ -39,13 +31,50 @@
         android:text="usuario"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <Button
-        android:id="@+id/btnmap"
-        style="?android:attr/buttonStyleSmall"
+    <ListView
+        android:id="@+id/lista"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/map" />
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="5dp"
+        android:drawSelectorOnTop="false" >
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/resultados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/txtResultados"
+        android:textAppearance="?android:attr/textAppearanceMedium" 
+        android:text="@string/resultsRoute" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/resultados"
+        android:text="@string/transport"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/txtResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/resultados"
+        android:layout_alignBottom="@+id/resultados"
+        android:layout_centerHorizontal="true"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/txtMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignLeft="@+id/txtResult"
+        android:text="" />
     
 </RelativeLayout>

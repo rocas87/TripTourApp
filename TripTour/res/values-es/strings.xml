@@ -27,7 +27,7 @@
     <string name="female">Femenino</string>
     <string name="male">Masculino</string>
     <string name="year">AAAA-AA-DD</string>
-    <string name="searchResults">Resultados buesqueda</string>
+    <string name="searchResults">Resultado busqueda</string>
     <string name="user">Usuario: </string>
     <string name="dir">Direccion:</string>
     <string name="average">Promedio:</string>
@@ -38,8 +38,12 @@
     <string name="valor">Resultado</string>
     <string name="monto">Cantidad</string>
     <string name="category">Seleccione categoria</string>
-    <string name="transport">Tipo de transporte</string>
+    <string name="transport">Tipo de transporte:</string>
     <string name="duration">tiempo maximo ruta</string>
     <string name="durationTotal">Duracion ruta:</string>
+    <string name="ResultRecomendation">Recomendaciones</string>
+    <string name="ResultRoute">Rutas</string>
+    <string name="resultsRoute">Rutas obtenidos:</string>
+    <string name="resultsFind">Atractivos obtenidos:</string>
 
 </resources>
