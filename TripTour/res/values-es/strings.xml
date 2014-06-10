@@ -26,7 +26,7 @@
     <string name="send">Enviar</string>
     <string name="female">Femenino</string>
     <string name="male">Masculino</string>
-    <string name="year">AAAA-AA-DD</string>
+    <string name="year">AAAA-MM-DD</string>
     <string name="searchResults">Resultado busqueda</string>
     <string name="user">Usuario: </string>
     <string name="dir">Direccion:</string>
@@ -45,5 +45,8 @@
     <string name="ResultRoute">Rutas</string>
     <string name="resultsRoute">Rutas obtenidos:</string>
     <string name="resultsFind">Atractivos obtenidos:</string>
+    <string name="register">Registrar</string>
+    <string name="logonSkip">Saltar inicio sesion</string>
+    <string name="inicio">¡Bienvenido¡</string>
 
 </resources>

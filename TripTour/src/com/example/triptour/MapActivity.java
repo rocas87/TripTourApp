@@ -30,6 +30,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -73,7 +74,7 @@ implements android.location.LocationListener, OnClickListener
 	View promptFind, promptRecomendation, promptRecomendationRoute;
 	EditText duracion;
 	String [] tokenDuracion;
-	
+		
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
@@ -230,11 +231,29 @@ implements android.location.LocationListener, OnClickListener
 	            return true;
 	            
 	        case R.id.recomendation:
-	        	promptRecomendation();
+	        	if(usuario.equals("SR"))
+	        	{
+	        		Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+	        		vibrator.vibrate(200);
+	        		Toast.makeText(MapActivity.this, "Debe estar registrado", Toast.LENGTH_LONG).show();
+	        	}
+	        	else
+	        	{
+	        		promptRecomendation();
+	        	}
 	            return true;
 	            
 	        case R.id.recomendation_route:
-	        	promptRecomendationRoute();
+	        	if(usuario.equals("SR"))
+	        	{
+	        		Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+	        		vibrator.vibrate(200);
+	        		Toast.makeText(MapActivity.this, "Debe estar registrado", Toast.LENGTH_LONG).show();
+	        	}
+	        	else
+	        	{
+	        	promptRecomendationRoute();		        		
+	        	}
 	            return true;
 
 	        case R.id.evaluacion:

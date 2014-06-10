@@ -69,7 +69,6 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 	View promptFind, promptRecomendation, promptRecomendationRoute;
 	EditText tiempo;
 	String [] tokenDuracion;
-	
 
 	// TODO Auto-generated method stub
 		@Override
@@ -223,11 +222,29 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 		            return true;
 		            
 		        case R.id.recomendation:
-		        	promptRecomendation();
+		        	if(usuario.equals("SR"))
+		        	{
+		        		Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+		        		vibrator.vibrate(200);
+		        		Toast.makeText(RecomendationRouteActivity.this, "Debe estar registrado", Toast.LENGTH_LONG).show();
+		        	}
+		        	else
+		        	{
+		        		promptRecomendation();
+		        	}
 		            return true;
 		            
 		        case R.id.recomendation_route:
-		        	promptRecomendationRoute();
+		        	if(usuario.equals("SR"))
+		        	{
+		        		Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+		        		vibrator.vibrate(200);
+		        		Toast.makeText(RecomendationRouteActivity.this, "Debe estar registrado", Toast.LENGTH_LONG).show();
+		        	}
+		        	else
+		        	{
+		        	promptRecomendationRoute();		        		
+		        	}
 		            return true;
 
 		        case R.id.evaluacion:

@@ -20,6 +20,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +31,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Toast;
 
 public class HomeActivity extends android.support.v4.app.FragmentActivity 
 implements android.location.LocationListener, OnClickListener
@@ -96,11 +98,29 @@ implements android.location.LocationListener, OnClickListener
 	            return true;
 	            
 	        case R.id.recomendation:
-	        	promptRecomendation();
+	        	if(user.equals("SR"))
+	        	{
+	        		Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+	        		vibrator.vibrate(200);
+	        		Toast.makeText(HomeActivity.this, "Debe estar registrado", Toast.LENGTH_LONG).show();
+	        	}
+	        	else
+	        	{
+	        		promptRecomendation();
+	        	}
 	            return true;
 	            
 	        case R.id.recomendation_route:
-	        	promptRecomendationRoute();
+	        	if(user.equals("SR"))
+	        	{
+	        		Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+	        		vibrator.vibrate(200);
+	        		Toast.makeText(HomeActivity.this, "Debe estar registrado", Toast.LENGTH_LONG).show();
+	        	}
+	        	else
+	        	{
+	        		promptRecomendationRoute();
+	        	}
 	            return true;
 
 	        case R.id.evaluacion:
@@ -129,9 +149,6 @@ implements android.location.LocationListener, OnClickListener
 
 			case R.id.preferencias:
 				return true;
-				
-			
-
 	    }
 	    return false;
 	}

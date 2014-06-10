@@ -22,22 +22,18 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnClickListener, OnTouchListener, 
-android.location.LocationListener
+public class MainActivity extends Activity implements OnClickListener, android.location.LocationListener
 {
-
-	TextView txtUsuario, txtPass, txtRegistrar;
+	TextView txtUsuario, txtPass;
 	EditText edtUsuario, edtPass;
-	Button btnLogin;
+	Button btnLogin, btnRegister, btnLogonSkip;
 	String res,valido,usr_nombre,usr_nick,user,password, php;
 	InputStream is = null;
 	JSONObject json = null;
@@ -56,15 +52,17 @@ android.location.LocationListener
 				
 		txtUsuario = (TextView)findViewById(R.id.txtUsuario);
 		txtPass = (TextView)findViewById(R.id.txtPass);
-		txtRegistrar = (TextView)findViewById(R.id.txtRegistrar);
-		
+				
 		edtUsuario = (EditText)findViewById(R.id.edtUsuario);
 		edtPass = (EditText)findViewById(R.id.edtPass);
 		
 		btnLogin = (Button)findViewById(R.id.btnLogin);
+		btnRegister = (Button)findViewById(R.id.btnRegister);
+		btnLogonSkip = (Button)findViewById(R.id.btnLogonSkip);
 		
 		btnLogin.setOnClickListener(this);
-		txtRegistrar.setOnTouchListener(this);
+		btnRegister.setOnClickListener(this);
+		btnLogonSkip.setOnClickListener(this);
 		
 		loc = getMiUbicacion();
 		
@@ -73,6 +71,28 @@ android.location.LocationListener
 
 	@Override
 	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		switch(arg0.getId())
+		{
+			case R.id.btnLogin:
+				login();
+				break;
+				
+			case R.id.btnRegister:
+				break;
+			
+			case R.id.btnLogonSkip:
+				Intent home = new Intent(this,HomeActivity.class);
+				home.putExtra("usr_nombre", "SR");
+				home.putExtra("usr_nick", "SR");
+				startActivity(home);
+				break;
+		}
+	}
+
+		
+	private void login() 
+	{
 		// TODO Auto-generated method stub
 		pDialog = new ProgressDialog(this);
 		pDialog.setMessage("Conencting...");
@@ -135,14 +155,6 @@ android.location.LocationListener
 		}		
 	}
 
-	@Override
-	public boolean onTouch(View arg0, MotionEvent arg1) {
-		// TODO Auto-generated method stub
-		Intent registro = new Intent(this,RegistroActivity.class);
-		startActivity(registro);
-		return false;
-	}
-		
 	public void valida (String usr_nombre, String usr_nick){
 		Intent home = new Intent(this,HomeActivity.class);
 		home.putExtra("usr_nombre", usr_nombre);

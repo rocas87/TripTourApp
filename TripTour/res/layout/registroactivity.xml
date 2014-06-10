@@ -14,7 +14,8 @@
         android:ems="10"
         android:hint="@string/mail"
         android:inputType="textEmailAddress"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:maxLength="30" />
 
     <Button
         android:id="@+id/btnEnviar"
@@ -31,6 +32,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/edtNick"
         android:ems="10"
+        android:maxLength="30"
         android:hint="@string/name"
         android:textSize="12sp" />
 
@@ -41,6 +43,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/edtNombre"
         android:ems="10"
+        android:maxLength="30"
         android:hint="@string/lastname"
         android:textSize="12sp" />
 
@@ -52,8 +55,9 @@
         android:layout_below="@+id/edtMail"
         android:ems="10"
         android:hint="@string/nick"
-        android:textSize="12sp" >
-
+        android:textSize="12sp" 
+        android:maxLength="30"
+        >
         <requestFocus />
     </EditText>
 
@@ -64,6 +68,7 @@
         android:layout_above="@+id/edtConfPass"
         android:layout_alignParentLeft="true"
         android:ems="10"
+        android:maxLength="30"
         android:hint="@string/password"
         android:inputType="textPassword"
         android:textSize="12sp" />
@@ -75,6 +80,7 @@
         android:layout_above="@+id/edtPass"
         android:layout_alignParentLeft="true"
         android:ems="10"
+        android:maxLength="10"
         android:hint="@string/year"
         android:inputType="date"
         android:textSize="12sp" />
@@ -87,6 +93,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginBottom="14dp"
         android:ems="10"
+        android:maxLength="30"
         android:hint="@string/confpass"
         android:inputType="textPassword"
         android:textSize="12sp" />

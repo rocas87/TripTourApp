@@ -9,6 +9,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,10 +23,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
@@ -67,7 +70,7 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 	LocationClient mLocationClient;
 	LocationManager handle;
 	private String provider;
-	
+		
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
@@ -385,11 +388,29 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 	            return true;
 	            
 	        case R.id.recomendation:
-	        	promptRecomendation();
+	        	if(usuario.equals("SR"))
+	        	{
+	        		Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+	        		vibrator.vibrate(200);
+	        		Toast.makeText(ChangeMoneyActivity.this, "Debe estar registrado", Toast.LENGTH_LONG).show();
+	        	}
+	        	else
+	        	{
+	        		promptRecomendation();
+	        	}
 	            return true;
 	            
 	        case R.id.recomendation_route:
-	        	promptRecomendationRoute();
+	        	if(usuario.equals("SR"))
+	        	{
+	        		Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+	        		vibrator.vibrate(200);
+	        		Toast.makeText(ChangeMoneyActivity.this, "Debe estar registrado", Toast.LENGTH_LONG).show();
+	        	}
+	        	else
+	        	{
+	        	promptRecomendationRoute();		        		
+	        	}
 	            return true;
 
 	        case R.id.evaluacion:

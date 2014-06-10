@@ -30,7 +30,7 @@
         android:id="@+id/evaluacion" 
         android:title="@string/rating" 
         android:icon="@drawable/ic_action_half_important"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
       >
     </item>
     

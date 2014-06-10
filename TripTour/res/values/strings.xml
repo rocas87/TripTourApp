@@ -47,5 +47,8 @@
     <string name="ResultRoute">Routes</string>
     <string name="resultsRoute">Routes obtained:</string>
     <string name="resultsFind">Attractions obtained:</string>
+    <string name="register">Register</string>
+    <string name="logonSkip">Skip logon</string>
+    <string name="inicio">¡Welcome!</string>
 
 </resources>

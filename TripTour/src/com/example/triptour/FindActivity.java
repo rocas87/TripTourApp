@@ -70,7 +70,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 	View promptFind, promptRecomendation, promptRecomendationRoute;
 	EditText duracion;
 	String [] tokenDuracion;
-	
+		
 	// TODO Auto-generated method stub
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
@@ -241,11 +241,29 @@ public class FindActivity extends Activity implements android.location.LocationL
 		            return true;
 		            
 		        case R.id.recomendation:
-		        	promptRecomendation();
+		        	if(usuario.equals("SR"))
+		        	{
+		        		Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+		        		vibrator.vibrate(200);
+		        		Toast.makeText(FindActivity.this, "Debe estar registrado", Toast.LENGTH_LONG).show();
+		        	}
+		        	else
+		        	{
+		        		promptRecomendation();
+		        	}
 		            return true;
 		            
 		        case R.id.recomendation_route:
-		        	promptRecomendationRoute();
+		        	if(usuario.equals("SR"))
+		        	{
+		        		Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+		        		vibrator.vibrate(200);
+		        		Toast.makeText(FindActivity.this, "Debe estar registrado", Toast.LENGTH_LONG).show();
+		        	}
+		        	else
+		        	{
+		        	promptRecomendationRoute();		        		
+		        	}
 		            return true;
 
 		        case R.id.evaluacion:
