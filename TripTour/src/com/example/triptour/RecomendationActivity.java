@@ -561,6 +561,7 @@ public class RecomendationActivity extends Activity implements android.location.
 			mapActivity.putExtra("itm_longitud", itm_longitude);
 			mapActivity.putExtra("rta_mode", mode);
 			mapActivity.putExtra("radioBusqueda", radioBusqueda);
+			mapActivity.putExtra("user", usuario);
 			startActivity(mapActivity);
 		}
 

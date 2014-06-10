@@ -563,6 +563,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 			mapActivity.putExtra("itm_longitud", itm_longitude);
 			mapActivity.putExtra("rta_mode", mode);
 			mapActivity.putExtra("radioBusqueda", radioBusqueda);
+			mapActivity.putExtra("user", usuario);
 			startActivity(mapActivity);
 		}
 

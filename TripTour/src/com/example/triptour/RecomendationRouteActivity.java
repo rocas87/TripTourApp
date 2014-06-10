@@ -547,6 +547,7 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 			mapActivity.putExtra("distMaxima", distMaxima);
 			mapActivity.putExtra("promedio_itm", promedio_itm);
 			mapActivity.putExtra("direcciones", direcciones);
+			mapActivity.putExtra("user", usuario);
 			startActivity(mapActivity);
 		}
 
