@@ -198,23 +198,22 @@ public class FindActivity extends Activity implements android.location.LocationL
 							    distancia.add(jsonObject.getString("distancia"));
 							    latitude.add(jsonObject.getString("itm_latitud"));
 							    longitude.add(jsonObject.getString("itm_longitud"));
-							    
-							    runOnUiThread
-								 (
-										 new Runnable()
-										 {
-											 @Override
-											 public void run() 
-											 {
-												 llenaLista(nombre,direccion,promedio,distancia, latitude, longitude);
-												 txtResults.setText(String.valueOf(jsonArray.length()));
-												 txtMode.setText(mode);
-												 pDialog.dismiss();
-											 }
-										 }
-								 );
 							}
 						 }
+						 runOnUiThread
+						 (
+								 new Runnable()
+								 {
+									 @Override
+									 public void run() 
+									 {
+										 llenaLista(nombre,direccion,promedio,distancia, latitude, longitude);
+										 txtResults.setText(String.valueOf(jsonArray.length()));
+										 txtMode.setText(mode);
+										 pDialog.dismiss();
+									 }
+								 }
+						 );
 					}
 					catch (Exception e)
 					{
