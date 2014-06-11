@@ -1,30 +1,18 @@
 package com.example.triptour;
 
-import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.os.Vibrator;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class AdaptadorTitulares extends ArrayAdapter {
 
@@ -71,8 +59,7 @@ public class AdaptadorTitulares extends ArrayAdapter {
 		
 		distance = (TextView)item.findViewById(R.id.distance);
 		distance.setText(dist);
-		
-		
+
 		Thread nt = new Thread() {
 			@Override
 			public void run() {
@@ -82,55 +69,16 @@ public class AdaptadorTitulares extends ArrayAdapter {
 					URL imageUrl = new URL("http://200.14.84.19/servtriptour/imagenes/ic_launcher.png");
 					HttpURLConnection conn = (HttpURLConnection)imageUrl.openConnection();
 					conn.connect();
-					Log.e("token", "descargando");
 					Bitmap bitm = BitmapFactory.decodeStream(conn.getInputStream());
 					imagen.setImageBitmap(bitm);
-					Log.e("token", "fin descargando");
 				}
-				catch (Exception e) {
+				catch (Exception e) 
+				{
 					// TODO: handle exception
 				}
 			}
 		};
 		nt.start();
 		return item;
-	}
-	
-	static class DescargarImagen extends AsyncTask<ImageView, Void, Bitmap>
-	{
-		ImageView imagen;
-		Bitmap bitm;
-		
-		protected Bitmap doInBackground(ImageView...params)
-		{
-			imagen = params[0];
-			try
-			{
-				URL imageUrl = new URL("http://200.14.84.19/servtriptour/ic_launcher.png");
-				HttpURLConnection conn = (HttpURLConnection)imageUrl.openConnection();
-				conn.connect();
-				Log.e("token", "descargando");
-				bitm = BitmapFactory.decodeStream(conn.getInputStream());
-				Log.e("token", "fin descargando");
-				imagen.setImageBitmap(bitm);
-			}
-			catch (MalformedURLException e)
-			{
-				
-			}
-			catch (IOException e)
-			{
-				
-			}
-			return bitm;
-		}
-		
-		protected void onPostExcecute(Bitmap result)
-		{
-			Log.e("token", "insertando imagen");
-			imagen.setImageBitmap(result);
-			Log.e("token", "imagen insertada");
-			super.onPostExecute(result);
-		}
 	}
 }
