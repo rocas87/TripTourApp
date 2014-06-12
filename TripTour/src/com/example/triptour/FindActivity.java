@@ -1,5 +1,6 @@
 package com.example.triptour;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 	ArrayList<String> latitude = new ArrayList<String>();
 	ArrayList<String> longitude = new ArrayList<String>();
 	String usuario, latitud, longitud, categoria, radioBusqueda, mode, php, res, itm_nombre, itm_direccion,
-				    itm_promedio, itm_distancia, itm_latitude, itm_longitude, medioTransporte, hora, latLong, minuto;
+				    itm_promedio, itm_distancia, itm_latitude, itm_longitude, medioTransporte, hora, latLong, minuto, dist;
 	int categoriaFind, transporteFind, categoriaRecomendation, transporteRecomendation, transporteRoute;
 	Location loc;
 	LocationClient mLocationClient;
@@ -69,7 +70,8 @@ public class FindActivity extends Activity implements android.location.LocationL
 	LayoutInflater liFind, liRecomendation, liRecomendationRoute;
 	View promptFind, promptRecomendation, promptRecomendationRoute;
 	EditText duracion;
-	String [] tokenDuracion;
+	String [] tokenDuracion, tokenDireccion;
+	DecimalFormat decimales = new DecimalFormat("0.0");
 		
 	// TODO Auto-generated method stub
 		@Override
@@ -193,9 +195,11 @@ public class FindActivity extends Activity implements android.location.LocationL
 							else if(jsonObject.getString("resultado").equals("1"))
 							{
 								nombre.add(jsonObject.getString("itm_nombre"));
-							    direccion.add(jsonObject.getString("itm_direccion"));
-							    promedio.add(jsonObject.getString("itm_promedio"));
-							    distancia.add(jsonObject.getString("distancia"));
+								tokenDireccion = jsonObject.getString("itm_direccion").split("<formatted_address>");
+							    direccion.add(tokenDireccion[1]);
+							    promedio.add(String.valueOf(jsonObject.getString("itm_promedio")));
+							    dist = decimales.format(Double.parseDouble(jsonObject.getString("distancia")));
+							    distancia.add(dist);
 							    latitude.add(jsonObject.getString("itm_latitud"));
 							    longitude.add(jsonObject.getString("itm_longitud"));
 							}

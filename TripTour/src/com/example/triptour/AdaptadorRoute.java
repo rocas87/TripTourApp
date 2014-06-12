@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class AdaptadorRoute extends ArrayAdapter {
@@ -18,6 +19,7 @@ public class AdaptadorRoute extends ArrayAdapter {
 	ArrayList<String> duracion = new ArrayList<String>();
 	String nom, prom, dist, dur;
 	TextView name, average, distance, duration;
+	RatingBar rating;
 	
 	
 	//@SuppressWarnings("unchecked")
@@ -46,8 +48,8 @@ public class AdaptadorRoute extends ArrayAdapter {
 		name = (TextView)item.findViewById(R.id.nombre);
 		name.setText(nom);
 				
-		average = (TextView)item.findViewById(R.id.average);
-		average.setText(prom);
+		rating = (RatingBar)item.findViewById(R.id.ratingBar1);
+		rating.setRating(Float.parseFloat(prom));
 		
 		distance = (TextView)item.findViewById(R.id.distance);
 		distance.setText(dist);

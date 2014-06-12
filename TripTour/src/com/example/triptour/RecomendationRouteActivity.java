@@ -68,7 +68,7 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 	LayoutInflater liFind, liRecomendation, liRecomendationRoute;
 	View promptFind, promptRecomendation, promptRecomendationRoute;
 	EditText tiempo;
-	String [] tokenDuracion;
+	String [] tokenDuracion, tokenDireccion;
 
 	// TODO Auto-generated method stub
 		@Override
@@ -176,7 +176,8 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 							duracion.add(jsonObject.getString("rta_duracion"));
 							coordenadas.add(jsonObject.getString("rta_coordenadas"));
 							promedio_itm.add(jsonObject.getString("itm_promedio"));
-							direcciones.add(jsonObject.getString("itm_direccion"));							
+							tokenDireccion = jsonObject.getString("itm_direccion").split("<formatted_address>");
+						    direcciones.add(tokenDireccion[1]);						
 							
 							runOnUiThread
 							(

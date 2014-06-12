@@ -68,7 +68,7 @@ public class RecomendationActivity extends Activity implements android.location.
 	LayoutInflater liFind, liRecomendation, liRecomendationRoute;
 	View promptFind, promptRecomendation, promptRecomendationRoute;
 	EditText duracion;
-	String [] tokenDuracion;
+	String [] tokenDuracion, tokenDireccion;
 		
 	// TODO Auto-generated method stub
 		@Override
@@ -191,7 +191,8 @@ public class RecomendationActivity extends Activity implements android.location.
 							else if(jsonObject.getString("resultado").equals("1"))
 							{
 								nombre.add(jsonObject.getString("itm_nombre"));
-							    direccion.add(jsonObject.getString("itm_direccion"));
+								tokenDireccion = jsonObject.getString("itm_direccion").split("<formatted_address>");
+							    direccion.add(tokenDireccion[1]);
 							    promedio.add(jsonObject.getString("itm_promedio"));
 							    distancia.add(jsonObject.getString("distancia"));
 							    latitude.add(jsonObject.getString("itm_latitud"));

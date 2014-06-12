@@ -33,7 +33,7 @@
     <string name="user">User: </string>
     <string name="dir">Address:</string>
     <string name="average">Average:</string>
-    <string name="dist">Distance:</string>
+    <string name="dist">Distance (KM):</string>
     <string name="map">Map</string>
     <string name="origen">Origin:</string>
     <string name="destino">destination</string>

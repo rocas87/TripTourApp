@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 public class AdaptadorTitulares extends ArrayAdapter {
@@ -23,6 +24,7 @@ public class AdaptadorTitulares extends ArrayAdapter {
 	ArrayList<String> distancia = new ArrayList<String>();
 	String nom, dir, prom, dist, lat;
 	TextView name, address, average, distance;
+	RatingBar rating;
 	
 	
 	//@SuppressWarnings("unchecked")
@@ -54,11 +56,12 @@ public class AdaptadorTitulares extends ArrayAdapter {
 		address= (TextView)item.findViewById(R.id.direccion);
 		address.setText(dir);
 		
-		average = (TextView)item.findViewById(R.id.average);
-		average.setText(prom);
+		rating = (RatingBar)item.findViewById(R.id.ratingBar1);
+		rating.setRating(Float.parseFloat(prom));
 		
 		distance = (TextView)item.findViewById(R.id.distance);
 		distance.setText(dist);
+		
 
 		Thread nt = new Thread() {
 			@Override
