@@ -73,7 +73,8 @@ public class FindActivity extends Activity implements android.location.LocationL
 	EditText duracion;
 	String [] tokenDuracion, tokenDireccion;
 	DecimalFormat decimales = new DecimalFormat("0.0");
-		
+	JSONObject jsonObject;
+	
 	// TODO Auto-generated method stub
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +99,10 @@ public class FindActivity extends Activity implements android.location.LocationL
 			categorias.add("Parques");
 			categorias.add("Parque de diversiones");
 			categorias.add("Deportes");
-			categorias.add("Restorant");
+			categorias.add("Restaurant");
+			categorias.add("Senderismo");
+			categorias.add("Artesania");
+			categorias.add("Patrimonio");
 			//Tipos de transporte
 			transporte.add("Driving/Automovil");
 			transporte.add("Walking/Caminando");
@@ -125,7 +129,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 			loc = getMiUbicacion();
 			latitud = String.valueOf(loc.getLatitude());
 			longitud = String.valueOf(loc.getLongitude());
-			
+			Log.e("token",categoria);
 			params = new ArrayList<NameValuePair>();
 			params.add(new BasicNameValuePair("latitud",latitud));
 			params.add(new BasicNameValuePair("longitud",longitud));
@@ -146,13 +150,13 @@ public class FindActivity extends Activity implements android.location.LocationL
 				{
 					try
 					{
-						Log.e("token", "THREAD");
 						res = enviar.enviarPost(params, php);
+						Log.e("token", res);
 						jsonArray = new JSONArray(res);
 						
 						 for (int i = 0; i < jsonArray.length(); i++) 
 						 {
-							JSONObject jsonObject = jsonArray.getJSONObject(i);
+							jsonObject = jsonArray.getJSONObject(i);
 							if(jsonObject.getString("resultado").equals("categoria"))
 							{
 								runOnUiThread
@@ -204,24 +208,31 @@ public class FindActivity extends Activity implements android.location.LocationL
 							    distancia.add(dist);
 							    latitude.add(jsonObject.getString("itm_latitud"));
 							    longitude.add(jsonObject.getString("itm_longitud"));
-							    
-							    runOnUiThread
-								 (
-										 new Runnable()
-										 {
-											 @Override
-											 public void run() 
-											 {
-												 llenaLista(id,nombre,direccion,promedio,distancia, latitude, longitude);
-												 txtResults.setText(String.valueOf(jsonArray.length()));
-												 txtMode.setText(mode);
-												 pDialog.dismiss();
-											 }
-										 }
-								 );
 							}
 						 }
 						 
+						 if(jsonObject.getString("resultado").equals("categoria") ||
+						    jsonObject.getString("resultado").equals("radioBusqueda"))
+						 {
+							 home();
+						 }
+						 else
+						 {
+							 runOnUiThread
+							 (
+									 new Runnable()
+									 {
+										 @Override
+										 public void run() 
+										 {
+											 llenaLista(id,nombre,direccion,promedio,distancia, latitude, longitude);
+											 txtResults.setText(String.valueOf(jsonArray.length()));
+											 txtMode.setText(mode);
+											 pDialog.dismiss();
+										 }
+									 }
+							 );
+						 }
 					}
 					catch (Exception e)
 					{
@@ -556,6 +567,13 @@ public class FindActivity extends Activity implements android.location.LocationL
 			startActivity(recomendationRoute);
 		}
 
+		public void home()
+		{
+			Intent home = new Intent(this,HomeActivity.class);
+			home.putExtra("usr_nick", usuario);
+			startActivity(home);
+		}
+		
 		public void llenaLista(final ArrayList<String> id, final ArrayList<String> nombre, final ArrayList<String> direccion,
 								final ArrayList<String> promedio, final ArrayList<String> distancia,
 								final ArrayList<String> latitude, final ArrayList<String> longitude)

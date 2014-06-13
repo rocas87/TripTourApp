@@ -18,7 +18,7 @@
         android:layout_height="180dp"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/nombre"
-        android:src="@drawable/ic_launcher" />
+       />
 
     <TextView
         android:id="@+id/distance"
@@ -28,7 +28,7 @@
         android:layout_below="@+id/imgItem"
         android:layout_marginLeft="15dp"
         android:layout_toRightOf="@+id/dist"
-        android:text="Medium Text"
+        android:text="000.0"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -41,20 +41,11 @@
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/dist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/imgItem"
-        android:text="@string/dist" />
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/distance"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
+        android:layout_alignBottom="@+id/distance"
+        android:layout_alignParentRight="true"
         android:orientation="horizontal" >
 
         <ImageView
@@ -87,5 +78,15 @@
             android:layout_height="30dp"
             android:src="@drawable/preview" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/dist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/imgItem"
+        android:layout_marginTop="5dp"
+        android:text="@string/dist" />
 
 </RelativeLayout>

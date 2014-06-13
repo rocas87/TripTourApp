@@ -69,6 +69,7 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 	View promptFind, promptRecomendation, promptRecomendationRoute;
 	EditText tiempo;
 	String [] tokenDuracion, tokenDireccion;
+	JSONObject jsonObject;
 
 	// TODO Auto-generated method stub
 		@Override
@@ -91,7 +92,10 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 			categorias.add("Parques");
 			categorias.add("Parque de diversiones");
 			categorias.add("Deportes");
-			categorias.add("Restorant");
+			categorias.add("Restaurant");
+			categorias.add("Senderismo");
+			categorias.add("Artesania");
+			categorias.add("Patrimonio");
 			//Tipos de transporte
 			transporte.add("Driving/Automovil");
 			transporte.add("Walking/Caminando");
@@ -148,7 +152,7 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 						
 						 for (int i = 0; i < jsonArray.length(); i++) 
 						 {
-							JSONObject jsonObject = jsonArray.getJSONObject(i);
+							jsonObject = jsonArray.getJSONObject(i);
 							if (jsonObject.getString("resultado")=="nada")
 							{
 								runOnUiThread
@@ -178,23 +182,29 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 							promedio_itm.add(jsonObject.getString("itm_promedio"));
 							tokenDireccion = jsonObject.getString("itm_direccion").split("<formatted_address>");
 						    direcciones.add(tokenDireccion[1]);						
-							
-							runOnUiThread
-							(
-								 new Runnable()
-								 {
-									 @Override
-									 public void run()
-									 {
-									  llenaLista(nombre,promedio,distancia,duracion, coordenadas, 
-											  promedio_itm, direcciones);
-									  txtResults.setText(String.valueOf(jsonArray.length()));
-									  txtMode.setText(mode);
-									  pDialog.dismiss();
-									 }
-								 }
-							 );
 							}
+						 }
+						 if(jsonObject.getString("resultado")=="nada")
+						 {
+							 home();
+						 }
+						 else
+						 {
+							 runOnUiThread
+								(
+									 new Runnable()
+									 {
+										 @Override
+										 public void run()
+										 {
+										  llenaLista(nombre,promedio,distancia,duracion, coordenadas, 
+												  promedio_itm, direcciones);
+										  txtResults.setText(String.valueOf(jsonArray.length()));
+										  txtMode.setText(mode);
+										  pDialog.dismiss();
+										 }
+									 }
+								 );
 						 }
 					}
 					catch (Exception e)
@@ -529,6 +539,13 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 			recomendationRoute.putExtra("hora", hora);
 			recomendationRoute.putExtra("minuto", minuto);
 			startActivity(recomendationRoute);
+		}
+		
+		public void home()
+		{
+			Intent home = new Intent(this,HomeActivity.class);
+			home.putExtra("usr_nick", usuario);
+			startActivity(home);
 		}
 
 		public void llenaLista(final ArrayList<String> nombre, final ArrayList<String> promedio,

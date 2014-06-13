@@ -23,6 +23,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -70,6 +71,7 @@ public class RecomendationActivity extends Activity implements android.location.
 	View promptFind, promptRecomendation, promptRecomendationRoute;
 	EditText duracion;
 	String [] tokenDuracion, tokenDireccion;
+	JSONObject jsonObject;
 		
 	// TODO Auto-generated method stub
 		@Override
@@ -95,7 +97,10 @@ public class RecomendationActivity extends Activity implements android.location.
 			categorias.add("Parques");
 			categorias.add("Parque de diversiones");
 			categorias.add("Deportes");
-			categorias.add("Restorant");
+			categorias.add("Restaurant");
+			categorias.add("Senderismo");
+			categorias.add("Artesania");
+			categorias.add("Patrimonio");
 			//Tipos de transporte
 			transporte.add("Driving/Automovil");
 			transporte.add("Walking/Caminando");
@@ -145,10 +150,10 @@ public class RecomendationActivity extends Activity implements android.location.
 					{
 						res = enviar.enviarPost(params, php);
 						jsonArray = new JSONArray(res);
-						
+						Log.e("token", res);
 						 for (int i = 0; i < jsonArray.length(); i++) 
 						 {
-							JSONObject jsonObject = jsonArray.getJSONObject(i);
+							jsonObject = jsonArray.getJSONObject(i);
 							if(jsonObject.getString("resultado").equals("categoria"))
 							{
 								runOnUiThread
@@ -199,23 +204,30 @@ public class RecomendationActivity extends Activity implements android.location.
 							    distancia.add(jsonObject.getString("distancia"));
 							    latitude.add(jsonObject.getString("itm_latitud"));
 							    longitude.add(jsonObject.getString("itm_longitud"));
-							    
-							    runOnUiThread
-								 (
-										 new Runnable()
-										 {
-											 @Override
-											 public void run() 
-											 {
-												 llenaLista(id,nombre,direccion,promedio,distancia, latitude, longitude);
-												 txtResults.setText(String.valueOf(jsonArray.length()));
-												 txtMode.setText(mode);
-												 pDialog.dismiss();
-											 }
-										 }
-								 );
 							}
 						 }
+						 if(jsonObject.getString("resultado").equals("categoria") ||
+								    jsonObject.getString("resultado").equals("radioBusqueda"))
+								 {
+									 home();
+								 }
+								 else
+								 {
+									 runOnUiThread
+									 (
+											 new Runnable()
+											 {
+												 @Override
+												 public void run() 
+												 {
+													 llenaLista(id,nombre,direccion,promedio,distancia, latitude, longitude);
+													 txtResults.setText(String.valueOf(jsonArray.length()));
+													 txtMode.setText(mode);
+													 pDialog.dismiss();
+												 }
+											 }
+									 );
+								 }
 					}
 					catch (Exception e)
 					{
@@ -548,6 +560,13 @@ public class RecomendationActivity extends Activity implements android.location.
 			recomendationRoute.putExtra("hora", hora);
 			recomendationRoute.putExtra("minuto", minuto);
 			startActivity(recomendationRoute);
+		}
+		
+		public void home()
+		{
+			Intent home = new Intent(this,HomeActivity.class);
+			home.putExtra("usr_nick", usuario);
+			startActivity(home);
 		}
 		
 		public void llenaLista(final ArrayList<String> id, final ArrayList<String> nombre, final ArrayList<String> direccion,

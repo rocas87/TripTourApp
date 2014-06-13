@@ -93,7 +93,10 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 		categorias.add("Parques");
 		categorias.add("Parque de diversiones");
 		categorias.add("Deportes");
-		categorias.add("Restorant");
+		categorias.add("Restaurant");
+		categorias.add("Senderismo");
+		categorias.add("Artesania");
+		categorias.add("Patrimonio");
 		//Tipos de transporte
 		transporte.add("Driving/Automovil");
 		transporte.add("Walking/Caminando");

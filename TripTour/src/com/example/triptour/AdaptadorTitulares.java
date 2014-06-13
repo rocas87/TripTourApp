@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,7 @@ public class AdaptadorTitulares extends ArrayAdapter {
 			public void run() {
 				
 				try {
+					Log.e("token",itm_id);
 					URL imageUrl = new URL("http://200.14.84.19/servtriptour/imagenes/"+itm_id+".jpg");
 					HttpURLConnection conn = (HttpURLConnection)imageUrl.openConnection();
 					conn.connect();
