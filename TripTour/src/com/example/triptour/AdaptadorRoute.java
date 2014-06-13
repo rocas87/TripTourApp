@@ -3,11 +3,12 @@ package com.example.triptour;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.RatingBar;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class AdaptadorRoute extends ArrayAdapter {
@@ -19,8 +20,7 @@ public class AdaptadorRoute extends ArrayAdapter {
 	ArrayList<String> duracion = new ArrayList<String>();
 	String nom, prom, dist, dur;
 	TextView name, average, distance, duration;
-	RatingBar rating;
-	
+	ImageView imagen, est1, est2, est3, est4, est5;	
 	
 	//@SuppressWarnings("unchecked")
 	public AdaptadorRoute(Activity context, ArrayList<String> nombre, ArrayList<String> promedio, ArrayList<String> distancia,
@@ -47,16 +47,41 @@ public class AdaptadorRoute extends ArrayAdapter {
 		
 		name = (TextView)item.findViewById(R.id.nombre);
 		name.setText(nom);
-				
-		rating = (RatingBar)item.findViewById(R.id.ratingBar1);
-		rating.setRating(Float.parseFloat(prom));
-		
+						
 		distance = (TextView)item.findViewById(R.id.distance);
 		distance.setText(dist);
 		
 		duration = (TextView)item.findViewById(R.id.duration);
 		duration.setText(dur);
 		
+		est1 = (ImageView)item.findViewById(R.id.est1);
+		est2 = (ImageView)item.findViewById(R.id.est2);
+		est3 = (ImageView)item.findViewById(R.id.est3);
+		est4 = (ImageView)item.findViewById(R.id.est4);
+		est5 = (ImageView)item.findViewById(R.id.est5);
+		
+		if(prom.equals("4"))
+		{
+			est5.setImageURI(Uri.parse("drawable/preview.jpg"));
+		}
+		else if(prom.equals("3"))
+		{
+			est4.setImageURI(Uri.parse("drawable/preview.jpg"));
+			est5.setImageURI(Uri.parse("drawable/preview.jpg"));
+		}
+		else if(prom.equals("2"))
+		{
+			est3.setImageURI(Uri.parse("drawable/preview.jpg"));
+			est4.setImageURI(Uri.parse("drawable/preview.jpg"));
+			est5.setImageURI(Uri.parse("drawable/preview.jpg"));
+		}
+		else if(prom.equals("1"))
+		{
+			est2.setImageURI(Uri.parse("drawable/preview.jpg"));
+			est3.setImageURI(Uri.parse("drawable/preview.jpg"));
+			est4.setImageURI(Uri.parse("drawable/preview.jpg"));
+			est5.setImageURI(Uri.parse("drawable/preview.jpg"));
+		}
 		return item;
 	}
 }

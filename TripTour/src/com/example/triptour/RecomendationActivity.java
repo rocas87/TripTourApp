@@ -45,6 +45,7 @@ public class RecomendationActivity extends Activity implements android.location.
 	ListView lista;
 	Button btnMapa;
 	List<NameValuePair> params;
+	ArrayList<String> id = new ArrayList<String>();
 	ArrayList<String> nombre = new ArrayList<String>();
 	ArrayList<String> direccion = new ArrayList<String>();
 	ArrayList<String> promedio = new ArrayList<String>();
@@ -190,6 +191,7 @@ public class RecomendationActivity extends Activity implements android.location.
 							}
 							else if(jsonObject.getString("resultado").equals("1"))
 							{
+								id.add(jsonObject.getString("itm_id"));
 								nombre.add(jsonObject.getString("itm_nombre"));
 								tokenDireccion = jsonObject.getString("itm_direccion").split("<formatted_address>");
 							    direccion.add(tokenDireccion[1]);
@@ -205,7 +207,7 @@ public class RecomendationActivity extends Activity implements android.location.
 											 @Override
 											 public void run() 
 											 {
-												 llenaLista(nombre,direccion,promedio,distancia, latitude, longitude);
+												 llenaLista(id,nombre,direccion,promedio,distancia, latitude, longitude);
 												 txtResults.setText(String.valueOf(jsonArray.length()));
 												 txtMode.setText(mode);
 												 pDialog.dismiss();
@@ -548,11 +550,11 @@ public class RecomendationActivity extends Activity implements android.location.
 			startActivity(recomendationRoute);
 		}
 		
-		public void llenaLista(final ArrayList<String> nombre, final ArrayList<String> direccion,
+		public void llenaLista(final ArrayList<String> id, final ArrayList<String> nombre, final ArrayList<String> direccion,
 								final ArrayList<String> promedio, final ArrayList<String> distancia,
 								final ArrayList<String> latitude, final ArrayList<String> longitude)
 		{
-			AdaptadorTitulares adap = new AdaptadorTitulares(this,nombre,direccion,
+			AdaptadorTitulares adap = new AdaptadorTitulares(this, id, nombre,direccion,
 															promedio,distancia);
 			lista.setAdapter(adap);
 			lista.setOnItemClickListener(new OnItemClickListener()

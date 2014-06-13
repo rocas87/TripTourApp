@@ -47,6 +47,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 	ListView lista;
 	Button btnMapa;
 	List<NameValuePair> params;
+	ArrayList<String> id = new ArrayList<String>();
 	ArrayList<String> nombre = new ArrayList<String>();
 	ArrayList<String> direccion = new ArrayList<String>();
 	ArrayList<String> promedio = new ArrayList<String>();
@@ -194,6 +195,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 							}
 							else if(jsonObject.getString("resultado").equals("1"))
 							{
+								id.add(jsonObject.getString("itm_id"));
 								nombre.add(jsonObject.getString("itm_nombre"));
 								tokenDireccion = jsonObject.getString("itm_direccion").split("<formatted_address>");
 							    direccion.add(tokenDireccion[1]);
@@ -202,22 +204,24 @@ public class FindActivity extends Activity implements android.location.LocationL
 							    distancia.add(dist);
 							    latitude.add(jsonObject.getString("itm_latitud"));
 							    longitude.add(jsonObject.getString("itm_longitud"));
+							    
+							    runOnUiThread
+								 (
+										 new Runnable()
+										 {
+											 @Override
+											 public void run() 
+											 {
+												 llenaLista(id,nombre,direccion,promedio,distancia, latitude, longitude);
+												 txtResults.setText(String.valueOf(jsonArray.length()));
+												 txtMode.setText(mode);
+												 pDialog.dismiss();
+											 }
+										 }
+								 );
 							}
 						 }
-						 runOnUiThread
-						 (
-								 new Runnable()
-								 {
-									 @Override
-									 public void run() 
-									 {
-										 llenaLista(nombre,direccion,promedio,distancia, latitude, longitude);
-										 txtResults.setText(String.valueOf(jsonArray.length()));
-										 txtMode.setText(mode);
-										 pDialog.dismiss();
-									 }
-								 }
-						 );
+						 
 					}
 					catch (Exception e)
 					{
@@ -552,11 +556,11 @@ public class FindActivity extends Activity implements android.location.LocationL
 			startActivity(recomendationRoute);
 		}
 
-		public void llenaLista(final ArrayList<String> nombre, final ArrayList<String> direccion,
+		public void llenaLista(final ArrayList<String> id, final ArrayList<String> nombre, final ArrayList<String> direccion,
 								final ArrayList<String> promedio, final ArrayList<String> distancia,
 								final ArrayList<String> latitude, final ArrayList<String> longitude)
 		{
-			AdaptadorTitulares adap = new AdaptadorTitulares(this,nombre,direccion,
+			AdaptadorTitulares adap = new AdaptadorTitulares(this,id,nombre,direccion,
 															promedio,distancia);
 			lista.setAdapter(adap);
 			lista.setOnItemClickListener(new OnItemClickListener()
