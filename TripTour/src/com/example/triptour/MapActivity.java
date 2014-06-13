@@ -1,5 +1,6 @@
 package com.example.triptour;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +55,7 @@ implements android.location.LocationListener, OnClickListener
 	LatLng MiUbicacion, coord;
 	String itm_nombre, itm_direccion, itm_promedio, itm_distancia, itm_latitude, itm_longitude, waypoints, url,
 	rta_nombre, rta_promedio, rta_distancia, rta_duracion, rta_coordenadas, rta_mode, promedio_itm, latLong, usuario, hora,
-	minuto;
+	minuto, disItem;
 	Marker itemMarker;
 	//double itm_latitud, itm_longitud;
 	ArrayList<String> nombre = new ArrayList<String>();
@@ -65,7 +66,7 @@ implements android.location.LocationListener, OnClickListener
 	ArrayList<String> longitude = new ArrayList<String>();
 	Double radioBusqueda;
 	int id, indice, categoriaFind, transporteFind, categoriaRecomendation, transporteRecomendation, transporteRoute;
-	String[] tokens, tokensNombre, tokensPromedio;
+	String[] tokens, tokensNombre, tokensPromedio, tokenDuracion, tokenDistancia;
 	ArrayAdapter<String> adaptadorCategoria, adaptadorTransporte;
 	private Spinner spCategoria, spTransporte;
 	private List<String> categorias = new ArrayList<String>();
@@ -73,8 +74,8 @@ implements android.location.LocationListener, OnClickListener
 	LayoutInflater liFind, liRecomendation, liRecomendationRoute;
 	View promptFind, promptRecomendation, promptRecomendationRoute;
 	EditText duracion;
-	String [] tokenDuracion;
-		
+	DecimalFormat decimales = new DecimalFormat("0.0");
+	
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
@@ -128,7 +129,7 @@ implements android.location.LocationListener, OnClickListener
 				 mapa.addMarker(new MarkerOptions()
 		        .position(new LatLng(Double.parseDouble(latitude.get(i)), Double.parseDouble(longitude.get(i))))
 		        .title(String.valueOf(nombre.get(i)))
-		        .snippet("Average:"+promedio.get(i)+"Distance:"+distancia.get(i)));
+		        .snippet(promedio.get(i)+"/"+distancia.get(i)));
 				 
 				 mapa.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
 			 }
@@ -148,7 +149,7 @@ implements android.location.LocationListener, OnClickListener
 			mapa.addMarker(new MarkerOptions()
 	        .position(new LatLng(Double.parseDouble(itm_latitude), Double.parseDouble(itm_longitude)))
 	        .title(itm_nombre)
-	        .snippet("Average:"+itm_promedio+"Distance:"+itm_distancia));
+	        .snippet(itm_promedio+"/"+itm_distancia));
 			
 			mapa.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
 			
@@ -172,20 +173,20 @@ implements android.location.LocationListener, OnClickListener
 			rta_mode = mapActivity.getString("rta_mode");
 			radioBusqueda = Double.parseDouble(mapActivity.getString("distMaxima"));
 			promedio_itm = mapActivity.getString("promedio_itm");
-			
+			disItem = mapActivity.getString("disItem");
 			//Divide coordenadas y nombre de la ruta
 			String delims = ",";
 			tokens = rta_coordenadas.split(delims);
 			tokensNombre = rta_nombre.split(delims);
 			tokensPromedio = promedio_itm.split(delims);
-					
+			tokenDistancia = disItem.split(delims);		
 			indice = 0;
 			for(int i=0; i < (tokens.length)-1; i++)
 			 {
 				 mapa.addMarker(new MarkerOptions()
 		        .position(new LatLng(Double.parseDouble(tokens[i]), Double.parseDouble(tokens[i+1])))
 		        .title(String.valueOf(tokensNombre[indice]))
-		        .snippet("Average:"+tokensPromedio[indice]));
+		        .snippet(tokensPromedio[indice]+"/"+decimales.format((Double.parseDouble(tokenDistancia[indice]))/1000)));
 				 
 				mapa.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
 				

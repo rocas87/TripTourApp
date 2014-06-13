@@ -433,6 +433,7 @@ containing a value of this type.
         public static final int direccion=0x7f060020;
         public static final int dist=0x7f06001f;
         public static final int distance=0x7f06001e;
+        public static final int distancia=0x7f06003b;
         public static final int dur=0x7f060027;
         public static final int duracion=0x7f06003f;
         public static final int duration=0x7f060026;
@@ -479,7 +480,6 @@ containing a value of this type.
         public static final int sandbox=0x7f060008;
         public static final int satellite=0x7f060002;
         public static final int selectionDetails=0x7f06000b;
-        public static final int snippet=0x7f06003b;
         public static final int spCategoria=0x7f06003d;
         public static final int spTransporte=0x7f06003e;
         public static final int strict_sandbox=0x7f060009;

@@ -1,5 +1,6 @@
 package com.example.triptour;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class RecomendationActivity extends Activity implements android.location.
 	ArrayList<String> latitude = new ArrayList<String>();
 	ArrayList<String> longitude = new ArrayList<String>();
 	String usuario, latitud, longitud, categoria, radioBusqueda, medioTransporte, mode, php, res, itm_nombre, itm_direccion,
-				    itm_promedio, itm_distancia, itm_latitude, itm_longitude, latLong, hora, minuto;
+				    itm_promedio, itm_distancia, itm_latitude, itm_longitude, latLong, hora, minuto, dist;
 	int categoriaFind, transporteFind, categoriaRecomendation, transporteRecomendation, transporteRoute;
 	Location loc;
 	LocationClient mLocationClient;
@@ -72,6 +73,7 @@ public class RecomendationActivity extends Activity implements android.location.
 	EditText duracion;
 	String [] tokenDuracion, tokenDireccion;
 	JSONObject jsonObject;
+	DecimalFormat decimales = new DecimalFormat("0.0");
 		
 	// TODO Auto-generated method stub
 		@Override
@@ -201,7 +203,8 @@ public class RecomendationActivity extends Activity implements android.location.
 								tokenDireccion = jsonObject.getString("itm_direccion").split("<formatted_address>");
 							    direccion.add(tokenDireccion[1]);
 							    promedio.add(jsonObject.getString("itm_promedio"));
-							    distancia.add(jsonObject.getString("distancia"));
+							    dist = decimales.format(Double.parseDouble(jsonObject.getString("distancia")));
+							    distancia.add(dist);
 							    latitude.add(jsonObject.getString("itm_latitud"));
 							    longitude.add(jsonObject.getString("itm_longitud"));
 							}

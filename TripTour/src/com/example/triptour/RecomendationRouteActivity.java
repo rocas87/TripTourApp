@@ -1,5 +1,6 @@
 package com.example.triptour;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -51,8 +53,10 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 	ArrayList<String> coordenadas = new ArrayList<String>();
 	ArrayList<String> promedio_itm = new ArrayList<String>();
 	ArrayList<String> direcciones = new ArrayList<String>();
+	ArrayList<String> disItem = new ArrayList<String>();
+	ArrayList<String> promRuta = new ArrayList<String>();
 	String usuario, latitud, longitud, php, res, itm_nombre, itm_direccion, itm_promedio, itm_distancia, 
-		   itm_latitude, itm_longitude, mode, medioTransporte, tiempoRecorrido, distMaxima, dia, hora, minuto, latLong;
+		   itm_latitude, itm_longitude, mode, medioTransporte, tiempoRecorrido, distMaxima, dia, hora, minuto, latLong, prom;
 	int categoriaFind, transporteFind, categoriaRecomendation, transporteRecomendation, transporteRoute;
 	Location loc;
 	LocationClient mLocationClient;
@@ -68,9 +72,9 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 	LayoutInflater liFind, liRecomendation, liRecomendationRoute;
 	View promptFind, promptRecomendation, promptRecomendationRoute;
 	EditText tiempo;
-	String [] tokenDuracion, tokenDireccion;
+	String [] tokenDuracion, tokenDireccion, tokenRating;
 	JSONObject jsonObject;
-
+	
 	// TODO Auto-generated method stub
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
@@ -181,7 +185,8 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 							coordenadas.add(jsonObject.getString("rta_coordenadas"));
 							promedio_itm.add(jsonObject.getString("itm_promedio"));
 							tokenDireccion = jsonObject.getString("itm_direccion").split("<formatted_address>");
-						    direcciones.add(tokenDireccion[1]);						
+						    direcciones.add(tokenDireccion[1]);	
+						    disItem.add(jsonObject.getString("itm_distancia"));
 							}
 						 }
 						 if(jsonObject.getString("resultado")=="nada")
@@ -198,7 +203,7 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 										 public void run()
 										 {
 										  llenaLista(nombre,promedio,distancia,duracion, coordenadas, 
-												  promedio_itm, direcciones);
+												  promedio_itm, direcciones, disItem);
 										  txtResults.setText(String.valueOf(jsonArray.length()));
 										  txtMode.setText(mode);
 										  pDialog.dismiss();
@@ -551,25 +556,47 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 		public void llenaLista(final ArrayList<String> nombre, final ArrayList<String> promedio,
 								final ArrayList<String> distancia, final ArrayList<String> duracion,
 								final ArrayList<String> coordenadas, final ArrayList<String> promedio_itm,
-								final ArrayList<String> direcciones)
+								final ArrayList<String> direcciones, final ArrayList<String> disItem)
 		{
-			AdaptadorRoute adap = new AdaptadorRoute(this,nombre,promedio,distancia,duracion);
+			promRuta = promedio(promedio_itm);
+			AdaptadorRoute adap = new AdaptadorRoute(this,nombre,promRuta,distancia,duracion);
 			lista.setAdapter(adap);
 			lista.setOnItemClickListener(new OnItemClickListener()
 			{
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					// TODO Auto-generated method stub
+					Log.e("token", "enviar"+String.valueOf(disItem.get(position)));
 					enviar(String.valueOf(nombre.get(position)), String.valueOf(promedio.get(position)),
 					String.valueOf(distancia.get(position)), String.valueOf(duracion.get(position)),
 					String.valueOf(coordenadas.get(position)), String.valueOf(promedio_itm.get(position)),
-					String.valueOf(direcciones.get(position)));
+					String.valueOf(direcciones.get(position)), String.valueOf(disItem.get(position)));
 				}
 			});
 		}
 		
+		private ArrayList<String> promedio(ArrayList<String> promedio_itm2) 
+		{
+			ArrayList<String> notas = new ArrayList<String>();
+			String resultado="0";
+			// TODO Auto-generated method stub
+			for(int i=0; i<promedio_itm2.size(); i++)
+			{
+				int suma = 0;
+				tokenRating = promedio_itm2.get(i).split(",");
+				for(int x=0; x<tokenRating.length; x++)
+				{
+					suma = suma+Integer.parseInt(tokenRating[x]);
+				}
+				resultado = String.valueOf(suma/tokenRating.length);
+				notas.add(resultado);
+			}
+			return notas;
+		}
+
+
 		public void enviar(String rta_nombre, String rta_promedio, String rta_distancia, 
-				String rta_duracion, String rta_coordenadas, String promedio_itm, String direcciones)
+				String rta_duracion, String rta_coordenadas, String promedio_itm, String direcciones, String disItem)
 		{
 			Intent mapActivity = new Intent(this,MapActivity.class);
 			mapActivity.putExtra("id", 2);
@@ -583,6 +610,8 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 			mapActivity.putExtra("promedio_itm", promedio_itm);
 			mapActivity.putExtra("direcciones", direcciones);
 			mapActivity.putExtra("user", usuario);
+			mapActivity.putExtra("disItem", disItem);
+			Log.e("token","put"+disItem);
 			startActivity(mapActivity);
 		}
 

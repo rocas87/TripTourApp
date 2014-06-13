@@ -116,6 +116,7 @@ int id destino 0x7f06002e
 int id direccion 0x7f060020
 int id dist 0x7f06001f
 int id distance 0x7f06001e
+int id distancia 0x7f06003b
 int id dur 0x7f060027
 int id duracion 0x7f06003f
 int id duration 0x7f060026
@@ -162,7 +163,6 @@ int id resultados 0x7f060040
 int id sandbox 0x7f060008
 int id satellite 0x7f060002
 int id selectionDetails 0x7f06000b
-int id snippet 0x7f06003b
 int id spCategoria 0x7f06003d
 int id spTransporte 0x7f06003e
 int id strict_sandbox 0x7f060009
