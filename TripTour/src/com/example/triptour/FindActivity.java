@@ -47,7 +47,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 	ListView lista;
 	Button btnMapa;
 	List<NameValuePair> params;
-	ArrayList<String> id = new ArrayList<String>();
+	ArrayList<String> itm_id = new ArrayList<String>();
 	ArrayList<String> nombre = new ArrayList<String>();
 	ArrayList<String> direccion = new ArrayList<String>();
 	ArrayList<String> promedio = new ArrayList<String>();
@@ -199,7 +199,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 							}
 							else if(jsonObject.getString("resultado").equals("1"))
 							{
-								id.add(jsonObject.getString("itm_id"));
+								itm_id.add(jsonObject.getString("itm_id"));
 								nombre.add(jsonObject.getString("itm_nombre"));
 								tokenDireccion = jsonObject.getString("itm_direccion").split("<formatted_address>");
 							    direccion.add(tokenDireccion[1]);
@@ -225,7 +225,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 										 @Override
 										 public void run() 
 										 {
-											 llenaLista(id,nombre,direccion,promedio,distancia, latitude, longitude);
+											 llenaLista(itm_id,nombre,direccion,promedio,distancia, latitude, longitude);
 											 txtResults.setText(String.valueOf(jsonArray.length()));
 											 txtMode.setText(mode);
 											 pDialog.dismiss();
@@ -574,11 +574,12 @@ public class FindActivity extends Activity implements android.location.LocationL
 			startActivity(home);
 		}
 		
-		public void llenaLista(final ArrayList<String> id, final ArrayList<String> nombre, final ArrayList<String> direccion,
-								final ArrayList<String> promedio, final ArrayList<String> distancia,
-								final ArrayList<String> latitude, final ArrayList<String> longitude)
+		public void llenaLista(final ArrayList<String> itm_id, final ArrayList<String> nombre, 
+								final ArrayList<String> direccion, final ArrayList<String> promedio, 
+								final ArrayList<String> distancia, final ArrayList<String> latitude, 
+								final ArrayList<String> longitude)
 		{
-			AdaptadorTitulares adap = new AdaptadorTitulares(this,id,nombre,direccion,
+			AdaptadorTitulares adap = new AdaptadorTitulares(this,itm_id,nombre,direccion,
 															promedio,distancia);
 			lista.setAdapter(adap);
 			lista.setOnItemClickListener(new OnItemClickListener()
@@ -586,18 +587,20 @@ public class FindActivity extends Activity implements android.location.LocationL
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					// TODO Auto-generated method stub
-					enviar(String.valueOf(nombre.get(position)), String.valueOf(direccion.get(position)),
-					String.valueOf(promedio.get(position)),	String.valueOf(distancia.get(position)),
-					String.valueOf(latitude.get(position)), String.valueOf(longitude.get(position)));
+					enviar(String.valueOf(itm_id.get(position)), String.valueOf(nombre.get(position)), 
+							String.valueOf(direccion.get(position)), String.valueOf(promedio.get(position)),
+							String.valueOf(distancia.get(position)), String.valueOf(latitude.get(position)), 
+							String.valueOf(longitude.get(position)));
 				}
 			});
 		}
 		
-		public void enviar(String itm_nombre, String itm_direccion, String itm_promedio, 
+		public void enviar(String itm_id, String itm_nombre, String itm_direccion, String itm_promedio, 
 							String itm_distancia, String itm_latitude, String itm_longitude)
 		{
 			Intent mapActivity = new Intent(this,MapActivity.class);
 			mapActivity.putExtra("id", 1);
+			mapActivity.putExtra("itm_id", itm_id);
 			mapActivity.putExtra("itm_nombre", itm_nombre);
 			mapActivity.putExtra("itm_direccion", itm_direccion);
 			mapActivity.putExtra("itm_promedio", itm_promedio);
@@ -659,6 +662,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 			// TODO Auto-generated method stub
 			Intent mapActivity = new Intent(this,MapActivity.class);
 			mapActivity.putExtra("id", 0);
+			mapActivity.putExtra("itm_id", itm_id);
 			mapActivity.putExtra("itm_nombre", nombre);
 			mapActivity.putExtra("itm_direccion", direccion);
 			mapActivity.putExtra("itm_promedio", promedio);

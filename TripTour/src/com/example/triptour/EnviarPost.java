@@ -13,6 +13,8 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
+import android.util.Log;
+
 public class EnviarPost {
 
 	String resultado,ip;
@@ -24,6 +26,7 @@ public class EnviarPost {
 		
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpContext localContext = new BasicHttpContext();
+		Log.e("token","http://"+ip+php);
 		HttpPost httpPost = new HttpPost("http://"+ip+php);
 		HttpResponse response = null;
 		try {

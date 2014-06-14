@@ -50,5 +50,6 @@
     <string name="register">Register</string>
     <string name="logonSkip">Skip logon</string>
     <string name="inicio">¡Welcome!</string>
+    <string name="post">Comentt</string>
 
 </resources>

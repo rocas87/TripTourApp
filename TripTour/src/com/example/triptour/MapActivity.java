@@ -7,8 +7,10 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import com.google.android.gms.ads.identifier.AdvertisingIdClient.Info;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -32,6 +34,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.renderscript.Int2;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -53,7 +57,7 @@ implements android.location.LocationListener, OnClickListener
 	private String provider;
 	Location loc;
 	LatLng MiUbicacion, coord;
-	String itm_nombre, itm_direccion, itm_promedio, itm_distancia, itm_latitude, itm_longitude, waypoints, url,
+	String itm_id, itm_nombre, itm_direccion, itm_promedio, itm_distancia, itm_latitude, itm_longitude, waypoints, url,
 	rta_nombre, rta_promedio, rta_distancia, rta_duracion, rta_coordenadas, rta_mode, promedio_itm, latLong, usuario, hora,
 	minuto, disItem;
 	Marker itemMarker;
@@ -138,6 +142,7 @@ implements android.location.LocationListener, OnClickListener
 		//Si coorresponde a 1 solo item
 		else if(id==1)
 		{
+			itm_id = mapActivity.getString("itm_id");
 			itm_nombre = mapActivity.getString("itm_nombre");
 			itm_direccion = mapActivity.getString("itm_direccion");
 			itm_promedio = mapActivity.getString("itm_promedio");
@@ -152,7 +157,14 @@ implements android.location.LocationListener, OnClickListener
 	        .snippet(itm_promedio+"/"+itm_distancia));
 			
 			mapa.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
-			
+			mapa.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+				
+				@Override
+				public void onInfoWindowClick(Marker arg0) {
+					// TODO Auto-generated method stub
+					infoItem(itm_id, itm_nombre, itm_direccion, itm_promedio);
+				}
+			});
 			waypoints = waypoints + "|" + Double.parseDouble(itm_latitude) + "," 
 						+ Double.parseDouble(itm_longitude);
 			
@@ -189,7 +201,7 @@ implements android.location.LocationListener, OnClickListener
 		        .snippet(tokensPromedio[indice]+"/"+decimales.format((Double.parseDouble(tokenDistancia[indice]))/1000)));
 				 
 				mapa.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
-				
+
 				waypoints = waypoints + "|" + tokens[i] + "," + tokens[i+1];
 				
 				indice++;
@@ -211,13 +223,22 @@ implements android.location.LocationListener, OnClickListener
 		circleOptions.strokeWidth((float) 2.0);
 		// Get back the mutable Circle
 		Circle circle = mapa.addCircle(circleOptions);
-		
-		mapa.setOnMarkerClickListener(new OnMarkerClickListener() {
-			public boolean onMarkerClick(Marker marker) {
-				Toast.makeText(	MapActivity.this,marker.getTitle(), 0);
-				return false;
-			}
-		});
+	}
+
+	private void infoItem(String itm_id, String itm_nombre, String itm_direccion, String itm_promedio) 
+	{
+		// TODO Auto-generated method stub
+		Intent item = new Intent(this,ItemActivity.class);
+		item.putExtra("user", usuario);
+		item.putExtra("itm_id", itm_id);
+		item.putExtra("itm_nombre", itm_nombre);
+		item.putExtra("itm_direccion", itm_direccion);
+		item.putExtra("itm_promedio", itm_promedio);
+		startActivity(item);
+	}
+	private OnInfoWindowClickListener OnInfoWindowClickListener() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

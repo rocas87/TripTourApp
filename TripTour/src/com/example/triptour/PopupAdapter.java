@@ -8,16 +8,15 @@ import android.widget.TextView;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.Marker;
 
-class PopupAdapter implements InfoWindowAdapter {
+public class PopupAdapter implements InfoWindowAdapter {
   LayoutInflater inflater=null;
 
   TextView title, promedio, distancia;
   ImageView est1, est2, est3, est4, est5;
   String[] tokenRes;
-  PopupAdapter(LayoutInflater inflater) {
-    this.inflater=inflater;
+ public PopupAdapter(LayoutInflater inflater) {
+	 this.inflater=inflater;
   }
-
   @Override
   public View getInfoWindow(Marker marker) {
     return(null);
