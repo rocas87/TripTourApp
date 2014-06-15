@@ -27,14 +27,6 @@
     </item>
     
     <item 
-        android:id="@+id/evaluacion" 
-        android:title="@string/rating" 
-        android:icon="@drawable/ic_action_half_important"
-        android:showAsAction="ifRoom"
-      >
-    </item>
-    
-    <item 
         android:id="@+id/alojamiento" 
         android:title="@string/alojamiento"
         android:icon="@drawable/ic_icon_building"
@@ -56,13 +48,5 @@
 		android:icon="@drawable/dollar_sign"
         android:showAsAction="ifRoom"
       >  
-    </item>
-        
-     <item 
-        android:id="@+id/preferencias" 
-        android:title="@string/preferences"
-        android:icon="@android:drawable/ic_menu_preferences"
-        android:showAsAction="ifRoom"
-      >
     </item>
 </menu>

@@ -321,9 +321,6 @@ implements android.location.LocationListener, OnClickListener
 	        	}
 	            return true;
 
-	        case R.id.evaluacion:
-	        	return true;
-
 	        case R.id.alojamiento:
 				Intent intent = new Intent(Intent.ACTION_VIEW);
 				intent.setData(Uri.parse("http://www.booking.com/"));
@@ -345,9 +342,6 @@ implements android.location.LocationListener, OnClickListener
 				startActivity(changeMoney);
 				return true;
 
-			case R.id.preferencias:
-				return true;
-				
 			case android.R.id.home:
 				Intent home = new Intent(this,HomeActivity.class);
 				home.putExtra("usr_nick", usuario);

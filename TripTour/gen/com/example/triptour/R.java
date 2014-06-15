@@ -327,6 +327,18 @@ containing a value of this type.
         public static final int zOrderOnTop=0x7f010010;
     }
     public static final class color {
+        public static final int AMARILLO=0x7f050020;
+        public static final int BLANCO=0x7f050017;
+        public static final int CELESTE=0x7f050021;
+        public static final int COBALTO=0x7f050022;
+        public static final int MORADO=0x7f050019;
+        public static final int NARANJA=0x7f050018;
+        public static final int NEGRO=0x7f05001b;
+        public static final int PISTACHO=0x7f05001a;
+        public static final int ROJO=0x7f05001c;
+        public static final int ROSA=0x7f05001d;
+        public static final int SALMON=0x7f05001e;
+        public static final int VVIVO=0x7f05001f;
         public static final int common_action_bar_splitter=0x7f050009;
         /**  Sign-in Button Colors 
          */
@@ -339,8 +351,8 @@ containing a value of this type.
         public static final int common_signin_btn_light_text_disabled=0x7f050006;
         public static final int common_signin_btn_light_text_focused=0x7f050007;
         public static final int common_signin_btn_light_text_pressed=0x7f050005;
-        public static final int common_signin_btn_text_dark=0x7f050017;
-        public static final int common_signin_btn_text_light=0x7f050018;
+        public static final int common_signin_btn_text_dark=0x7f050023;
+        public static final int common_signin_btn_text_light=0x7f050024;
         public static final int wallet_bright_foreground_disabled_holo_light=0x7f05000f;
         /** 
          Wallet colors to support consistent Wallet fragment holo dark UI in client application
@@ -359,8 +371,8 @@ containing a value of this type.
         public static final int wallet_hint_foreground_holo_light=0x7f050011;
         public static final int wallet_holo_blue_light=0x7f050015;
         public static final int wallet_link_text_light=0x7f050016;
-        public static final int wallet_primary_text_holo_light=0x7f050019;
-        public static final int wallet_secondary_text_holo_dark=0x7f05001a;
+        public static final int wallet_primary_text_holo_light=0x7f050025;
+        public static final int wallet_secondary_text_holo_dark=0x7f050026;
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
@@ -414,8 +426,8 @@ containing a value of this type.
         public static final int preview=0x7f020025;
     }
     public static final class id {
-        public static final int action_settings=0x7f06005e;
-        public static final int alojamiento=0x7f06005a;
+        public static final int action_settings=0x7f06005c;
+        public static final int alojamiento=0x7f060059;
         public static final int book_now=0x7f060010;
         public static final int btnCambio=0x7f060032;
         public static final int btnEnviar=0x7f06004c;
@@ -426,9 +438,9 @@ containing a value of this type.
         public static final int buyButton=0x7f06000a;
         public static final int buy_now=0x7f06000f;
         public static final int buy_with_google=0x7f06000e;
-        public static final int cambio_moneda=0x7f06005c;
+        public static final int cambio_moneda=0x7f06005b;
         public static final int classic=0x7f060011;
-        public static final int clima=0x7f06005b;
+        public static final int clima=0x7f06005a;
         public static final int destino=0x7f060031;
         public static final int direccion=0x7f060020;
         public static final int dist=0x7f06001f;
@@ -451,7 +463,6 @@ containing a value of this type.
         public static final int est3=0x7f060023;
         public static final int est4=0x7f060024;
         public static final int est5=0x7f060025;
-        public static final int evaluacion=0x7f060059;
         public static final int find=0x7f060055;
         public static final int grayscale=0x7f060012;
         public static final int holo_dark=0x7f060005;
@@ -470,7 +481,6 @@ containing a value of this type.
         public static final int normal=0x7f060001;
         public static final int origen=0x7f06002e;
         public static final int post=0x7f060040;
-        public static final int preferencias=0x7f06005d;
         public static final int production=0x7f060007;
         public static final int prompt=0x7f060045;
         public static final int radioGroupSexo=0x7f060052;
