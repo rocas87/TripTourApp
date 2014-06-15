@@ -55,7 +55,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 	ArrayList<String> latitude = new ArrayList<String>();
 	ArrayList<String> longitude = new ArrayList<String>();
 	String usuario, latitud, longitud, categoria, radioBusqueda, mode, php, res, itm_nombre, itm_direccion,
-				    itm_promedio, itm_distancia, itm_latitude, itm_longitude, medioTransporte, hora, latLong, minuto, dist;
+				    itm_promedio, itm_distancia, itm_latitude, itm_longitude, medioTransporte, hora, latLong, minuto, dist, mov;
 	int categoriaFind, transporteFind, categoriaRecomendation, transporteRecomendation, transporteRoute;
 	Location loc;
 	LocationClient mLocationClient;
@@ -118,11 +118,13 @@ public class FindActivity extends Activity implements android.location.LocationL
 			{
 				mode = "driving";
 				radioBusqueda = "20";
+				mov = "Conduciendo/To driving";
 			}
 			else if(medioTransporte.equals("2"))
 			{
 				mode = "walking";
 				radioBusqueda = "5";
+				mov = "Caminando/To walking";
 			}
 			
 						
@@ -169,7 +171,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 												 Vibrator vibrator =(Vibrator)getSystemService
 														 (Context.VIBRATOR_SERVICE);
 												 vibrator.vibrate(200);
-												 Toast.makeText(FindActivity.this,"No se encontraron" +
+												 Toast.makeText(FindActivity.this,"No se encontraron " +
 												 		"resultados para esta categoria",
 												 		Toast.LENGTH_LONG).show();
 												 pDialog.dismiss();
@@ -189,7 +191,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 												 Vibrator vibrator =(Vibrator)getSystemService
 														 (Context.VIBRATOR_SERVICE);
 												 vibrator.vibrate(200);
-												 Toast.makeText(FindActivity.this,"No se encontraron" +
+												 Toast.makeText(FindActivity.this,"No se encontraron " +
 												 		"resultados dentro del radio de busqueda",
 												 		Toast.LENGTH_LONG).show();
 												 pDialog.dismiss();
@@ -227,7 +229,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 										 {
 											 llenaLista(itm_id,nombre,direccion,promedio,distancia, latitude, longitude);
 											 txtResults.setText(String.valueOf(jsonArray.length()));
-											 txtMode.setText(mode);
+											 txtMode.setText(mov);
 											 pDialog.dismiss();
 										 }
 									 }

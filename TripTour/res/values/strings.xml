@@ -5,7 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hellow world!</string>
     <string name="login">Sig in</string>
-    <string name="userLog">User or nick:</string>
+    <string name="userLog">E-Mail or nick:</string>
     <string name="pass">Password:</string>
     <string name="newUser">New user register!!</string>
     <string name="find">Search attractions</string>

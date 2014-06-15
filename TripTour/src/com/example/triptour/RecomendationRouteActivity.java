@@ -57,7 +57,7 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 	ArrayList<String> disItem = new ArrayList<String>();
 	ArrayList<String> promRuta = new ArrayList<String>();
 	String usuario, latitud, longitud, php, res, itm_nombre, itm_direccion, itm_promedio, itm_distancia, 
-		   itm_latitude, itm_longitude, mode, medioTransporte, tiempoRecorrido, distMaxima, dia, hora, minuto, latLong, prom;
+		   itm_latitude, itm_longitude, mode, medioTransporte, tiempoRecorrido, distMaxima, dia, hora, minuto, latLong, prom, mov;
 	int categoriaFind, transporteFind, categoriaRecomendation, transporteRecomendation, transporteRoute;
 	Location loc;
 	LocationClient mLocationClient;
@@ -117,11 +117,13 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 			{
 				mode = "driving";
 				distMaxima = "50";
+				mov = "Conduciendo/To driving";
 			}
 			else if(medioTransporte.equals("2"))
 			{
 				mode = "walking";
 				distMaxima = "10";
+				mov = "Caminando/To walking";
 			}
 			
 			dia = "0";
@@ -206,7 +208,7 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 										  llenaLista(itm_id,nombre,promedio,distancia,duracion, coordenadas, 
 												  promedio_itm, direcciones, disItem);
 										  txtResults.setText(String.valueOf(jsonArray.length()));
-										  txtMode.setText(mode);
+										  txtMode.setText(mov);
 										  pDialog.dismiss();
 										 }
 									 }
