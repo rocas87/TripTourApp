@@ -654,6 +654,7 @@ public class RecomendationActivity extends Activity implements android.location.
 			// TODO Auto-generated method stub
 			Intent mapActivity = new Intent(this,MapActivity.class);
 			mapActivity.putExtra("id", 0);
+			mapActivity.putExtra("itm_id", id);
 			mapActivity.putExtra("itm_nombre", nombre);
 			mapActivity.putExtra("itm_direccion", direccion);
 			mapActivity.putExtra("itm_promedio", promedio);
