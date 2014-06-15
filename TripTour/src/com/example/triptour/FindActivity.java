@@ -94,18 +94,18 @@ public class FindActivity extends Activity implements android.location.LocationL
 			
 			//Categorias disponibles
 			categorias.add("Bar");
-			categorias.add("Zoologico");
-			categorias.add("Museo");
-			categorias.add("Parques");
-			categorias.add("Parque de diversiones");
-			categorias.add("Deportes");
+			categorias.add("Zoologico/Zoo");
+			categorias.add("Museo/Museum");
+			categorias.add("Parques/Park");
+			categorias.add("Parque de Diversiones/Amusement Park");
+			categorias.add("Deportes/Sports");
 			categorias.add("Restaurant");
-			categorias.add("Senderismo");
-			categorias.add("Artesania");
-			categorias.add("Patrimonio");
+			categorias.add("Senderismo/Hiking");
+			categorias.add("Artesania/Crafts");
+			categorias.add("Patrimonios Nacionales/National Treasures");
 			//Tipos de transporte
-			transporte.add("Driving/Automovil");
-			transporte.add("Walking/Caminando");
+			transporte.add("Conduciendo/To driving");
+			transporte.add("Caminando/To walking");
 			
 			Bundle find = getIntent().getExtras();
 			usuario = find.getString("user");
