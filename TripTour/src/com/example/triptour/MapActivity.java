@@ -70,7 +70,7 @@ implements android.location.LocationListener, OnClickListener
 	ArrayList<String> longitude = new ArrayList<String>();
 	Double radioBusqueda;
 	int id, indice, categoriaFind, transporteFind, categoriaRecomendation, transporteRecomendation, transporteRoute;
-	String[] tokens, tokensNombre, tokensPromedio, tokenDuracion, tokenDistancia;
+	String[] tokens, tokensNombre, tokensPromedio, tokenDuracion, tokenDistancia, tokenItmId, tokenDireccion, tokenInfo;
 	ArrayAdapter<String> adaptadorCategoria, adaptadorTransporte;
 	private Spinner spCategoria, spTransporte;
 	private List<String> categorias = new ArrayList<String>();
@@ -136,6 +136,7 @@ implements android.location.LocationListener, OnClickListener
 		        .snippet(promedio.get(i)+"/"+distancia.get(i)));
 				 
 				 mapa.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
+				 
 			 }
 			radioBusqueda = Double.parseDouble(mapActivity.getString("radioBusqueda"));
 		}
@@ -176,7 +177,8 @@ implements android.location.LocationListener, OnClickListener
 		}
 		//Si corresponde a rutas
 		else if (id==2)
-		{		
+		{	
+			itm_id = mapActivity.getString("itm_id");
 			rta_nombre = mapActivity.getString("rta_nombre");
 			rta_promedio = mapActivity.getString("rta_promedio");
 			rta_distancia = mapActivity.getString("rta_distancia");
@@ -186,27 +188,48 @@ implements android.location.LocationListener, OnClickListener
 			radioBusqueda = Double.parseDouble(mapActivity.getString("distMaxima"));
 			promedio_itm = mapActivity.getString("promedio_itm");
 			disItem = mapActivity.getString("disItem");
+			itm_direccion = mapActivity.getString("direcciones");
 			//Divide coordenadas y nombre de la ruta
+			Log.e("token", itm_direccion);
 			String delims = ",";
+			tokenItmId = itm_id.split(delims);
 			tokens = rta_coordenadas.split(delims);
 			tokensNombre = rta_nombre.split(delims);
 			tokensPromedio = promedio_itm.split(delims);
-			tokenDistancia = disItem.split(delims);		
+			tokenDistancia = disItem.split(delims);	
+			tokenDireccion = itm_direccion.split("<formatted_address>");
+			Log.e("token", "direcciones"+String.valueOf(tokenDireccion.length));
 			indice = 0;
+			int aux=1;
 			for(int i=0; i < (tokens.length)-1; i++)
 			 {
+				Log.e("token", "indice: "+String.valueOf(tokenDireccion[indice]));
 				 mapa.addMarker(new MarkerOptions()
 		        .position(new LatLng(Double.parseDouble(tokens[i]), Double.parseDouble(tokens[i+1])))
 		        .title(String.valueOf(tokensNombre[indice]))
-		        .snippet(tokensPromedio[indice]+"/"+decimales.format((Double.parseDouble(tokenDistancia[indice]))/1000)));
+		        .snippet(tokensPromedio[indice]+"/"+decimales.format((Double.parseDouble(tokenDistancia[indice]))/1000)+"/"+
+		        		String.valueOf(tokenItmId[indice])+"/"+String.valueOf(tokensNombre[indice])+"/"+
+		        		String.valueOf(tokenDireccion[aux])));
 				 
 				mapa.setInfoWindowAdapter(new PopupAdapter(getLayoutInflater()));
-
+				
 				waypoints = waypoints + "|" + tokens[i] + "," + tokens[i+1];
 				
 				indice++;
 				i++;
+				aux++;
 			 }	
+		
+			mapa.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+				
+				@Override
+				public void onInfoWindowClick(Marker arg0) {
+					// TODO Auto-generated method stub
+					tokenInfo = arg0.getSnippet().split("/");
+					infoItem(tokenInfo[2],tokenInfo[3],tokenInfo[4],tokenInfo[0]);
+				}
+			});
+			
 			//Dibujo ruta entre puntos
 			url = getMapsApiDirectionsUrl(waypoints);
 		    ReadTask downloadTask = new ReadTask();

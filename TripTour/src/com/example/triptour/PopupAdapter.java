@@ -38,9 +38,7 @@ public class PopupAdapter implements InfoWindowAdapter {
     
     title.setText(marker.getTitle());
     distancia.setText(tokenRes[1]);
-    
-    
-	
+    	
 	if(tokenRes[0].equals("4"))
 	{
 		est5.setImageURI(Uri.parse("drawable/preview.jpg"));

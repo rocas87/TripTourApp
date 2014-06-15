@@ -46,6 +46,7 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 	ListView lista;
 	Button btnMapa;
 	List<NameValuePair> params;
+	ArrayList<String> itm_id = new ArrayList<String>();
 	ArrayList<String> nombre = new ArrayList<String>();
 	ArrayList<String> promedio = new ArrayList<String>();
 	ArrayList<String> distancia = new ArrayList<String>();
@@ -178,14 +179,14 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 							}
 							else
 							{
+							itm_id.add(jsonObject.getString("itm_id"));
 							nombre.add(jsonObject.getString("rta_nombre"));
 							promedio.add(jsonObject.getString("rta_promedio"));
 							distancia.add(jsonObject.getString("rta_distancia"));
 							duracion.add(jsonObject.getString("rta_duracion"));
 							coordenadas.add(jsonObject.getString("rta_coordenadas"));
 							promedio_itm.add(jsonObject.getString("itm_promedio"));
-							tokenDireccion = jsonObject.getString("itm_direccion").split("<formatted_address>");
-						    direcciones.add(tokenDireccion[1]);	
+							direcciones.add(jsonObject.getString("itm_direccion"));	
 						    disItem.add(jsonObject.getString("itm_distancia"));
 							}
 						 }
@@ -202,7 +203,7 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 										 @Override
 										 public void run()
 										 {
-										  llenaLista(nombre,promedio,distancia,duracion, coordenadas, 
+										  llenaLista(itm_id,nombre,promedio,distancia,duracion, coordenadas, 
 												  promedio_itm, direcciones, disItem);
 										  txtResults.setText(String.valueOf(jsonArray.length()));
 										  txtMode.setText(mode);
@@ -553,10 +554,10 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 			startActivity(home);
 		}
 
-		public void llenaLista(final ArrayList<String> nombre, final ArrayList<String> promedio,
-								final ArrayList<String> distancia, final ArrayList<String> duracion,
-								final ArrayList<String> coordenadas, final ArrayList<String> promedio_itm,
-								final ArrayList<String> direcciones, final ArrayList<String> disItem)
+		public void llenaLista(final ArrayList<String> itm_id, final ArrayList<String> nombre, 
+				final ArrayList<String> promedio, final ArrayList<String> distancia, final ArrayList<String> duracion, 
+				final ArrayList<String> coordenadas, final ArrayList<String> promedio_itm, final ArrayList<String> direcciones, 
+				final ArrayList<String> disItem)
 		{
 			promRuta = promedio(promedio_itm);
 			AdaptadorRoute adap = new AdaptadorRoute(this,nombre,promRuta,distancia,duracion);
@@ -566,8 +567,7 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 					// TODO Auto-generated method stub
-					Log.e("token", "enviar"+String.valueOf(disItem.get(position)));
-					enviar(String.valueOf(nombre.get(position)), String.valueOf(promedio.get(position)),
+					enviar(String.valueOf(itm_id.get(position)),String.valueOf(nombre.get(position)), String.valueOf(promedio.get(position)),
 					String.valueOf(distancia.get(position)), String.valueOf(duracion.get(position)),
 					String.valueOf(coordenadas.get(position)), String.valueOf(promedio_itm.get(position)),
 					String.valueOf(direcciones.get(position)), String.valueOf(disItem.get(position)));
@@ -595,11 +595,12 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 		}
 
 
-		public void enviar(String rta_nombre, String rta_promedio, String rta_distancia, 
+		public void enviar(String itm_id, String rta_nombre, String rta_promedio, String rta_distancia, 
 				String rta_duracion, String rta_coordenadas, String promedio_itm, String direcciones, String disItem)
 		{
 			Intent mapActivity = new Intent(this,MapActivity.class);
 			mapActivity.putExtra("id", 2);
+			mapActivity.putExtra("itm_id", itm_id);
 			mapActivity.putExtra("rta_nombre", rta_nombre);
 			mapActivity.putExtra("rta_promedio", rta_promedio);
 			mapActivity.putExtra("rta_distancia", rta_distancia);
@@ -611,7 +612,6 @@ public class RecomendationRouteActivity extends Activity implements android.loca
 			mapActivity.putExtra("direcciones", direcciones);
 			mapActivity.putExtra("user", usuario);
 			mapActivity.putExtra("disItem", disItem);
-			Log.e("token","put"+disItem);
 			startActivity(mapActivity);
 		}
 
