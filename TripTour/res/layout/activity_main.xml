@@ -10,25 +10,6 @@
     android:background="#FFFFFF"
     tools:context=".MainActivity" >
 
-    <EditText
-        android:id="@+id/edtPass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:ems="10"
-        android:hint="@string/pass"
-        android:inputType="textPassword" />
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/edtPass"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="@string/login" />
-
     <TextView
         android:id="@+id/txtPass"
         android:layout_width="wrap_content"
@@ -55,22 +36,12 @@
         android:layout_alignLeft="@+id/edtUsuario"
         android:text="@string/user" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/txtUsuario"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="44dp"
-        android:text="@string/inicio"
-        android:textColor="@color/PISTACHO"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <Button
         android:id="@+id/btnLogonSkip"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnRegister"
         android:layout_alignBottom="@+id/btnRegister"
         android:layout_toRightOf="@+id/btnLogin"
         android:drawable="@color/NARANJA"
@@ -81,10 +52,51 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnLogin"
-        android:layout_marginTop="36dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="29dp"
         android:layout_toLeftOf="@+id/textView1"
         android:drawable="@color/NARANJA"
         android:text="@string/register" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnLogonSkip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:text="@string/login" />
+
+    <EditText
+        android:id="@+id/edtPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnLogin"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="19dp"
+        android:ems="10"
+        android:hint="@string/pass"
+        android:inputType="textPassword" >
+
+        <requestFocus />
+    </EditText>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/inicio"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/PISTACHO" />
 
 </RelativeLayout>
