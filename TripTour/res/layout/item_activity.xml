@@ -70,6 +70,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtComent"
         android:layout_centerHorizontal="true"
+		android:scaleX="0.75"
+        android:scaleY="0.75"
      />
 
     <ListView
