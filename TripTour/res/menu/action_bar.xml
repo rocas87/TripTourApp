@@ -17,8 +17,7 @@
             <item 
                 android:id="@+id/recomendation"
                 android:title="@string/recomendation" 
-            />
-            
+            /> 
             <item 
                 android:id="@+id/recomendation_route"
                 android:title="@string/recRutas" 
@@ -29,7 +28,7 @@
     <item 
         android:id="@+id/alojamiento" 
         android:title="@string/alojamiento"
-        android:icon="@drawable/ic_icon_building"
+        android:icon="@drawable/hotel"
         android:showAsAction="always"
       >
     </item>

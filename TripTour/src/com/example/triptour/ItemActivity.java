@@ -10,18 +10,27 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.google.android.gms.location.LocationClient;
+
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -35,11 +44,11 @@ import android.widget.RatingBar.OnRatingBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ItemActivity extends Activity{
+public class ItemActivity extends Activity implements android.location.LocationListener{
 
-	String usuario, itm_id, itm_nombre, itm_direccion, itm_promedio, res, php, nota;
+	String usuario, itm_id, itm_nombre, itm_direccion, itm_promedio, res, php, nota, hora, minuto, latLong;
 	TextView txtNombre, txtUsuario, txtAddress, txtUsr;
-	EditText edtComentario;
+	EditText edtComentario, duracion;
 	ImageView imagenItem, est1, est2, est3, est4, est5, est1p, est2p, est3p, est4p, est5p;
 	RatingBar ratingBar;
 	ListView post;
@@ -54,6 +63,18 @@ public class ItemActivity extends Activity{
 	EnviarPost enviar = new EnviarPost();
 	LayoutInflater liComentario;
 	View promptComentario;
+	ArrayAdapter<String> adaptadorCategoria, adaptadorTransporte;
+	private Spinner spCategoria, spTransporte;
+	private List<String> categorias = new ArrayList<String>();
+	private List<String> transporte = new ArrayList<String>();
+	LayoutInflater liFind, liRecomendation, liRecomendationRoute;
+	View promptFind, promptRecomendation, promptRecomendationRoute;
+	String [] tokenDuracion;
+	int categoriaFind, transporteFind, categoriaRecomendation, transporteRecomendation, transporteRoute;
+	Location loc;
+	LocationClient mLocationClient;
+	LocationManager handle;
+	private String provider;
 	
 	protected void onCreate(Bundle savedInstanceState) 
 	{
@@ -85,6 +106,27 @@ public class ItemActivity extends Activity{
 		ratingBar.setStepSize((float) 1.0);
 		addListenerOnRatingBar();
 		comentarios(itm_id);
+		
+		// Action Bar
+		
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		
+		//Categorias disponibles
+		categorias.add("Bar");
+		categorias.add("Zoologico/Zoo");
+		categorias.add("Museo/Museum");
+		categorias.add("Parques/Park");
+		categorias.add("Parque de Diversiones/Amusement Park");
+		categorias.add("Deportes/Sports");
+		categorias.add("Restaurant");
+		categorias.add("Senderismo/Hiking");
+		categorias.add("Artesania/Crafts");
+		categorias.add("Patrimonios Nacionales/National Treasures");
+		//Tipos de transporte
+		transporte.add("Conduciendo/To driving");
+		transporte.add("Caminando/To walking");
+
 	}
 	
 	void downloadImagen(final String id)
@@ -337,4 +379,369 @@ public class ItemActivity extends Activity{
 			AdaptadorComentarios adap = new AdaptadorComentarios(this,usr_nick,fechaPost,comentario,itm_rating);
 			post.setAdapter(adap);
 		}
+	
+	//ActionBar
+	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.action_bar, menu);
+        return true;
+    }
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle presses on the action bar items
+	    switch (item.getItemId()) {
+	        case R.id.find:	    		
+	        	pomptFind();
+	            return true;
+	            
+	        case R.id.recomendation:
+	        	if(usuario.equals("SR"))
+	        	{
+	        		Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+	        		vibrator.vibrate(200);
+	        		Toast.makeText(ItemActivity.this, "Debe estar registrado", Toast.LENGTH_LONG).show();
+	        	}
+	        	else
+	        	{
+	        		promptRecomendation();
+	        	}
+	            return true;
+	            
+	        case R.id.recomendation_route:
+	        	if(usuario.equals("SR"))
+	        	{
+	        		Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+	        		vibrator.vibrate(200);
+	        		Toast.makeText(ItemActivity.this, "Debe estar registrado", Toast.LENGTH_LONG).show();
+	        	}
+	        	else
+	        	{
+	        		promptRecomendationRoute();
+	        	}
+	            return true;
+
+	        case R.id.alojamiento:
+				Intent intent = new Intent(Intent.ACTION_VIEW);
+				intent.setData(Uri.parse("http://www.booking.com/"));
+				startActivity(intent);
+				return true;
+
+	        case R.id.clima:				
+				loc = getMiUbicacion();
+				Climate cl = new Climate();
+				latLong = cl.climaURL(String.valueOf(loc.getLatitude()), String.valueOf(loc.getLongitude()));
+				Intent clima = new Intent(Intent.ACTION_VIEW);
+				clima.setData(Uri.parse(latLong));
+				startActivity(clima);
+				return true;
+
+	        case R.id.cambio_moneda:
+				Intent changeMoney = new Intent(this,ChangeMoneyActivity.class);
+				changeMoney.putExtra("user", usuario);
+				startActivity(changeMoney);
+				return true;
+				
+	        case android.R.id.home:
+				Intent home = new Intent(this,HomeActivity.class);
+				home.putExtra("usr_nick", usuario);
+				startActivity(home);
+				return true;
+	    }
+	    return false;
+	}
+
+	private void pomptFind() 
+	{
+		// TODO Auto-generated method stub
+		liFind = LayoutInflater.from(this);
+		promptFind = liFind.inflate(R.layout.prompt_find_activity, null);
+
+		spCategoria = (Spinner)promptFind.findViewById(R.id.spCategoria);
+		adaptadorCategoria = new ArrayAdapter<String>
+			(this,android.R.layout.simple_spinner_item, categorias);
+		adaptadorCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spCategoria.setAdapter(adaptadorCategoria);
+		
+		spTransporte = (Spinner)promptFind.findViewById(R.id.spTransporte);
+		adaptadorTransporte = new ArrayAdapter<String>
+			(this,android.R.layout.simple_spinner_item, transporte);
+		adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spTransporte.setAdapter(adaptadorTransporte);
+		
+		spCategoria.setOnItemSelectedListener(new OnItemSelectedListener()
+		{
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				categoriaFind = arg2+1;
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		spTransporte.setOnItemSelectedListener(new OnItemSelectedListener()
+		{
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				transporteFind = arg2+1;
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub	
+			}
+			
+		});
+		
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setView(promptFind);
+		
+		// Mostramos el mensaje del cuadro de dialogo
+		alertDialogBuilder
+		.setCancelable(false)
+		.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog,int id) {
+		// Rescatamos el nombre del EditText y lo mostramos por pantalla
+			find();
+		}
+		})
+		.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+		public void onClick(DialogInterface dialog,int id) {
+		// Cancelamos el cuadro de dialogo
+		dialog.cancel();
+		}
+		});
+		// Creamos un AlertDialog y lo mostramos
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+		
+	}
+
+	public void find()
+	{
+		Intent find = new Intent(this,FindActivity.class);
+		find.putExtra("user", usuario);
+		find.putExtra("categoria", String.valueOf(categoriaFind));
+		find.putExtra("transporte", String.valueOf(transporteFind));
+		startActivity(find);
+	}
+	
+	private void promptRecomendation() 
+	{
+		// TODO Auto-generated method stub
+		liRecomendation = LayoutInflater.from(this);
+		promptRecomendation = liRecomendation.inflate(R.layout.prompt_recomendation_activity, null);
+
+		spCategoria = (Spinner)findViewById(R.id.spCategoria);
+		spCategoria = (Spinner)promptRecomendation.findViewById(R.id.spCategoria);
+		adaptadorCategoria = new ArrayAdapter<String>
+			(this,android.R.layout.simple_spinner_item, categorias);
+		adaptadorCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spCategoria.setAdapter(adaptadorCategoria);
+		
+		spTransporte = (Spinner)promptRecomendation.findViewById(R.id.spTransporte);
+		adaptadorTransporte = new ArrayAdapter<String>
+			(this,android.R.layout.simple_spinner_item, transporte);
+		adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spTransporte.setAdapter(adaptadorTransporte);
+		
+		spCategoria.setOnItemSelectedListener(new OnItemSelectedListener()
+		{
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				categoriaRecomendation = arg2+1;
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
+		spTransporte.setOnItemSelectedListener(new OnItemSelectedListener()
+		{
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				transporteRecomendation = arg2+1;
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub	
+			}
+			
+		});
+		
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setView(promptRecomendation);
+		
+		// Mostramos el mensaje del cuadro de dialogo
+		alertDialogBuilder
+		.setCancelable(false)
+		.setPositiveButton("OK", new DialogInterface.OnClickListener() 
+		{
+			public void onClick(DialogInterface dialog,int id) 
+			{
+				// Rescatamos el nombre del EditText y lo mostramos por pantalla
+				recomendation();
+			}
+		})
+		.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() 
+		{
+			public void onClick(DialogInterface dialog,int id) 
+			{
+				// Cancelamos el cuadro de dialogo
+				dialog.cancel();
+			}
+		});
+		// Creamos un AlertDialog y lo mostramos
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	}
+
+	public void recomendation()
+	{
+		Intent recomendation = new Intent(this,RecomendationActivity.class);
+		recomendation.putExtra("user", usuario);
+		recomendation.putExtra("categoria", String.valueOf(categoriaRecomendation));
+		recomendation.putExtra("transporte", String.valueOf(transporteRecomendation));
+		startActivity(recomendation);
+	}
+	
+	private void promptRecomendationRoute() 
+	{
+		// TODO Auto-generated method stub
+		liRecomendationRoute = LayoutInflater.from(this);
+		promptRecomendationRoute = liRecomendationRoute.inflate(R.layout.prompt_recomendation_route_activity, null);
+		
+		spTransporte = (Spinner)promptRecomendationRoute.findViewById(R.id.spTransporte);
+		adaptadorTransporte = new ArrayAdapter<String>
+			(this,android.R.layout.simple_spinner_item, transporte);
+		adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spTransporte.setAdapter(adaptadorTransporte);
+		
+		duracion = (EditText)promptRecomendationRoute.findViewById(R.id.duracion);
+		
+		spTransporte.setOnItemSelectedListener(new OnItemSelectedListener()
+		{
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
+				// TODO Auto-generated method stub
+				transporteRoute = arg2+1;
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub	
+			}
+			
+		});
+		
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setView(promptRecomendationRoute);
+		
+		// Mostramos el mensaje del cuadro de dialogo
+		alertDialogBuilder
+		.setCancelable(false)
+		.setPositiveButton("OK", new DialogInterface.OnClickListener() 
+		{
+			public void onClick(DialogInterface dialog,int id) 
+			{
+				// Rescatamos el nombre del EditText y lo mostramos por pantalla
+				tokenDuracion = (duracion.getText().toString()).split(":");
+				hora = tokenDuracion[0];
+				minuto = tokenDuracion[1];
+				recomendationRoute();
+			}
+		})
+		.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() 
+		{
+			public void onClick(DialogInterface dialog,int id) 
+			{
+				// Cancelamos el cuadro de dialogo
+				dialog.cancel();
+			}
+		});
+		// Creamos un AlertDialog y lo mostramos
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	}
+
+	public void recomendationRoute()
+	{
+		Intent recomendationRoute = new Intent(this,RecomendationRouteActivity.class);
+		recomendationRoute.putExtra("user", usuario);	
+		recomendationRoute.putExtra("transporte", String.valueOf(transporteRoute));
+		recomendationRoute.putExtra("hora", hora);
+		recomendationRoute.putExtra("minuto", minuto);
+		startActivity(recomendationRoute);
+	}
+	
+	//Localizacion
+	public Location getMiUbicacion()
+	{
+		//Llamo al servico de localizacion	        
+	    handle = (LocationManager)getSystemService(LOCATION_SERVICE);
+	    //Clase criteria permite decidir mejor poveedor de posicion
+	    Criteria c = new Criteria();
+	    //obtiene el mejor proveedor en funci�n del criterio asignado
+	    //ACCURACY_FINE(La mejor presicion)--ACCURACY_COARSE(PRESISION MEDIA)
+	    c.setAccuracy(Criteria.ACCURACY_COARSE);
+	    //Indica si es necesaria la altura por parte del proveedor
+	    c.setAltitudeRequired(false);
+	    provider = handle.getBestProvider(c, true);
+	    //Se activan las notificaciones de localizaci�n con los par�metros: 
+	    //proveedor, tiempo m�nimo de actualizaci�n, distancia m�nima, Locationlistener
+	    handle.requestLocationUpdates(provider, 60000, 5,this);
+	    //Obtiene la ultima posicion conocida por el proveedor
+	    loc = handle.getLastKnownLocation(provider);
+	  
+	    return loc;
+	}
+
+	@Override
+	public void onLocationChanged(Location arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderDisabled(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onProviderEnabled(String arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
+		// TODO Auto-generated method stub
+		
+	}
 }
