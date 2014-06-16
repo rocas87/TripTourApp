@@ -12,7 +12,7 @@
     <string name="recomendation">Recommendation attractions</string>
     <string name="recRutas">Recomendations route</string>
     <string name="alojamiento">Hotel</string>
-    <string name="change">Change money</string>
+    <string name="change">Exchange money</string>
     <string name="climate">Climate</string>
     <string name="rating">Rating attractives</string>
     <string name="preferences">Preferences</string>
@@ -51,5 +51,8 @@
     <string name="logonSkip">Skip logon</string>
     <string name="inicio">¡Welcome!</string>
     <string name="post">Comentt</string>
+    <string name="accept">Accept</string>
+    <string name="searchRadius">Search radius (KM):</string>
+    <string name="distMax">Maximum travel distance (KM):</string>
 
 </resources>

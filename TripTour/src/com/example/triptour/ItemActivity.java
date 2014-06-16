@@ -46,9 +46,9 @@ import android.widget.Toast;
 
 public class ItemActivity extends Activity implements android.location.LocationListener{
 
-	String usuario, itm_id, itm_nombre, itm_direccion, itm_promedio, res, php, nota, hora, minuto, latLong;
+	String usuario, itm_id, itm_nombre, itm_direccion, itm_promedio, res, php, nota, hora, minuto, latLong, distMax;
 	TextView txtNombre, txtUsuario, txtAddress, txtUsr;
-	EditText edtComentario, duracion;
+	EditText edtComentario, edtHora, edtMinuto, edtDist, edtRadioBusqueda;
 	ImageView imagenItem, est1, est2, est3, est4, est5, est1p, est2p, est3p, est4p, est5p;
 	RatingBar ratingBar;
 	ListView post;
@@ -124,8 +124,8 @@ public class ItemActivity extends Activity implements android.location.LocationL
 		categorias.add("Artesania/Crafts");
 		categorias.add("Patrimonios Nacionales/National Treasures");
 		//Tipos de transporte
-		transporte.add("Conduciendo/To driving");
-		transporte.add("Caminando/To walking");
+		transporte.add("Caminando/By walking");
+		transporte.add("Conduciendo/By driving");
 
 	}
 	
@@ -318,6 +318,7 @@ public class ItemActivity extends Activity implements android.location.LocationL
 		alertDialog.show();
 		
 	}
+	
 	public void comentarios(String id)
 	{
 		php = "/servtriptour/infItem.php";
@@ -373,6 +374,7 @@ public class ItemActivity extends Activity implements android.location.LocationL
 		};
 		tr.start();
 	}
+	
 	public void llenaLista(final ArrayList<String> usr_nick, final ArrayList<String> fechaPost,	final ArrayList<String> comentario, 
 			final ArrayList<String> itm_rating)
 		{
@@ -470,6 +472,8 @@ public class ItemActivity extends Activity implements android.location.LocationL
 		adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spTransporte.setAdapter(adaptadorTransporte);
 		
+		edtRadioBusqueda = (EditText)promptFind.findViewById(R.id.edtRadioBusqueda);
+		
 		spCategoria.setOnItemSelectedListener(new OnItemSelectedListener()
 		{
 
@@ -514,7 +518,7 @@ public class ItemActivity extends Activity implements android.location.LocationL
 		.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog,int id) {
 		// Rescatamos el nombre del EditText y lo mostramos por pantalla
-			find();
+			find(edtRadioBusqueda.getText().toString());
 		}
 		})
 		.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -529,12 +533,13 @@ public class ItemActivity extends Activity implements android.location.LocationL
 		
 	}
 
-	public void find()
+	public void find(String radio)
 	{
 		Intent find = new Intent(this,FindActivity.class);
 		find.putExtra("user", usuario);
 		find.putExtra("categoria", String.valueOf(categoriaFind));
 		find.putExtra("transporte", String.valueOf(transporteFind));
+		find.putExtra("radioBusqueda", radio);
 		startActivity(find);
 	}
 	
@@ -556,6 +561,8 @@ public class ItemActivity extends Activity implements android.location.LocationL
 			(this,android.R.layout.simple_spinner_item, transporte);
 		adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spTransporte.setAdapter(adaptadorTransporte);
+		
+		edtRadioBusqueda = (EditText)promptRecomendation.findViewById(R.id.edtRadioBusqueda);
 		
 		spCategoria.setOnItemSelectedListener(new OnItemSelectedListener()
 		{
@@ -603,7 +610,7 @@ public class ItemActivity extends Activity implements android.location.LocationL
 			public void onClick(DialogInterface dialog,int id) 
 			{
 				// Rescatamos el nombre del EditText y lo mostramos por pantalla
-				recomendation();
+				recomendation(edtRadioBusqueda.getText().toString());
 			}
 		})
 		.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() 
@@ -619,12 +626,13 @@ public class ItemActivity extends Activity implements android.location.LocationL
 		alertDialog.show();
 	}
 
-	public void recomendation()
+	public void recomendation(String radio)
 	{
 		Intent recomendation = new Intent(this,RecomendationActivity.class);
 		recomendation.putExtra("user", usuario);
 		recomendation.putExtra("categoria", String.valueOf(categoriaRecomendation));
 		recomendation.putExtra("transporte", String.valueOf(transporteRecomendation));
+		recomendation.putExtra("radioBusqueda", radio);
 		startActivity(recomendation);
 	}
 	
@@ -640,7 +648,9 @@ public class ItemActivity extends Activity implements android.location.LocationL
 		adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spTransporte.setAdapter(adaptadorTransporte);
 		
-		duracion = (EditText)promptRecomendationRoute.findViewById(R.id.duracion);
+		edtHora = (EditText)promptRecomendationRoute.findViewById(R.id.edtHora);
+		edtMinuto = (EditText)promptRecomendationRoute.findViewById(R.id.edtMinuto);
+		edtDist = (EditText)promptRecomendationRoute.findViewById(R.id.edtDisMax);
 		
 		spTransporte.setOnItemSelectedListener(new OnItemSelectedListener()
 		{
@@ -670,9 +680,9 @@ public class ItemActivity extends Activity implements android.location.LocationL
 			public void onClick(DialogInterface dialog,int id) 
 			{
 				// Rescatamos el nombre del EditText y lo mostramos por pantalla
-				tokenDuracion = (duracion.getText().toString()).split(":");
-				hora = tokenDuracion[0];
-				minuto = tokenDuracion[1];
+				hora = edtHora.getText().toString();
+				minuto = edtMinuto.getText().toString();
+				distMax = edtDist.getText().toString();
 				recomendationRoute();
 			}
 		})
@@ -696,6 +706,7 @@ public class ItemActivity extends Activity implements android.location.LocationL
 		recomendationRoute.putExtra("transporte", String.valueOf(transporteRoute));
 		recomendationRoute.putExtra("hora", hora);
 		recomendationRoute.putExtra("minuto", minuto);
+		recomendationRoute.putExtra("distMaxima", distMax);
 		startActivity(recomendationRoute);
 	}
 	

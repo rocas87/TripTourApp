@@ -44,6 +44,7 @@ import android.widget.Toast;
 public class FindActivity extends Activity implements android.location.LocationListener, OnClickListener{
 
 	TextView txtUsuario, Seleccionado, txtResults, txtMode;
+	EditText edtRadioBusqueda;
 	ListView lista;
 	Button btnMapa;
 	List<NameValuePair> params;
@@ -55,7 +56,8 @@ public class FindActivity extends Activity implements android.location.LocationL
 	ArrayList<String> latitude = new ArrayList<String>();
 	ArrayList<String> longitude = new ArrayList<String>();
 	String usuario, latitud, longitud, categoria, radioBusqueda, mode, php, res, itm_nombre, itm_direccion,
-				    itm_promedio, itm_distancia, itm_latitude, itm_longitude, medioTransporte, hora, latLong, minuto, dist, mov;
+				    itm_promedio, itm_distancia, itm_latitude, itm_longitude, medioTransporte, hora, latLong, minuto, dist, mov, 
+				    distMax;
 	int categoriaFind, transporteFind, categoriaRecomendation, transporteRecomendation, transporteRoute;
 	Location loc;
 	LocationClient mLocationClient;
@@ -70,7 +72,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 	private List<String> transporte = new ArrayList<String>();
 	LayoutInflater liFind, liRecomendation, liRecomendationRoute;
 	View promptFind, promptRecomendation, promptRecomendationRoute;
-	EditText duracion;
+	EditText edtHora, edtMinuto, edtDist;
 	String [] tokenDuracion, tokenDireccion;
 	DecimalFormat decimales = new DecimalFormat("0.0");
 	JSONObject jsonObject;
@@ -104,27 +106,26 @@ public class FindActivity extends Activity implements android.location.LocationL
 			categorias.add("Artesania/Crafts");
 			categorias.add("Patrimonios Nacionales/National Treasures");
 			//Tipos de transporte
-			transporte.add("Conduciendo/To driving");
-			transporte.add("Caminando/To walking");
+			transporte.add("Caminando/By walking");
+			transporte.add("Conduciendo/By driving");
 			
 			Bundle find = getIntent().getExtras();
 			usuario = find.getString("user");
 			categoria = find.getString("categoria");
 			medioTransporte = find.getString("transporte");
+			radioBusqueda = find.getString("radioBusqueda");
 			txtUsuario.setText(usuario);
 			// Parametros forsados por el momento
 			
-			if(medioTransporte.equals("1"))
+			if(medioTransporte.equals("2"))
 			{
 				mode = "driving";
-				radioBusqueda = "20";
-				mov = "Conduciendo/To driving";
+				mov = "Conduciendo/By driving";
 			}
-			else if(medioTransporte.equals("2"))
+			else if(medioTransporte.equals("1"))
 			{
 				mode = "walking";
-				radioBusqueda = "5";
-				mov = "Caminando/To walking";
+				mov = "Caminando/By walking";
 			}
 			
 						
@@ -334,6 +335,8 @@ public class FindActivity extends Activity implements android.location.LocationL
 			adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			spTransporte.setAdapter(adaptadorTransporte);
 			
+			edtRadioBusqueda = (EditText)promptFind.findViewById(R.id.edtRadioBusqueda);
+			
 			spCategoria.setOnItemSelectedListener(new OnItemSelectedListener()
 			{
 
@@ -378,7 +381,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 			.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog,int id) {
 			// Rescatamos el nombre del EditText y lo mostramos por pantalla
-				find();
+				find(edtRadioBusqueda.getText().toString());
 			}
 			})
 			.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -393,12 +396,13 @@ public class FindActivity extends Activity implements android.location.LocationL
 			
 		}
 
-		public void find()
+		public void find(String radio)
 		{
 			Intent find = new Intent(this,FindActivity.class);
 			find.putExtra("user", usuario);
 			find.putExtra("categoria", String.valueOf(categoriaFind));
 			find.putExtra("transporte", String.valueOf(transporteFind));
+			find.putExtra("radioBusqueda", radio);
 			startActivity(find);
 		}
 		
@@ -420,6 +424,8 @@ public class FindActivity extends Activity implements android.location.LocationL
 				(this,android.R.layout.simple_spinner_item, transporte);
 			adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			spTransporte.setAdapter(adaptadorTransporte);
+			
+			edtRadioBusqueda = (EditText)promptRecomendation.findViewById(R.id.edtRadioBusqueda);
 			
 			spCategoria.setOnItemSelectedListener(new OnItemSelectedListener()
 			{
@@ -467,7 +473,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 				public void onClick(DialogInterface dialog,int id) 
 				{
 					// Rescatamos el nombre del EditText y lo mostramos por pantalla
-					recomendation();
+					recomendation(edtRadioBusqueda.getText().toString());
 				}
 			})
 			.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() 
@@ -483,12 +489,13 @@ public class FindActivity extends Activity implements android.location.LocationL
 			alertDialog.show();
 		}
 
-		public void recomendation()
+		public void recomendation(String radio)
 		{
 			Intent recomendation = new Intent(this,RecomendationActivity.class);
 			recomendation.putExtra("user", usuario);
 			recomendation.putExtra("categoria", String.valueOf(categoriaRecomendation));
 			recomendation.putExtra("transporte", String.valueOf(transporteRecomendation));
+			recomendation.putExtra("radioBusqueda", radio);
 			startActivity(recomendation);
 		}
 		
@@ -504,7 +511,9 @@ public class FindActivity extends Activity implements android.location.LocationL
 			adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			spTransporte.setAdapter(adaptadorTransporte);
 			
-			duracion = (EditText)promptRecomendationRoute.findViewById(R.id.duracion);
+			edtHora = (EditText)promptRecomendationRoute.findViewById(R.id.edtHora);
+			edtMinuto = (EditText)promptRecomendationRoute.findViewById(R.id.edtMinuto);
+			edtDist = (EditText)promptRecomendationRoute.findViewById(R.id.edtDisMax);
 			
 			spTransporte.setOnItemSelectedListener(new OnItemSelectedListener()
 			{
@@ -534,9 +543,9 @@ public class FindActivity extends Activity implements android.location.LocationL
 				public void onClick(DialogInterface dialog,int id) 
 				{
 					// Rescatamos el nombre del EditText y lo mostramos por pantalla
-					tokenDuracion = (duracion.getText().toString()).split(":");
-					hora = tokenDuracion[0];
-					minuto = tokenDuracion[1];
+					hora = edtHora.getText().toString();
+					minuto = edtMinuto.getText().toString();
+					distMax = edtDist.getText().toString();
 					recomendationRoute();
 				}
 			})
@@ -560,6 +569,7 @@ public class FindActivity extends Activity implements android.location.LocationL
 			recomendationRoute.putExtra("transporte", String.valueOf(transporteRoute));
 			recomendationRoute.putExtra("hora", hora);
 			recomendationRoute.putExtra("minuto", minuto);
+			recomendationRoute.putExtra("distMaxima", distMax);
 			startActivity(recomendationRoute);
 		}
 

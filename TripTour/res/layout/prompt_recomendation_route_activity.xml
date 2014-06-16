@@ -1,49 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:id="@+id/prompt"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-android:orientation="vertical"
-android:padding="10dp"
-android:background="#FFFFFF" >
- 
-<TextView
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:text="@string/recRutas"
-android:textSize="25sp" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/prompt"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:padding="10dp" >
 
-<TextView
-    android:id="@+id/textView2"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/transport"
-    android:textAppearance="?android:attr/textAppearanceMedium" />
+    <EditText
+        android:id="@+id/edtDisMax"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_below="@+id/textView3"
+        android:ems="3"
+        android:inputType="number" />
 
-<Spinner
- android:id="@+id/spTransporte"
- android:layout_width="wrap_content"
- android:layout_height="wrap_content"
- />
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spTransporte"
+        android:layout_below="@+id/spTransporte"
+        android:text="@string/duration"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-<TextView
-    android:id="@+id/textView1"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/duration"
-    android:textAppearance="?android:attr/textAppearanceMedium" />
+    <Spinner
+        android:id="@+id/spTransporte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_below="@+id/textView2" />
 
-<EditText
-    android:id="@+id/duracion"
-    android:layout_width="91dp"
-    android:layout_height="wrap_content"
-    android:ems="10"
-    android:hint="hh:mm"
-    android:maxLength="5"
-    android:inputType="time" >
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/recRutas"
+        android:textSize="25sp" />
 
-    <requestFocus />
-</EditText>
- 
-</LinearLayout>
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView4"
+        android:text="@string/transport"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/edtHora"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:ems="10"
+        android:hint="HH"
+        android:inputType="time"
+        android:maxLength="5" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/edtHora"
+        android:layout_below="@+id/edtHora"
+        android:text="@string/distMax"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/edtHora"
+        android:layout_alignBottom="@+id/edtHora"
+        android:layout_toRightOf="@+id/edtHora"
+        android:text=":" />
+
+    <EditText
+        android:id="@+id/edtMinuto"
+        android:layout_width="55dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView3"
+        android:layout_toRightOf="@+id/textView5"
+        android:ems="10"
+        android:hint="MM"
+        android:inputType="time"
+        android:maxLength="5" />
+
+</RelativeLayout>

@@ -46,9 +46,9 @@ import com.google.android.gms.location.LocationClient;
 public class ChangeMoneyActivity extends Activity implements android.location.LocationListener, OnClickListener{
 	
 	TextView txtCambio;
-	EditText edtCantidad;
+	EditText edtCantidad, edtRadioBusqueda;
 	Button btnCambio;
-	String valor, url, resultado, origen, destino, latLong, hora, minuto, usuario;
+	String valor, url, resultado, origen, destino, latLong, hora, minuto, usuario, distancia;
 	int categoriaFind, transporteFind, categoriaRecomendation, transporteRecomendation, transporteRoute;
 	double total, cant;
 	Editable data;
@@ -64,7 +64,7 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 	private List<String> transporte = new ArrayList<String>();
 	LayoutInflater liFind, liRecomendation, liRecomendationRoute;
 	View promptFind, promptRecomendation, promptRecomendationRoute;
-	EditText duracion;
+	EditText edtHora, edtMinuto, edtDist;
 	String [] tokenDuracion;
 	Location loc;
 	LocationClient mLocationClient;
@@ -98,8 +98,8 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 		categorias.add("Artesania/Crafts");
 		categorias.add("Patrimonios Nacionales/National Treasures");
 		//Tipos de transporte
-		transporte.add("Conduciendo/To driving");
-		transporte.add("Caminando/To walking");
+		transporte.add("Caminando/By walking");
+		transporte.add("Conduciendo/By driving");
 				
 		//Valores de cambio
 		lista.add("USD-U.S. Dollar");
@@ -464,6 +464,8 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 		adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spTransporte.setAdapter(adaptadorTransporte);
 		
+		edtRadioBusqueda = (EditText)promptFind.findViewById(R.id.edtRadioBusqueda);
+		
 		spCategoria.setOnItemSelectedListener(new OnItemSelectedListener()
 		{
 
@@ -508,7 +510,7 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 		.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog,int id) {
 		// Rescatamos el nombre del EditText y lo mostramos por pantalla
-			find();
+			find(edtRadioBusqueda.getText().toString());
 		}
 		})
 		.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -523,12 +525,13 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 		
 	}
 
-	public void find()
+	public void find(String radio)
 	{
 		Intent find = new Intent(this,FindActivity.class);
 		find.putExtra("user", usuario);
 		find.putExtra("categoria", String.valueOf(categoriaFind));
 		find.putExtra("transporte", String.valueOf(transporteFind));
+		find.putExtra("radioBusqueda", radio);
 		startActivity(find);
 	}
 	
@@ -550,6 +553,8 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 			(this,android.R.layout.simple_spinner_item, transporte);
 		adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spTransporte.setAdapter(adaptadorTransporte);
+		
+		edtRadioBusqueda = (EditText)promptRecomendation.findViewById(R.id.edtRadioBusqueda);
 		
 		spCategoria.setOnItemSelectedListener(new OnItemSelectedListener()
 		{
@@ -597,7 +602,7 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 			public void onClick(DialogInterface dialog,int id) 
 			{
 				// Rescatamos el nombre del EditText y lo mostramos por pantalla
-				recomendation();
+				recomendation(edtRadioBusqueda.getText().toString());
 			}
 		})
 		.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() 
@@ -613,12 +618,13 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 		alertDialog.show();
 	}
 
-	public void recomendation()
+	public void recomendation(String radio)
 	{
 		Intent recomendation = new Intent(this,RecomendationActivity.class);
 		recomendation.putExtra("user", usuario);
 		recomendation.putExtra("categoria", String.valueOf(categoriaRecomendation));
 		recomendation.putExtra("transporte", String.valueOf(transporteRecomendation));
+		recomendation.putExtra("radioBusqueda", radio);
 		startActivity(recomendation);
 	}
 	
@@ -634,7 +640,9 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 		adaptadorTransporte.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spTransporte.setAdapter(adaptadorTransporte);
 		
-		duracion = (EditText)promptRecomendationRoute.findViewById(R.id.duracion);
+		edtHora = (EditText)promptRecomendationRoute.findViewById(R.id.edtHora);
+		edtMinuto = (EditText)promptRecomendationRoute.findViewById(R.id.edtMinuto);
+		edtDist = (EditText)promptRecomendationRoute.findViewById(R.id.edtDisMax);
 		
 		spTransporte.setOnItemSelectedListener(new OnItemSelectedListener()
 		{
@@ -664,9 +672,9 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 			public void onClick(DialogInterface dialog,int id) 
 			{
 				// Rescatamos el nombre del EditText y lo mostramos por pantalla
-				tokenDuracion = (duracion.getText().toString()).split(":");
-				hora = tokenDuracion[0];
-				minuto = tokenDuracion[1];
+				hora = edtHora.getText().toString();
+				minuto = edtMinuto.getText().toString();
+				distancia = edtDist.getText().toString();
 				recomendationRoute();
 			}
 		})
@@ -690,6 +698,7 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 		recomendationRoute.putExtra("transporte", String.valueOf(transporteRoute));
 		recomendationRoute.putExtra("hora", hora);
 		recomendationRoute.putExtra("minuto", minuto);
+		recomendationRoute.putExtra("distMaxima", distancia);
 		startActivity(recomendationRoute);
 	}
 
@@ -699,14 +708,14 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 	    handle = (LocationManager)getSystemService(LOCATION_SERVICE);
 	    //Clase criteria permite decidir mejor poveedor de posicion
 	    Criteria c = new Criteria();
-	    //obtiene el mejor proveedor en función del criterio asignado
+	    //obtiene el mejor proveedor en funciï¿½n del criterio asignado
 	    //ACCURACY_FINE(La mejor presicion)--ACCURACY_COARSE(PRESISION MEDIA)
 	    c.setAccuracy(Criteria.ACCURACY_COARSE);
 	    //Indica si es necesaria la altura por parte del proveedor
 	    c.setAltitudeRequired(false);
 	    provider = handle.getBestProvider(c, true);
-	    //Se activan las notificaciones de localización con los parámetros: 
-	    //proveedor, tiempo mínimo de actualización, distancia mínima, Locationlistener
+	    //Se activan las notificaciones de localizaciï¿½n con los parï¿½metros: 
+	    //proveedor, tiempo mï¿½nimo de actualizaciï¿½n, distancia mï¿½nima, Locationlistener
 	    handle.requestLocationUpdates(provider, 60000, 5,this);
 	    //Obtiene la ultima posicion conocida por el proveedor
 	    loc = handle.getLastKnownLocation(provider);

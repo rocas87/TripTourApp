@@ -49,5 +49,8 @@
     <string name="logonSkip">Saltar inicio sesion</string>
     <string name="inicio">¡Bienvenido!</string>
     <string name="post">Comentarios</string>
+    <string name="accept">Aceptar</string>
+    <string name="searchRadius">Radio de busqueda (KM):</string>
+    <string name="distMax">Distancia maxima recorrido (KM):</string>
 
 </resources>

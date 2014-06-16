@@ -7,14 +7,6 @@
     android:background="#FFFFFF" >
 
     <TextView
-        android:id="@+id/txtorige"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/origen" />
-
-    <TextView
         android:id="@+id/txtCambio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,64 +16,82 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <Spinner
-        android:id="@+id/origen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/edtCantidad"
-        android:layout_alignParentTop="true" />
-
-    <TextView
-        android:id="@+id/txtdestino"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txtorige"
-        android:layout_below="@+id/origen"
-        android:text="@string/destino" />
-
-    <Spinner
         android:id="@+id/destino"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/origen"
-        android:layout_below="@+id/origen" />
+        android:layout_alignLeft="@+id/edtCantidad"
+        android:layout_alignTop="@+id/txtdestino" />
+
+    <Spinner
+        android:id="@+id/origen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/destino"
+        android:layout_alignLeft="@+id/destino" />
+
+    <TextView
+        android:id="@+id/txtorige"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtdestino"
+        android:layout_alignTop="@+id/origen"
+        android:text="@string/origen" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logoexchangemoney" />
 
     <Button
         android:id="@+id/btnCambio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/txtvalor"
-        android:layout_below="@+id/destino"
-        android:layout_marginTop="92dp"
-        android:text="@string/change" />
-
-    <TextView
-        android:id="@+id/txtvalor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/btnCambio"
-        android:layout_alignLeft="@+id/txtdestino"
-        android:layout_marginBottom="60dp"
-        android:text="@string/valor" />
-
-    <TextView
-        android:id="@+id/txtmonto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/txtCambio"
-        android:layout_alignLeft="@+id/txtvalor"
-        android:layout_marginBottom="15dp"
-        android:text="@string/monto" />
+        android:layout_below="@+id/txtCambio"
+        android:layout_marginTop="18dp"
+        android:text="@string/accept" />
 
     <EditText
         android:id="@+id/edtCantidad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/txtCambio"
         android:layout_alignLeft="@+id/txtCambio"
+        android:layout_below="@+id/imageView1"
+        android:layout_marginTop="138dp"
         android:ems="10"
         android:inputType="number" >
 
         <requestFocus />
     </EditText>
+
+    <TextView
+        android:id="@+id/txtdestino"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/edtCantidad"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="76dp"
+        android:text="@string/destino" />
+
+    <TextView
+        android:id="@+id/txtmonto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/edtCantidad"
+        android:layout_alignBottom="@+id/edtCantidad"
+        android:layout_alignLeft="@+id/txtdestino"
+        android:text="@string/monto" />
+
+    <TextView
+        android:id="@+id/txtvalor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/txtmonto"
+        android:layout_below="@+id/txtdestino"
+        android:layout_marginTop="20dp"
+        android:text="@string/valor" />
 
 </RelativeLayout>
