@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -30,6 +31,7 @@ public class RegistroActivity extends Activity implements OnClickListener {
 		   php, res, valido, masculino, femenino;
 	List<NameValuePair> params;
 	ProgressDialog pDialog;
+	EnviarPost send = new EnviarPost();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +40,6 @@ public class RegistroActivity extends Activity implements OnClickListener {
 		
 		edtMail = (EditText)findViewById(R.id.edtMail);
 		edtNick = (EditText)findViewById(R.id.edtNick);
-		edtNombre = (EditText)findViewById(R.id.edtNombre);
-		edtApellido = (EditText)findViewById(R.id.edtApellido);
 		rdbtnMasculino =(RadioButton)findViewById(R.id.rdtbtnMasculino);
 		rdbtnFemenino = (RadioButton)findViewById(R.id.rdbtnFemenino);
 		edtFecha = (EditText)findViewById(R.id.edtFecha);
@@ -71,8 +71,6 @@ public class RegistroActivity extends Activity implements OnClickListener {
 			}
 			else
 			{	
-				usr_nombre = edtNombre.getText().toString();
-				usr_apellido = edtApellido.getText().toString();
 				usr_fecha = edtFecha.getText().toString();
 								
 				if(rdbtnMasculino.isChecked() == true)
@@ -87,30 +85,23 @@ public class RegistroActivity extends Activity implements OnClickListener {
 				params = new ArrayList<NameValuePair>();
 				params.add(new BasicNameValuePair("usr_mail", usr_mail));
 				params.add(new BasicNameValuePair("usr_nick", usr_nick));
-				params.add(new BasicNameValuePair("usr_nombre", usr_nombre));
-				params.add(new BasicNameValuePair("usr_apellido", usr_apellido));
 				params.add(new BasicNameValuePair("usr_sexo", usr_sexo));
 				params.add(new BasicNameValuePair("usr_fecha_nacimiento", usr_fecha));
 				params.add(new BasicNameValuePair("usr_pass", usr_pass));
-				params.add(new BasicNameValuePair("pass", usr_pass));
+				
+				php = "/servtriptour/registro.php";
 				
 				pDialog = new ProgressDialog(this);
+				pDialog.setMessage("Sending...");
+				pDialog.show();
 				
+				Log.e("token", "antes");
 				Thread nt = new Thread() {
 					@Override
 					public void run() {
 						
-						try {
-							pDialog.setMessage("Sending...");
-							pDialog.show();
-							
-							php = "/servtriptour/registro.php";
-							EnviarPost enviar = new EnviarPost();
-							
-							res = enviar.enviarPost(params, php);
-							
-							Toast.makeText(RegistroActivity.this,res,
-									Toast.LENGTH_LONG).show();
+						try {													
+							res = send.enviarPost(params, php);
 							
 							JSONArray jsonArray = new JSONArray(res);
 							
@@ -119,38 +110,48 @@ public class RegistroActivity extends Activity implements OnClickListener {
 								JSONObject jsonObject = jsonArray.getJSONObject(i);
 							    valido = jsonObject.getString("valido");
 							}         
-							runOnUiThread(new Runnable() {
-								@Override
-								public void run() {
-									Toast.makeText(RegistroActivity.this,res,
-											Toast.LENGTH_LONG).show();
-									
-									if(valido.equals("mail"))
-									{
+							
+							if(valido.equals("mail"))
+							{
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
 										Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 									    vibrator.vibrate(200);
+									    pDialog.dismiss();
 										Toast.makeText(RegistroActivity.this,"Mail ya registrado",
 												Toast.LENGTH_LONG).show();
-										pDialog.dismiss();
 									}
-									else if(valido.equals("nick"))
-									{
+								});
+								
+							}
+							else if(valido.equals("nick"))
+							{
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
 										Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 									    vibrator.vibrate(200);
+									    pDialog.dismiss();
 										Toast.makeText(RegistroActivity.this,"Nick ya fue ocupado",
 												Toast.LENGTH_LONG).show();
-										pDialog.dismiss();
 									}
-									else
-									{
+								});
+								
+							}
+							else if(valido.equals("registrado"))
+							{
+								runOnUiThread(new Runnable() {
+									@Override
+									public void run() {
+										pDialog.dismiss();
 										Toast.makeText(RegistroActivity.this,"Usuario registrado",
 												Toast.LENGTH_LONG).show();
-										pDialog.dismiss();
 										registrado();
 									}
-								}
-							});
-						    }
+								});
+							}
+						   }
 						catch (Exception e) {
 							// TODO: handle exception
 						}

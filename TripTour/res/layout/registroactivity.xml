@@ -4,106 +4,67 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF" >
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/mail" />
+
     <EditText
         android:id="@+id/edtMail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView1"
         android:ems="10"
         android:hint="@string/mail"
         android:inputType="textEmailAddress"
-        android:textSize="12sp"
-        android:maxLength="30" />
+        android:maxLength="30"
+        android:textSize="12sp" />
 
-    <Button
-        android:id="@+id/btnEnviar"
+    <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="@string/send"
-        android:textSize="12sp" />
-
-    <EditText
-        android:id="@+id/edtNombre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/edtNick"
-        android:ems="10"
-        android:maxLength="30"
-        android:hint="@string/name"
-        android:textSize="12sp" />
-
-    <EditText
-        android:id="@+id/edtApellido"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/edtNombre"
-        android:ems="10"
-        android:maxLength="30"
-        android:hint="@string/lastname"
-        android:textSize="12sp" />
+        android:layout_below="@+id/edtMail"
+        android:layout_marginTop="14dp"
+        android:text="@string/nick" />
 
     <EditText
         android:id="@+id/edtNick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/edtMail"
+        android:layout_below="@+id/textView2"
         android:ems="10"
         android:hint="@string/nick"
-        android:textSize="12sp" 
         android:maxLength="30"
-        >
+        android:textSize="12sp" >
+
         <requestFocus />
     </EditText>
 
-    <EditText
-        android:id="@+id/edtPass"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/edtConfPass"
         android:layout_alignParentLeft="true"
-        android:ems="10"
-        android:maxLength="30"
-        android:hint="@string/password"
-        android:inputType="textPassword"
-        android:textSize="12sp" />
-
-    <EditText
-        android:id="@+id/edtFecha"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/edtPass"
-        android:layout_alignParentLeft="true"
-        android:ems="10"
-        android:maxLength="10"
-        android:hint="@string/year"
-        android:inputType="date"
-        android:textSize="12sp" />
-
-    <EditText
-        android:id="@+id/edtConfPass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnEnviar"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="14dp"
-        android:ems="10"
-        android:maxLength="30"
-        android:hint="@string/confpass"
-        android:inputType="textPassword"
-        android:textSize="12sp" />
+        android:layout_below="@+id/edtNick"
+        android:layout_marginTop="14dp"
+        android:text="@string/sexo" />
 
     <RadioGroup
         android:id="@+id/radioGroupSexo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/edtNick"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" >
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp" >
 
         <RadioButton
             android:id="@+id/rdbtnFemenino"
@@ -119,7 +80,79 @@
             android:layout_height="wrap_content"
             android:text="@string/male"
             android:textSize="12sp" />
-
     </RadioGroup>
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/radioGroupSexo"
+        android:layout_marginTop="14dp"
+        android:text="@string/birthday" />
+
+    <EditText
+        android:id="@+id/edtFecha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:hint="@string/year"
+        android:inputType="date"
+        android:maxLength="10"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/edtFecha"
+        android:layout_marginTop="14dp"
+        android:text="@string/pass" />
+
+    <EditText
+        android:id="@+id/edtPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView5"
+        android:ems="10"
+        android:hint="@string/password"
+        android:inputType="textPassword"
+        android:maxLength="30"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/edtPass"
+        android:layout_marginTop="14dp"
+        android:text="@string/confpass" />
+
+    <EditText
+        android:id="@+id/edtConfPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView6"
+        android:ems="10"
+        android:hint="@string/confpass"
+        android:inputType="textPassword"
+        android:maxLength="30"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/btnEnviar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edtConfPass"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="@string/send"
+        android:textSize="12sp" />
+    
 </RelativeLayout>

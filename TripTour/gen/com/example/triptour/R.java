@@ -435,11 +435,11 @@ containing a value of this type.
         public static final int triplog=0x7f02002e;
     }
     public static final class id {
-        public static final int action_settings=0x7f060065;
-        public static final int alojamiento=0x7f060062;
+        public static final int action_settings=0x7f060064;
+        public static final int alojamiento=0x7f060061;
         public static final int book_now=0x7f060010;
         public static final int btnCambio=0x7f060033;
-        public static final int btnEnviar=0x7f060055;
+        public static final int btnEnviar=0x7f06005c;
         public static final int btnLogin=0x7f06001a;
         public static final int btnLogonSkip=0x7f060018;
         public static final int btnRegister=0x7f060019;
@@ -447,9 +447,9 @@ containing a value of this type.
         public static final int buyButton=0x7f06000a;
         public static final int buy_now=0x7f06000f;
         public static final int buy_with_google=0x7f06000e;
-        public static final int cambio_moneda=0x7f060064;
+        public static final int cambio_moneda=0x7f060063;
         public static final int classic=0x7f060011;
-        public static final int clima=0x7f060063;
+        public static final int clima=0x7f060062;
         public static final int destino=0x7f06002e;
         public static final int direccion=0x7f060021;
         public static final int dist=0x7f060020;
@@ -457,17 +457,15 @@ containing a value of this type.
         public static final int distancia=0x7f060045;
         public static final int dur=0x7f06002b;
         public static final int duration=0x7f06002a;
-        public static final int edtApellido=0x7f060058;
         public static final int edtCantidad=0x7f06002f;
         public static final int edtComentario=0x7f060047;
-        public static final int edtConfPass=0x7f060059;
+        public static final int edtConfPass=0x7f06005b;
         public static final int edtDisMax=0x7f06004d;
-        public static final int edtFecha=0x7f06005a;
+        public static final int edtFecha=0x7f060059;
         public static final int edtHora=0x7f06004f;
         public static final int edtMail=0x7f060054;
         public static final int edtMinuto=0x7f060051;
-        public static final int edtNick=0x7f060057;
-        public static final int edtNombre=0x7f060056;
+        public static final int edtNick=0x7f060055;
         public static final int edtPass=0x7f060015;
         public static final int edtRadioBusqueda=0x7f06004c;
         public static final int edtUsuario=0x7f060016;
@@ -476,7 +474,7 @@ containing a value of this type.
         public static final int est3=0x7f060024;
         public static final int est4=0x7f060025;
         public static final int est5=0x7f060026;
-        public static final int find=0x7f06005e;
+        public static final int find=0x7f06005d;
         public static final int grayscale=0x7f060012;
         public static final int holo_dark=0x7f060005;
         public static final int holo_light=0x7f060006;
@@ -488,7 +486,7 @@ containing a value of this type.
         public static final int lista=0x7f060037;
         public static final int map=0x7f06003c;
         public static final int match_parent=0x7f06000c;
-        public static final int menu_recomendation=0x7f06005f;
+        public static final int menu_recomendation=0x7f06005e;
         public static final int monochrome=0x7f060013;
         public static final int nombre=0x7f06001d;
         public static final int none=0x7f060000;
@@ -497,12 +495,12 @@ containing a value of this type.
         public static final int post=0x7f060041;
         public static final int production=0x7f060007;
         public static final int prompt=0x7f060048;
-        public static final int radioGroupSexo=0x7f06005b;
+        public static final int radioGroupSexo=0x7f060056;
         public static final int ratingBar=0x7f06003f;
-        public static final int rdbtnFemenino=0x7f06005c;
-        public static final int rdtbtnMasculino=0x7f06005d;
-        public static final int recomendation=0x7f060060;
-        public static final int recomendation_route=0x7f060061;
+        public static final int rdbtnFemenino=0x7f060057;
+        public static final int rdtbtnMasculino=0x7f060058;
+        public static final int recomendation=0x7f06005f;
+        public static final int recomendation_route=0x7f060060;
         public static final int resultados=0x7f060052;
         public static final int sandbox=0x7f060008;
         public static final int satellite=0x7f060002;
@@ -516,6 +514,7 @@ containing a value of this type.
         public static final int textView3=0x7f06004b;
         public static final int textView4=0x7f06004e;
         public static final int textView5=0x7f060050;
+        public static final int textView6=0x7f06005a;
         public static final int title=0x7f060044;
         public static final int txtAddress=0x7f060042;
         public static final int txtCambio=0x7f06002c;
@@ -707,6 +706,7 @@ containing a value of this type.
         public static final int searchRadius=0x7f040053;
         public static final int searchResults=0x7f04003c;
         public static final int send=0x7f040038;
+        public static final int sexo=0x7f040055;
         public static final int transport=0x7f040047;
         public static final int user=0x7f04003d;
         public static final int userLog=0x7f040024;

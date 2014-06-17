@@ -84,6 +84,6 @@
         android:layout_alignTop="@+id/textView2"
         android:layout_toRightOf="@+id/textView2"
         android:layout_marginTop="3dp"
-        android:text="hh" />
+         />
     
 </RelativeLayout>
