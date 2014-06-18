@@ -125,7 +125,6 @@ public class MainActivity extends Activity implements OnClickListener, android.l
 					        JSONObject jsonObject = jsonArray.getJSONObject(i);
 					        valido = jsonObject.getString("valido");
 					        if(valido.equals("1")){
-					        	usr_nombre = jsonObject.getString("usr_nombre");
 					        	usr_nick = jsonObject.getString("usr_nick");
 					        	pDialog.dismiss();
 					        	runOnUiThread(new Runnable() {
