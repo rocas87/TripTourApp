@@ -11,7 +11,7 @@
         android:layout_height="150dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:src="@drawable/ic_launcher" />
+       />
 
     <TextView
         android:id="@+id/txtNombre"
@@ -99,7 +99,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtAddress"
         android:layout_centerHorizontal="true"
-        android:text="@string/post"
+        android:text="@string/tuOpinion"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

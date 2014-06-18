@@ -708,6 +708,7 @@ containing a value of this type.
         public static final int send=0x7f040038;
         public static final int sexo=0x7f040055;
         public static final int transport=0x7f040047;
+        public static final int tuOpinion=0x7f040056;
         public static final int user=0x7f04003d;
         public static final int userLog=0x7f040024;
         public static final int valor=0x7f040044;

@@ -212,7 +212,7 @@ public class ItemActivity extends Activity implements android.location.LocationL
 		est5p = (ImageView)promptComentario.findViewById(R.id.est5);
 		edtComentario = (EditText)promptComentario.findViewById(R.id.edtComentario);
 		
-		txtUsr.setText("usuario");
+		txtUsr.setText(usuario);
 		
 		nota = "5";
 		if(String.valueOf(rating).equals("4.0"))

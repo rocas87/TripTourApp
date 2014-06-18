@@ -55,5 +55,6 @@
     <string name="searchRadius">Search radius (KM):</string>
     <string name="distMax">Maximum travel distance (KM):</string>
     <string name="sexo">Gender:</string>
+    <string name="tuOpinion">Give your review</string>
 
 </resources>

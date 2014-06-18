@@ -53,5 +53,6 @@
     <string name="searchRadius">Radio de busqueda (KM):</string>
     <string name="distMax">Distancia maxima recorrido (KM):</string>
     <string name="sexo">Sexo:</string>
+    <string name="tuOpinion">Danos tu opinion</string>
 
 </resources>

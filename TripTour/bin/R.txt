@@ -319,6 +319,7 @@ int string searchResults 0x7f04003c
 int string send 0x7f040038
 int string sexo 0x7f040055
 int string transport 0x7f040047
+int string tuOpinion 0x7f040056
 int string user 0x7f04003d
 int string userLog 0x7f040024
 int string valor 0x7f040044
