@@ -124,8 +124,8 @@ int id book_now 0x7f060010
 int id btnCambio 0x7f060033
 int id btnEnviar 0x7f06005c
 int id btnLogin 0x7f06001a
-int id btnLogonSkip 0x7f060018
-int id btnRegister 0x7f060019
+int id btnLogonSkip 0x7f06001c
+int id btnRegister 0x7f06001b
 int id btnmap 0x7f060039
 int id buyButton 0x7f06000a
 int id buy_now 0x7f06000f
@@ -149,9 +149,9 @@ int id edtHora 0x7f06004f
 int id edtMail 0x7f060054
 int id edtMinuto 0x7f060051
 int id edtNick 0x7f060055
-int id edtPass 0x7f060015
+int id edtPass 0x7f060019
 int id edtRadioBusqueda 0x7f06004c
-int id edtUsuario 0x7f060016
+int id edtUsuario 0x7f060015
 int id est1 0x7f060022
 int id est2 0x7f060023
 int id est3 0x7f060024
@@ -163,7 +163,7 @@ int id holo_dark 0x7f060005
 int id holo_light 0x7f060006
 int id hybrid 0x7f060004
 int id icon 0x7f060043
-int id imageView1 0x7f06001c
+int id imageView1 0x7f060017
 int id imgItem 0x7f06001e
 int id linearLayout1 0x7f06003e
 int id lista 0x7f060037
@@ -192,7 +192,7 @@ int id spCategoria 0x7f060049
 int id spTransporte 0x7f06004a
 int id strict_sandbox 0x7f060009
 int id terrain 0x7f060003
-int id textView1 0x7f06001b
+int id textView1 0x7f060018
 int id textView2 0x7f060038
 int id textView3 0x7f06004b
 int id textView4 0x7f06004e
@@ -213,7 +213,7 @@ int id txtResults 0x7f06003a
 int id txtUser 0x7f060035
 int id txtUsr 0x7f060046
 int id txtUsrNick 0x7f060027
-int id txtUsuario 0x7f060017
+int id txtUsuario 0x7f060016
 int id txtdestino 0x7f060030
 int id txtmonto 0x7f060034
 int id txtorige 0x7f060032

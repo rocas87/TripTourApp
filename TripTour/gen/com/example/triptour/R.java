@@ -441,8 +441,8 @@ containing a value of this type.
         public static final int btnCambio=0x7f060033;
         public static final int btnEnviar=0x7f06005c;
         public static final int btnLogin=0x7f06001a;
-        public static final int btnLogonSkip=0x7f060018;
-        public static final int btnRegister=0x7f060019;
+        public static final int btnLogonSkip=0x7f06001c;
+        public static final int btnRegister=0x7f06001b;
         public static final int btnmap=0x7f060039;
         public static final int buyButton=0x7f06000a;
         public static final int buy_now=0x7f06000f;
@@ -466,9 +466,9 @@ containing a value of this type.
         public static final int edtMail=0x7f060054;
         public static final int edtMinuto=0x7f060051;
         public static final int edtNick=0x7f060055;
-        public static final int edtPass=0x7f060015;
+        public static final int edtPass=0x7f060019;
         public static final int edtRadioBusqueda=0x7f06004c;
-        public static final int edtUsuario=0x7f060016;
+        public static final int edtUsuario=0x7f060015;
         public static final int est1=0x7f060022;
         public static final int est2=0x7f060023;
         public static final int est3=0x7f060024;
@@ -480,7 +480,7 @@ containing a value of this type.
         public static final int holo_light=0x7f060006;
         public static final int hybrid=0x7f060004;
         public static final int icon=0x7f060043;
-        public static final int imageView1=0x7f06001c;
+        public static final int imageView1=0x7f060017;
         public static final int imgItem=0x7f06001e;
         public static final int linearLayout1=0x7f06003e;
         public static final int lista=0x7f060037;
@@ -509,7 +509,7 @@ containing a value of this type.
         public static final int spTransporte=0x7f06004a;
         public static final int strict_sandbox=0x7f060009;
         public static final int terrain=0x7f060003;
-        public static final int textView1=0x7f06001b;
+        public static final int textView1=0x7f060018;
         public static final int textView2=0x7f060038;
         public static final int textView3=0x7f06004b;
         public static final int textView4=0x7f06004e;
@@ -530,7 +530,7 @@ containing a value of this type.
         public static final int txtUser=0x7f060035;
         public static final int txtUsr=0x7f060046;
         public static final int txtUsrNick=0x7f060027;
-        public static final int txtUsuario=0x7f060017;
+        public static final int txtUsuario=0x7f060016;
         public static final int txtdestino=0x7f060030;
         public static final int txtmonto=0x7f060034;
         public static final int txtorige=0x7f060032;
