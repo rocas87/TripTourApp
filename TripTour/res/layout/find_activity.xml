@@ -26,10 +26,11 @@
     <ListView
         android:id="@+id/lista"
         android:layout_width="wrap_content"
-        android:layout_height="280dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginTop="30dp"
         android:layout_below="@+id/textView2"
+        android:layout_above="@+id/btnmap"
         android:drawSelectorOnTop="false" />
 
     <TextView
@@ -40,13 +41,6 @@
         android:layout_toRightOf="@+id/txtUser"
         android:text="usuario"
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <Button
-        android:id="@+id/btnmap"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lista"
-        android:text="@string/map" />
 
     <TextView
         android:id="@+id/textView1"
@@ -80,8 +74,16 @@
         android:id="@+id/txtMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/txtResults"
+        android:layout_alignLeft="@+id/txtResults"
         android:layout_below="@+id/txtResults"
         android:text="" />
+
+     <Button
+         android:id="@+id/btnmap"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:layout_alignParentLeft="true"
+         android:text="@string/map" />
         
 </RelativeLayout>
