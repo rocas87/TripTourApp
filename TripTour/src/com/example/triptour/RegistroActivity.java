@@ -75,11 +75,11 @@ public class RegistroActivity extends Activity implements OnClickListener {
 								
 				if(rdbtnMasculino.isChecked() == true)
 				{
-					usr_sexo = "M";
+					usr_sexo = "H";
 				}
 				else if(rdbtnFemenino.isChecked() == true)
 				{
-					usr_sexo = "F";
+					usr_sexo = "M";
 				}
 				
 				params = new ArrayList<NameValuePair>();

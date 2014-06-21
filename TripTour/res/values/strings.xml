@@ -4,7 +4,7 @@
     <string name="app_name">TripTour</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hellow world!</string>
-    <string name="login">Sig in</string>
+    <string name="login">Sign in</string>
     <string name="userLog">E-Mail or nick:</string>
     <string name="pass">Password:</string>
     <string name="newUser">New user register!!</string>
@@ -12,7 +12,7 @@
     <string name="recomendation">Recommendation attractions</string>
     <string name="recRutas">Recomendations route</string>
     <string name="alojamiento">Hotel</string>
-    <string name="change">Exchange money</string>
+    <string name="change">Money exchange</string>
     <string name="climate">Climate</string>
     <string name="rating">Rating attractives</string>
     <string name="preferences">Preferences</string>
@@ -34,15 +34,15 @@
     <string name="dir">Address:</string>
     <string name="average">Average:</string>
     <string name="dist">Distance (KM):</string>
-    <string name="map">Map</string>
+    <string name="map">View all</string>
     <string name="origen">Origin:</string>
     <string name="destino">destination</string>
     <string name="valor">Result:</string>
     <string name="monto">Amount</string>
     <string name="category">Select category</string>
-    <string name="transport">Type of transport:</string>
+    <string name="transport">Type of transportation:</string>
     <string name="duration">Maximum duration tour</string>
-    <string name="durationTotal">Duration tour:</string>
+    <string name="durationTotal">Estimate time tour:</string>
     <string name="ResultRecomendation">Recomendations</string>
     <string name="ResultRoute">Routes</string>
     <string name="resultsRoute">Routes obtained:</string>

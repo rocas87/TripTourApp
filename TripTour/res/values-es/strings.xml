@@ -32,7 +32,7 @@
     <string name="dir">Direccion:</string>
     <string name="average">Promedio:</string>
     <string name="dist">Distancia (KM):</string>
-    <string name="map">Mapa</string>
+    <string name="map">Ver todos</string>
     <string name="origen">Origen:</string>
     <string name="destino">Destino:</string>
     <string name="valor">Resultado</string>

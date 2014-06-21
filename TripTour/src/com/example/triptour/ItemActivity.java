@@ -518,7 +518,17 @@ public class ItemActivity extends Activity implements android.location.LocationL
 		.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog,int id) {
 		// Rescatamos el nombre del EditText y lo mostramos por pantalla
-			find(edtRadioBusqueda.getText().toString());
+			if(edtRadioBusqueda.getText().toString().equals(""))
+			{
+				Vibrator vibrator =(Vibrator)getSystemService
+						 (Context.VIBRATOR_SERVICE);
+				 vibrator.vibrate(200);
+				Toast.makeText(ItemActivity.this,"Debe llenar el radio",Toast.LENGTH_LONG).show();
+			}
+			else
+			{
+				find(edtRadioBusqueda.getText().toString());
+			}
 		}
 		})
 		.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -610,7 +620,17 @@ public class ItemActivity extends Activity implements android.location.LocationL
 			public void onClick(DialogInterface dialog,int id) 
 			{
 				// Rescatamos el nombre del EditText y lo mostramos por pantalla
-				recomendation(edtRadioBusqueda.getText().toString());
+				if(edtRadioBusqueda.getText().toString().equals(""))
+				{
+					Vibrator vibrator =(Vibrator)getSystemService
+							 (Context.VIBRATOR_SERVICE);
+					 vibrator.vibrate(200);
+					Toast.makeText(ItemActivity.this,"Debe llenar el radio",Toast.LENGTH_LONG).show();
+				}
+				else
+				{
+					recomendation(edtRadioBusqueda.getText().toString());
+				}
 			}
 		})
 		.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() 
@@ -680,10 +700,34 @@ public class ItemActivity extends Activity implements android.location.LocationL
 			public void onClick(DialogInterface dialog,int id) 
 			{
 				// Rescatamos el nombre del EditText y lo mostramos por pantalla
-				hora = edtHora.getText().toString();
-				minuto = edtMinuto.getText().toString();
-				distMax = edtDist.getText().toString();
-				recomendationRoute();
+				if(edtHora.getText().toString().equals(""))
+				{
+					Vibrator vibrator =(Vibrator)getSystemService
+							 (Context.VIBRATOR_SERVICE);
+					 vibrator.vibrate(200);
+					Toast.makeText(ItemActivity.this,"Debe llenar hora",Toast.LENGTH_LONG).show();
+				}
+				else if(edtMinuto.getText().toString().equals(""))
+				{
+					Vibrator vibrator =(Vibrator)getSystemService
+							 (Context.VIBRATOR_SERVICE);
+					 vibrator.vibrate(200);
+					Toast.makeText(ItemActivity.this,"Debe llenar minutos",Toast.LENGTH_LONG).show();
+				}
+				else if(edtDist.getText().toString().equals(""))
+				{
+					Vibrator vibrator =(Vibrator)getSystemService
+							 (Context.VIBRATOR_SERVICE);
+					 vibrator.vibrate(200);
+					Toast.makeText(ItemActivity.this,"Debe llenar distancia",Toast.LENGTH_LONG).show();
+				}
+				else
+				{
+					hora = edtHora.getText().toString();
+					minuto = edtMinuto.getText().toString();
+					distMax = edtDist.getText().toString();
+					recomendationRoute();
+				}
 			}
 		})
 		.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() 

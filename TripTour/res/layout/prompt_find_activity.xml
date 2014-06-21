@@ -52,7 +52,7 @@ android:textSize="25sp" />
     android:layout_width="100dp"
     android:layout_height="wrap_content"
     android:ems="3"
-    android:inputType="number" >
+    android:inputType="numberDecimal" >
 
     <requestFocus />
 </EditText>

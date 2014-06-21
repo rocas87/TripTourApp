@@ -36,7 +36,7 @@
     <item 
         android:id="@+id/clima" 
         android:title="@string/climate"
-        android:icon="@drawable/ic_action_cloud"
+        android:icon="@drawable/clima"
         android:showAsAction="ifRoom"
       >
     </item>
