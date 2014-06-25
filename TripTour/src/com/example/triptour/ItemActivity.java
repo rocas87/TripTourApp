@@ -136,8 +136,8 @@ public class ItemActivity extends Activity implements android.location.LocationL
 			public void run() {
 				
 				try {
-					URL imageUrl = new URL("http://200.14.84.19/servtriptour/imagenes/"+id+".jpg");
-					Log.e("token","http://200.14.84.19/servtriptour/imagenes/"+id+".jpg" );
+					URL imageUrl = new URL("http://200.14.84.19/servtriptour/app/imagenes/"+id+".jpg");
+					Log.e("token","http://200.14.84.19/servtriptour/app/imagenes/"+id+".jpg" );
 					HttpURLConnection conn = (HttpURLConnection)imageUrl.openConnection();
 					conn.connect();
 					Bitmap bitm = BitmapFactory.decodeStream(conn.getInputStream());
@@ -260,7 +260,7 @@ public class ItemActivity extends Activity implements android.location.LocationL
 			Log.e("token", "itm_rating:"+nota);
 			Log.e("token", "itm_post:"+edtComentario.getText().toString());
 			
-			php = "/servtriptour/comentario.php";
+			php = "/servtriptour/app/comentario.php";
 
 			pDialog.setMessage("Guardando...");
 			pDialog.show();
@@ -321,7 +321,7 @@ public class ItemActivity extends Activity implements android.location.LocationL
 	
 	public void comentarios(String id)
 	{
-		php = "/servtriptour/infItem.php";
+		php = "/servtriptour/app/infItem.php";
 		
 		params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("itm_id",id));
@@ -523,7 +523,7 @@ public class ItemActivity extends Activity implements android.location.LocationL
 				Vibrator vibrator =(Vibrator)getSystemService
 						 (Context.VIBRATOR_SERVICE);
 				 vibrator.vibrate(200);
-				Toast.makeText(ItemActivity.this,"Debe llenar el radio",Toast.LENGTH_LONG).show();
+				Toast.makeText(ItemActivity.this,"Ingrese radio de búsqueda",Toast.LENGTH_LONG).show();
 			}
 			else
 			{
@@ -625,7 +625,7 @@ public class ItemActivity extends Activity implements android.location.LocationL
 					Vibrator vibrator =(Vibrator)getSystemService
 							 (Context.VIBRATOR_SERVICE);
 					 vibrator.vibrate(200);
-					Toast.makeText(ItemActivity.this,"Debe llenar el radio",Toast.LENGTH_LONG).show();
+					Toast.makeText(ItemActivity.this,"Ingrese radio de búsqueda",Toast.LENGTH_LONG).show();
 				}
 				else
 				{
@@ -705,21 +705,21 @@ public class ItemActivity extends Activity implements android.location.LocationL
 					Vibrator vibrator =(Vibrator)getSystemService
 							 (Context.VIBRATOR_SERVICE);
 					 vibrator.vibrate(200);
-					Toast.makeText(ItemActivity.this,"Debe llenar hora",Toast.LENGTH_LONG).show();
+					Toast.makeText(ItemActivity.this,"Ingrese un tiempo máximo, hora",Toast.LENGTH_LONG).show();
 				}
 				else if(edtMinuto.getText().toString().equals(""))
 				{
 					Vibrator vibrator =(Vibrator)getSystemService
 							 (Context.VIBRATOR_SERVICE);
 					 vibrator.vibrate(200);
-					Toast.makeText(ItemActivity.this,"Debe llenar minutos",Toast.LENGTH_LONG).show();
+					Toast.makeText(ItemActivity.this,"Ingrese un tiempo máximo, minutos",Toast.LENGTH_LONG).show();
 				}
 				else if(edtDist.getText().toString().equals(""))
 				{
 					Vibrator vibrator =(Vibrator)getSystemService
 							 (Context.VIBRATOR_SERVICE);
 					 vibrator.vibrate(200);
-					Toast.makeText(ItemActivity.this,"Debe llenar distancia",Toast.LENGTH_LONG).show();
+					Toast.makeText(ItemActivity.this,"Debe llenar distancia máxima del recorrido",Toast.LENGTH_LONG).show();
 				}
 				else
 				{

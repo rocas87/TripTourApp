@@ -515,7 +515,7 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 				Vibrator vibrator =(Vibrator)getSystemService
 						 (Context.VIBRATOR_SERVICE);
 				 vibrator.vibrate(200);
-				Toast.makeText(ChangeMoneyActivity.this,"Debe llenar el radio",Toast.LENGTH_LONG).show();
+				Toast.makeText(ChangeMoneyActivity.this,"Ingrese radio de búsqueda",Toast.LENGTH_LONG).show();
 			}
 			else
 			{
@@ -617,7 +617,7 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 					Vibrator vibrator =(Vibrator)getSystemService
 							 (Context.VIBRATOR_SERVICE);
 					 vibrator.vibrate(200);
-					Toast.makeText(ChangeMoneyActivity.this,"Debe llenar el radio",Toast.LENGTH_LONG).show();
+					Toast.makeText(ChangeMoneyActivity.this,"Ingrese radio de búsqueda",Toast.LENGTH_LONG).show();
 				}
 				else
 				{
@@ -698,21 +698,21 @@ public class ChangeMoneyActivity extends Activity implements android.location.Lo
 					Vibrator vibrator =(Vibrator)getSystemService
 							 (Context.VIBRATOR_SERVICE);
 					 vibrator.vibrate(200);
-					Toast.makeText(ChangeMoneyActivity.this,"Debe llenar hora",Toast.LENGTH_LONG).show();
+					Toast.makeText(ChangeMoneyActivity.this,"Ingrese un tiempo máximo, hora",Toast.LENGTH_LONG).show();
 				}
 				else if(edtMinuto.getText().toString().equals(""))
 				{
 					Vibrator vibrator =(Vibrator)getSystemService
 							 (Context.VIBRATOR_SERVICE);
 					 vibrator.vibrate(200);
-					Toast.makeText(ChangeMoneyActivity.this,"Debe llenar minutos",Toast.LENGTH_LONG).show();
+					Toast.makeText(ChangeMoneyActivity.this,"Ingrese un tiempo máximo, minutos",Toast.LENGTH_LONG).show();
 				}
 				else if(edtDist.getText().toString().equals(""))
 				{
 					Vibrator vibrator =(Vibrator)getSystemService
 							 (Context.VIBRATOR_SERVICE);
 					 vibrator.vibrate(200);
-					Toast.makeText(ChangeMoneyActivity.this,"Debe llenar distancia",Toast.LENGTH_LONG).show();
+					Toast.makeText(ChangeMoneyActivity.this,"Debe llenar distancia máxima recorrido",Toast.LENGTH_LONG).show();
 				}
 				else
 				{

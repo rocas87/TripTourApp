@@ -70,7 +70,7 @@ public class AdaptadorTitulares extends ArrayAdapter {
 				
 				try {
 					Log.e("token",itm_id);
-					URL imageUrl = new URL("http://200.14.84.19/servtriptour/imagenes/"+itm_id+".jpg");
+					URL imageUrl = new URL("http://200.14.84.19/servtriptour/app/imagenes/"+itm_id+".jpg");
 					HttpURLConnection conn = (HttpURLConnection)imageUrl.openConnection();
 					conn.connect();
 					Bitmap bitm = BitmapFactory.decodeStream(conn.getInputStream());

@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 public class RegistroActivity extends Activity implements OnClickListener {
 
-	EditText edtMail, edtNick, edtNombre, edtApellido, edtFecha, edtPass, edtConfPass;
+	EditText edtMail, edtNick, edtNombre, edtApellido, edtFecha, edtPass, edtConfPass, edtMes, edtDia;
 	Button enviar;
 	RadioButton rdbtnFemenino, rdbtnMasculino;
 	String usr_mail, usr_nick, usr_nombre, usr_apellido, usr_sexo, usr_fecha, usr_pass, confPass, 
@@ -43,6 +43,8 @@ public class RegistroActivity extends Activity implements OnClickListener {
 		rdbtnMasculino =(RadioButton)findViewById(R.id.rdtbtnMasculino);
 		rdbtnFemenino = (RadioButton)findViewById(R.id.rdbtnFemenino);
 		edtFecha = (EditText)findViewById(R.id.edtFecha);
+		edtMes = (EditText)findViewById(R.id.edtMes);
+		edtDia = (EditText)findViewById(R.id.edtDia);
 		edtPass = (EditText)findViewById(R.id.edtPass);
 		edtConfPass = (EditText)findViewById(R.id.edtConfPass);
 		        
@@ -55,24 +57,49 @@ public class RegistroActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		usr_pass = edtPass.getText().toString();
 		confPass = edtConfPass.getText().toString();
-		
+		usr_fecha = edtFecha.getText().toString()+"/"+edtMes.getText().toString()+"/"+edtDia.getText().toString();
 		if(usr_pass.equals(confPass))
 		{
 			usr_mail = edtMail.getText().toString();
 			usr_nick = edtNick.getText().toString();
-			usr_fecha = edtFecha.getText().toString();
 			
-			if(usr_mail.equals("") || usr_nick.equals("") || usr_fecha.equals(""))
+			if(usr_mail.equals("") || usr_nick.equals("") || edtFecha.getText().toString().equals("") 
+					|| edtMes.getText().toString().equals("") || edtDia.getText().toString().equals(""))
 			{
 				Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 			    vibrator.vibrate(500);
-				Toast.makeText(this,"Campos Mail, Nick y Fecha deben ser completados",
+				Toast.makeText(this,"todos los campos deben ser completados correctamente",
+						Toast.LENGTH_LONG).show();
+			}
+			else if(Integer.parseInt(edtFecha.getText().toString())<1900 || 2014<Integer.parseInt(edtFecha.getText().toString()))
+			{
+				Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+			    vibrator.vibrate(500);
+				Toast.makeText(this,"Año incorrecto",
+						Toast.LENGTH_LONG).show();
+			}
+			else if(Integer.parseInt(edtMes.getText().toString())<=0 || 12<Integer.parseInt(edtMes.getText().toString()))
+			{
+				Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+			    vibrator.vibrate(500);
+				Toast.makeText(this,"Mes incorrecto",
+						Toast.LENGTH_LONG).show();
+			}
+			else if(Integer.parseInt(edtDia.getText().toString())<=0 || 31<Integer.parseInt(edtDia.getText().toString()))
+			{
+				Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+			    vibrator.vibrate(500);
+				Toast.makeText(this,"Dia incorrecto",
+						Toast.LENGTH_LONG).show();
+			}
+			else if (edtPass.getText().toString() != edtConfPass.getText().toString())
+			{
+				Toast.makeText(RegistroActivity.this,"Los passwords no coinciden",
 						Toast.LENGTH_LONG).show();
 			}
 			else
 			{	
-				usr_fecha = edtFecha.getText().toString();
-								
+				
 				if(rdbtnMasculino.isChecked() == true)
 				{
 					usr_sexo = "H";
@@ -89,7 +116,7 @@ public class RegistroActivity extends Activity implements OnClickListener {
 				params.add(new BasicNameValuePair("usr_fecha_nacimiento", usr_fecha));
 				params.add(new BasicNameValuePair("usr_pass", usr_pass));
 				
-				php = "/servtriptour/registro.php";
+				php = "/servtriptour/app/registro.php";
 				
 				pDialog = new ProgressDialog(this);
 				pDialog.setMessage("Sending...");
@@ -119,7 +146,7 @@ public class RegistroActivity extends Activity implements OnClickListener {
 										Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 									    vibrator.vibrate(200);
 									    pDialog.dismiss();
-										Toast.makeText(RegistroActivity.this,"Mail ya registrado",
+										Toast.makeText(RegistroActivity.this,"E-mail ya registrado",
 												Toast.LENGTH_LONG).show();
 									}
 								});
@@ -160,11 +187,7 @@ public class RegistroActivity extends Activity implements OnClickListener {
 				nt.start();
 			}
 		}
-		else
-		{
-			Toast.makeText(RegistroActivity.this,"Password diferentes",
-					Toast.LENGTH_LONG).show();
-		}
+		
 	}
 	
 	private void registrado() 

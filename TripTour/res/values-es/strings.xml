@@ -26,7 +26,7 @@
     <string name="send">Enviar</string>
     <string name="female">Femenino</string>
     <string name="male">Masculino</string>
-    <string name="year">AAAA-MM-DD</string>
+    <string name="year">AAAA</string>
     <string name="searchResults">Resultado busqueda</string>
     <string name="user">Usuario: </string>
     <string name="dir">Direccion:</string>

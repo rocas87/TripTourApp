@@ -66,7 +66,7 @@ public class MainActivity extends Activity implements OnClickListener, android.l
 		
 		loc = getMiUbicacion();
 		
-		php = "/servtriptour/login.php";
+		php = "/servtriptour/app/login.php";
 	}
 
 	@Override
@@ -140,7 +140,7 @@ public class MainActivity extends Activity implements OnClickListener, android.l
 										pDialog.dismiss();
 										Vibrator vibrator =(Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 									    vibrator.vibrate(200);
-										Toast.makeText(MainActivity.this,"Usuario invalido",
+										Toast.makeText(MainActivity.this,"Usuario o contraseña invalidos",
 												Toast.LENGTH_LONG).show();
 									}
 								});

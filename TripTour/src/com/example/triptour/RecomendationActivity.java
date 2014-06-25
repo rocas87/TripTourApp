@@ -138,7 +138,7 @@ public class RecomendationActivity extends Activity implements android.location.
 			params.add(new BasicNameValuePair("categoria",categoria));
 			params.add(new BasicNameValuePair("radioBusqueda",radioBusqueda));
 
-			php = "/servtriptour/recomendacionV2.php";
+			php = "/servtriptour/app/recomendacionV2.php";
 			
 			pDialog = new ProgressDialog(this);
 			pDialog.setMessage("Buscando...");
@@ -382,7 +382,7 @@ public class RecomendationActivity extends Activity implements android.location.
 					Vibrator vibrator =(Vibrator)getSystemService
 							 (Context.VIBRATOR_SERVICE);
 					 vibrator.vibrate(200);
-					Toast.makeText(RecomendationActivity.this,"Debe llenar el radio",Toast.LENGTH_LONG).show();
+					Toast.makeText(RecomendationActivity.this,"Ingrese radio de búsqueda",Toast.LENGTH_LONG).show();
 				}
 				else
 				{
@@ -484,7 +484,7 @@ public class RecomendationActivity extends Activity implements android.location.
 						Vibrator vibrator =(Vibrator)getSystemService
 								 (Context.VIBRATOR_SERVICE);
 						 vibrator.vibrate(200);
-						Toast.makeText(RecomendationActivity.this,"Debe llenar el radio",Toast.LENGTH_LONG).show();
+						Toast.makeText(RecomendationActivity.this,"Ingrese radio de búsqueda",Toast.LENGTH_LONG).show();
 					}
 					else
 					{
@@ -564,21 +564,21 @@ public class RecomendationActivity extends Activity implements android.location.
 						Vibrator vibrator =(Vibrator)getSystemService
 								 (Context.VIBRATOR_SERVICE);
 						 vibrator.vibrate(200);
-						Toast.makeText(RecomendationActivity.this,"Debe llenar hora",Toast.LENGTH_LONG).show();
+						Toast.makeText(RecomendationActivity.this,"Ingrese un tiempo máximo, hora",Toast.LENGTH_LONG).show();
 					}
 					else if(edtMinuto.getText().toString().equals(""))
 					{
 						Vibrator vibrator =(Vibrator)getSystemService
 								 (Context.VIBRATOR_SERVICE);
 						 vibrator.vibrate(200);
-						Toast.makeText(RecomendationActivity.this,"Debe llenar minutos",Toast.LENGTH_LONG).show();
+						Toast.makeText(RecomendationActivity.this,"Ingrese un tiempo máximo, minutos",Toast.LENGTH_LONG).show();
 					}
 					else if(edtDist.getText().toString().equals(""))
 					{
 						Vibrator vibrator =(Vibrator)getSystemService
 								 (Context.VIBRATOR_SERVICE);
 						 vibrator.vibrate(200);
-						Toast.makeText(RecomendationActivity.this,"Debe llenar distancia",Toast.LENGTH_LONG).show();
+						Toast.makeText(RecomendationActivity.this,"Debe llenar distancia máxima del recorrido",Toast.LENGTH_LONG).show();
 					}
 					else
 					{

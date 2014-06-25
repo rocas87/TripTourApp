@@ -421,7 +421,7 @@ implements android.location.LocationListener, OnClickListener
 				Vibrator vibrator =(Vibrator)getSystemService
 						 (Context.VIBRATOR_SERVICE);
 				 vibrator.vibrate(200);
-				Toast.makeText(MapActivity.this,"Debe llenar el radio",Toast.LENGTH_LONG).show();
+				Toast.makeText(MapActivity.this,"Ingrese radio de búsqueda",Toast.LENGTH_LONG).show();
 			}
 			else
 			{
@@ -523,7 +523,7 @@ implements android.location.LocationListener, OnClickListener
 					Vibrator vibrator =(Vibrator)getSystemService
 							 (Context.VIBRATOR_SERVICE);
 					 vibrator.vibrate(200);
-					Toast.makeText(MapActivity.this,"Debe llenar el radio",Toast.LENGTH_LONG).show();
+					Toast.makeText(MapActivity.this,"Ingrese radio de búsqueda",Toast.LENGTH_LONG).show();
 				}
 				else
 				{
@@ -603,21 +603,21 @@ implements android.location.LocationListener, OnClickListener
 					Vibrator vibrator =(Vibrator)getSystemService
 							 (Context.VIBRATOR_SERVICE);
 					 vibrator.vibrate(200);
-					Toast.makeText(MapActivity.this,"Debe llenar hora",Toast.LENGTH_LONG).show();
+					Toast.makeText(MapActivity.this,"Ingrese un tiempo máximo, hora",Toast.LENGTH_LONG).show();
 				}
 				else if(edtMinuto.getText().toString().equals(""))
 				{
 					Vibrator vibrator =(Vibrator)getSystemService
 							 (Context.VIBRATOR_SERVICE);
 					 vibrator.vibrate(200);
-					Toast.makeText(MapActivity.this,"Debe llenar minutos",Toast.LENGTH_LONG).show();
+					Toast.makeText(MapActivity.this,"Ingrese un tiempo máximo, minutos",Toast.LENGTH_LONG).show();
 				}
 				else if(edtDist.getText().toString().equals(""))
 				{
 					Vibrator vibrator =(Vibrator)getSystemService
 							 (Context.VIBRATOR_SERVICE);
 					 vibrator.vibrate(200);
-					Toast.makeText(MapActivity.this,"Debe llenar distancia",Toast.LENGTH_LONG).show();
+					Toast.makeText(MapActivity.this,"Debe llenar distancia máxima del recorrido",Toast.LENGTH_LONG).show();
 				}
 				else
 				{

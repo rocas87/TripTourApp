@@ -28,7 +28,7 @@
     <string name="send">Send</string>
     <string name="female">Famale</string>
     <string name="male">Male</string>
-    <string name="year">YYYY-MM-DD</string>
+    <string name="year">YYYY</string>
     <string name="searchResults">Search results</string>
     <string name="user">User: </string>
     <string name="dir">Address:</string>
@@ -56,5 +56,7 @@
     <string name="distMax">Maximum travel distance (KM):</string>
     <string name="sexo">Gender:</string>
     <string name="tuOpinion">Give your review</string>
+    <string name="mes">MM</string>
+    <string name="dia">DD</string>
 
 </resources>
